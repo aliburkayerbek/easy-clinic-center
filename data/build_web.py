@@ -3,13 +3,19 @@ import json, base64, pathlib, re, html as H
 import illus
 from web_strings import S
 
+import os, sys, subprocess
 LANGS = ["en", "fr", "ar", "ru"]
+if "ECC_LI" not in os.environ:   # driver: build every language page in its own process
+    for i in range(len(LANGS)):
+        subprocess.run([sys.executable, __file__], check=True, env={**os.environ, "ECC_LI": str(i)})
+    sys.exit(0)
+LI = int(os.environ["ECC_LI"]); LC = LANGS[LI]
 I18N = {l: {k: v[i] for k, v in S.items()} for i, l in enumerate(LANGS)}
 
 def T(key, tag="span", cls="", attrs=""):
     c = f' class="{cls}"' if cls else ""
     a = f" {attrs}" if attrs else ""
-    return f'<{tag} data-i="{key}"{c}{a}>{S[key][0]}</{tag}>'
+    return f'<{tag} data-i="{key}"{c}{a}>{S[key][LI]}</{tag}>'
 
 def b64(p):
     return "data:image/png;base64," + base64.b64encode(pathlib.Path(p).read_bytes()).decode()
@@ -88,8 +94,12 @@ HOSP = [
 def check_li(key):
     return f'<li>{ic("check")}{T(key)}</li>'
 
+LANG_NAMES = {"en": "English", "fr": "Français", "ar": "العربية", "ru": "Русский"}
+LANG_PATH = {"en": "/", "fr": "/fr/", "ar": "/ar/", "ru": "/ru/"}
+LANG_OPTS = "".join(f'<option value="{LANG_PATH[l]}"{" selected" if l == LC else ""}>{LANG_NAMES[l]}</option>' for l in LANGS)
+
 header = f'''
-<a class="skip" href="#main">{S["skip"][0]}</a>
+<a class="skip" href="#main">{S["skip"][LI]}</a>
 <header class="hdr" id="top">
  <div class="wrap hdr-in">
   <a class="brand" href="#top" aria-label="Easy Clinic Center"><img class="logo-l" src="{LOGO}" alt="Easy Clinic Center"/><img class="logo-d" src="{LOGO_W}" alt="Easy Clinic Center"/></a>
@@ -97,25 +107,40 @@ header = f'''
    <a href="#about">{T("nav_about")}</a><a href="#how">{T("nav_how")}</a><a href="#treatments">{T("nav_treat")}</a><a href="#second">{T("nav_second")}</a><a href="#hospitals">{T("nav_hosp")}</a><a href="#travel">{T("nav_travel")}</a><a href="#faq">{T("nav_faq")}</a>
   </nav>
   <div class="hdr-act">
-   <label class="sr" for="lang">{S["lang_label"][0]}</label>
+   <label class="sr" for="lang">{S["lang_label"][LI]}</label>
    <select id="lang" class="lang">
-    <option value="en">English</option><option value="fr">Français</option><option value="ar">العربية</option><option value="ru">Русский</option>
+    {LANG_OPTS}
    </select>
    <a class="btn btn-p hdr-apply" href="#apply">{T("nav_apply")}</a>
   </div>
  </div>
 </header>'''
 
-hero = f'''
-<section class="hero">
- <div class="wrap hero-in">
-  <div class="hero-txt">
-   {T("hero_eb", "p", "eyebrow")}
-   {T("hero_h1", "h1")}
-   {T("hero_sub", "p", "lead")}
-   <div class="ctas"><a class="btn btn-p btn-l" href="#apply">{T("cta_apply")}{ic("arrow", "ic dir")}</a><a class="btn btn-s btn-l" href="#second">{T("cta_second")}</a></div>
-   <p class="hero-note">{ic("shield")}{T("hero_note")}</p>
-  </div>
+def uniq_ids(svg, suf):
+    ids = set(re.findall(r'\bid="([^"]+)"', svg))
+    for i in ids:
+        svg = svg.replace(f'id="{i}"', f'id="{i}{suf}"').replace(f"url(#{i})", f"url(#{i}{suf})").replace(f'href="#{i}"', f'href="#{i}{suf}"')
+    return svg
+
+def strip_text(svg):
+    return re.sub(r"<text\b.*?</text>", "", svg, flags=re.S)
+
+SLIDE_ART = [uniq_ids(ISO, "-b1"), uniq_ids(strip_text(illus.ILL["second"]()), "-b2")]
+
+def slide(n, href, h="h2"):
+    k = f"b{n}"
+    chips = "".join(f'<li>{ic("check")}{T(f"{k}_c{i}")}</li>' for i in (1, 2, 3))
+    on = " is-on" if n == 1 else ""
+    inert = "" if n == 1 else ' inert aria-hidden="true"'
+    return f'''<article class="bn-s{on}" role="group" aria-roledescription="slide" aria-label="{S["bn_slide"][LI]} {n} / 2"{inert}>
+  <div class="bn-t">{T(f"{k}_eb", "p", "eyebrow")}{T(f"{k}_h", h)}{T(f"{k}_p", "p", "lead")}
+   <ul class="bn-chips">{chips}</ul>
+   <a class="btn btn-p btn-l" href="{href}">{T(f"{k}_cta")}{ic("arrow", "ic dir")}</a>
+   <p class="hero-note">{ic("lock")}{T("form_reassure")}</p></div>
+  <div class="bn-a plate" aria-hidden="true">{SLIDE_ART[n - 1]}</div>
+ </article>'''
+
+QCARD = f'''
   <aside class="qcard" aria-label="Example quote format">
    {T("qc_ex", "p", "qc-ex")}
    {T("qc_title", "h2")}
@@ -128,6 +153,24 @@ hero = f'''
    </div>
    {T("qc_note", "p", "qc-note")}
   </aside>
+'''
+QCARD = QCARD.replace('<aside class="qcard"', '<aside class="qcard qcard-how"')
+
+hero = f'''
+<section class="hero" aria-label="Easy Clinic Center">
+ <div class="wrap">
+  <div class="bn" id="bn" role="region" aria-roledescription="carousel" aria-label="{S["bn_region"][LI]}">
+   <div class="bn-track" id="bnTrack" aria-live="off">
+    {slide(1, "#apply", "h1")}
+    {slide(2, "#second")}
+   </div>
+   <div class="bn-ctl">
+    <button type="button" class="bn-b bn-prev" id="bnPrev" aria-label="{S["bn_prev"][LI]}">{ic("arrow", "ic dir")}</button>
+    <div class="bn-dots"><button type="button" aria-label="{S["bn_slide"][LI]} 1" aria-current="true"></button><button type="button" aria-label="{S["bn_slide"][LI]} 2" aria-current="false"></button></div>
+    <button type="button" class="bn-b" id="bnNext" aria-label="{S["bn_next"][LI]}">{ic("arrow", "ic dir")}</button>
+    <button type="button" class="bn-b" id="bnPlay" aria-label="{S["bn_pause"][LI]}"><svg class="ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg></button>
+   </div>
+  </div>
  </div>
  <div class="wrap stats">
   <div><b>2020</b>{T("st1")}</div><div><b>7/7</b>{T("st2")}</div><div><b>14</b>{T("st3")}</div><div><b>4</b>{T("st4")}</div>
@@ -157,6 +200,7 @@ how = f'''
    {"".join(f'<li><span class="sn">{n}</span><div>{T(h, "h3")}{T(p, "p")}</div></li>' for n, h, p in [(1, "s1_h", "s1_p"), (2, "s2_h", "s2_p"), (3, "s3_h", "s3_p")])}
   </ol>
  </div>
+ {QCARD}
  <div class="opts2">
   <div class="opt2 a"><p class="qo-k">{T("optA")}</p>{T("optA_n", "h3")}{T("optA_d", "p")}{T("best_A", "p", "best")}</div>
   <div class="opt2 b"><p class="qo-k">{T("optB")}</p>{T("optB_n", "h3")}{T("optB_d", "p")}{T("best_B", "p", "best")}</div>
@@ -249,7 +293,7 @@ def sel(id_, key, opts, req=False, full=False):
     star = '<b class="req" aria-hidden="true">*</b>' if req else ""
     r = " required" if req else ""
     o = '<option value="" data-i="choose">Choose…</option>' if req else ""
-    o += "".join(f'<option value="{v}"{" data-i=" + chr(34) + k + chr(34) if k else ""}>{S[k][0] if k else lbl}</option>' for v, k, lbl in opts)
+    o += "".join(f'<option value="{v}"{" data-i=" + chr(34) + k + chr(34) if k else ""}>{S[k][LI] if k else lbl}</option>' for v, k, lbl in opts)
     return f'<div class="f{" full" if full else ""}"><label for="{id_}">{T(key)}{star}</label><select id="{id_}" name="{id_}"{r} aria-describedby="{id_}-e">{o}</select><p class="err" role="alert" id="{id_}-e" hidden></p></div>'
 
 def tick(id_, key, req=True):
@@ -301,6 +345,7 @@ form = f'''
   <form id="appForm" novalidate>
    {step1}{step2}{step3}{step4}
    <div class="fnav"><button type="button" class="btn btn-s" id="btnBack" hidden>{T("back")}</button><button type="button" class="btn btn-p" id="btnNext">{T("next")}</button><button type="submit" class="btn btn-p" id="btnSubmit" hidden>{T("submit")}</button></div>
+   <p class="form-reassure">{ic("lock")}{T("form_reassure")}</p>
   </form>
   <div class="result" id="result" hidden tabindex="-1">
    {ic("check", "ic big")}{T("res_h", "h3")}
@@ -650,29 +695,43 @@ input,select,textarea{accent-color:var(--accent)}
  .nav::-webkit-scrollbar{display:none}
 }
 @media(max-width:680px){.brand img{height:52px} .prog-l{font-size:.75rem} body::after{display:none}}
+
+/* ---- hero banner ---- */
+.hero{padding-block:28px 20px}
+.bn{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
+.bn-track{display:grid}
+.bn-s{grid-area:1/1;display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:center;padding:40px;opacity:0;visibility:hidden;transition:opacity .5s,visibility .5s}
+.bn-s.is-on{opacity:1;visibility:visible}
+.bn-t{display:flex;flex-direction:column;gap:16px;align-items:flex-start;min-width:0}
+.bn-a{background:var(--plate);border-radius:var(--r);padding:16px;display:grid;place-items:center;min-width:0}
+.bn-a svg{width:100%;height:auto;max-height:300px}
+.bn-chips{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:0}
+.bn-chips li{display:flex;gap:6px;align-items:center;padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:var(--bg-alt);color:var(--ink);font-size:.9rem}
+.bn-chips .ic{color:var(--leaf-ink)}
+.bn-ctl{display:flex;align-items:center;justify-content:center;gap:12px;padding:10px;border-top:1px solid var(--line)}
+.bn-b{min-width:44px;min-height:44px;border-radius:50%;border:1.5px solid var(--field-line);background:var(--surface);color:var(--navy);cursor:pointer;display:inline-grid;place-items:center}
+.bn-b:hover{border-color:var(--accent)}
+.bn-prev .ic{transform:scaleX(-1)}
+:root[dir="rtl"] .bn-prev .ic{transform:none}
+:root[dir="rtl"] .bn-prev .ic.dir{transform:scaleX(-1)}
+.bn-dots{display:flex}
+.bn-dots button{width:44px;height:44px;background:none;border:0;position:relative;cursor:pointer}
+.bn-dots button::after{content:"";position:absolute;inset:50% auto auto 50%;width:10px;height:10px;translate:-50% -50%;border-radius:50%;background:var(--field-line);transition:width .2s}
+:root[dir="rtl"] .bn-dots button::after{inset:50% 50% auto auto;translate:50% -50%}
+.bn-dots [aria-current="true"]::after{background:var(--navy);width:26px;border-radius:6px}
+.qcard-how{max-width:720px;margin:32px auto}
+.form-reassure{display:flex;gap:8px;color:var(--muted);font-size:.9rem;margin:12px 0 0}
+.form-reassure .ic{color:var(--leaf-ink);margin-top:.2em}
+@media(max-width:900px){.bn-s{grid-template-columns:1fr;padding:20px 16px;gap:16px}.bn-a{order:-1}.bn-a svg{max-height:150px}.bn-t .btn{width:100%}}
+@media(prefers-reduced-motion:reduce){.bn-s{transition:none}}
 '''
 
 JS = r'''
 (function(){
  const I18N = __I18N__;
  const root = document.documentElement;
- let lang = "en";
- const nodes = () => document.querySelectorAll("[data-i]");
- function setLang(l){
-  if(!I18N[l]) l = "en";
-  lang = l;
-  root.lang = l; root.dir = l === "ar" ? "rtl" : "ltr";
-  nodes().forEach(el => { const v = I18N[l][el.dataset.i]; if(v != null) el.innerHTML = v; });
-  document.getElementById("lang").value = l;
-  document.title = TITLE_TXT;
-  try{ localStorage.setItem("ecc-lang", l); }catch(e){}
-  document.querySelectorAll(".err:not([hidden])").forEach(e => { if(e.dataset.k) e.textContent = I18N[l][e.dataset.k]; });
- }
- document.getElementById("lang").addEventListener("change", e => {
-  const y = window.scrollY; setLang(e.target.value); window.scrollTo(0, y);
- });
- let saved = null; try{ saved = localStorage.getItem("ecc-lang"); }catch(e){}
- if(saved && saved !== "en") setLang(saved); else { root.lang = "en"; root.dir = "ltr"; }
+ let lang = root.lang;
+ document.getElementById("lang").addEventListener("change", e => { location.href = e.target.value + location.hash; });
 
  /* tabs */
  const tabs = [...document.querySelectorAll('[role="tab"]')];
@@ -801,13 +860,60 @@ JS = r'''
   const io = new IntersectionObserver(es => { es.forEach(e => e.isIntersecting ? seen.add(e.target) : seen.delete(e.target)); mbar.classList.toggle("off", seen.size > 0); });
   ["apply", "contact"].forEach(id => { const el = document.getElementById(id); if(el) io.observe(el); });
  }
+ /* banner */
+ (function(){
+  const r = document.getElementById("bn"); if(!r) return;
+  const S = [...r.querySelectorAll(".bn-s")], D = [...r.querySelectorAll(".bn-dots button")];
+  const L = document.getElementById("bnTrack"), P = document.getElementById("bnPlay");
+  let i = 0, t = null, loops = 0, user = false;
+  const rm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const T = I18N[lang] || I18N.en;
+  function go(n, byUser){
+   i = (n + S.length) % S.length;
+   S.forEach((s, k) => { const on = k === i; s.classList.toggle("is-on", on); s.inert = !on; if(on) s.removeAttribute("aria-hidden"); else s.setAttribute("aria-hidden", "true"); });
+   D.forEach((d, k) => d.setAttribute("aria-current", k === i));
+   if(byUser) L.setAttribute("aria-live", "polite");
+  }
+  function halt(){ clearInterval(t); t = null; }
+  function stop(){ halt(); L.setAttribute("aria-live", "polite"); P.setAttribute("aria-label", T.bn_play); P.classList.add("paused"); }
+  function start(){ if(t || rm || user) return; L.setAttribute("aria-live", "off"); P.setAttribute("aria-label", T.bn_pause); P.classList.remove("paused");
+   t = setInterval(() => { go(i + 1); if(i === 0 && ++loops >= 2) stop(); }, 8000); }
+  r.addEventListener("mouseenter", halt);
+  r.addEventListener("mouseleave", start);
+  r.addEventListener("focusin", halt);
+  r.addEventListener("focusout", e => { if(!r.contains(e.relatedTarget)) start(); });
+  document.getElementById("bnPrev").addEventListener("click", () => { user = true; stop(); go(i - 1, true); });
+  document.getElementById("bnNext").addEventListener("click", () => { user = true; stop(); go(i + 1, true); });
+  D.forEach((d, k) => d.addEventListener("click", () => { user = true; stop(); go(k, true); }));
+  P.addEventListener("click", () => { if(t){ user = true; stop(); } else { user = false; start(); } });
+  document.addEventListener("visibilitychange", () => document.hidden ? halt() : start());
+  r.addEventListener("keydown", e => { if(e.key === "ArrowLeft" || e.key === "ArrowRight"){ const d = (e.key === "ArrowRight") === (root.dir !== "rtl") ? 1 : -1; user = true; stop(); go(i + d, true); } });
+  if(rm) stop(); else start();
+ })();
+
  show(0);
 })();
 '''
 
 # ------------------------------------------------------------------ SEO / assets
 SITE = "https://www.easycliniccenter.com"
-META_DESC = "Personal health consultancy in Türkiye for UK patients: treatment at partner hospitals with written quotes, or an online second medical opinion from a specialist physician."
+META = {
+ "en": ("Medical Treatment in Turkey &amp; Second Opinion | Easy Clinic Center",
+        "Personal health consultancy in Türkiye for UK patients: treatment at partner hospitals with written quotes, or an online second medical opinion from a specialist physician.",
+        "JavaScript is needed for the application form.", "en_GB"),
+ "fr": ("Soins médicaux en Turquie et second avis médical | Easy Clinic Center",
+        "Conseil santé personnalisé en Türkiye : traitement dans des hôpitaux partenaires avec devis écrit, ou second avis médical en ligne rédigé par un médecin spécialiste.",
+        "JavaScript est nécessaire pour le formulaire de demande.", "fr_FR"),
+ "ar": ("العلاج في تركيا ورأي طبي ثانٍ | Easy Clinic Center",
+        "استشارات صحية شخصية في تركيا: علاج في مستشفيات شريكة بعروض أسعار مكتوبة، أو رأي طبي ثانٍ عبر الإنترنت يكتبه طبيب أخصائي.",
+        "يلزم تفعيل جافاسكربت لاستخدام نموذج الطلب.", "ar_AR"),
+ "ru": ("Лечение в Турции и второе медицинское мнение | Easy Clinic Center",
+        "Персональный медицинский консалтинг в Турции: лечение в клиниках-партнёрах с письменной сметой или онлайн-второе мнение от врача-специалиста.",
+        "Для формы заявки нужен JavaScript.", "ru_RU"),
+}
+TITLE, META_DESC, NOSCRIPT, OG_LOCALE = META[LC]
+URL = SITE + LANG_PATH[LC]
+DIR = "rtl" if LC == "ar" else "ltr"
 
 def plain(t):
     return H.unescape(re.sub(r"<[^>]+>", "", t)).strip()
@@ -826,39 +932,52 @@ def make_assets():
     og.paste(wl, ((1200 - wl.width) // 2, (630 - wl.height) // 2), wl)
     og.save(site / "og.png", optimize=True)
     (site / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n")
-    (site / "sitemap.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>{SITE}/</loc></url></urlset>\n')
+    hl = "".join(f'<xhtml:link rel="alternate" hreflang="{hreflang(l)}" href="{SITE}{LANG_PATH[l]}"/>' for l in LANGS) + f'<xhtml:link rel="alternate" hreflang="x-default" href="{SITE}/"/>'
+    urls = "".join(f"<url><loc>{SITE}{LANG_PATH[l]}</loc>{hl}</url>" for l in LANGS)
+    (site / "sitemap.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">{urls}</urlset>\n')
 
-make_assets()
+def hreflang(l):
+    return "en-GB" if l == "en" else l
+
+if LI == 0:
+    make_assets()
+
 JSONLD = json.dumps({"@context": "https://schema.org", "@graph": [
     {"@type": "Organization", "@id": SITE + "/#org", "name": "Easy Clinic Center", "url": SITE + "/",
      "logo": SITE + "/apple-touch-icon.png", "foundingDate": "2020-10-01",
      "areaServed": {"@type": "Country", "name": "United Kingdom"}, "description": META_DESC},
     {"@type": "WebSite", "@id": SITE + "/#web", "url": SITE + "/", "name": "Easy Clinic Center",
-     "publisher": {"@id": SITE + "/#org"}},
-    {"@type": "FAQPage", "mainEntity": [
-        {"@type": "Question", "name": plain(S[f"q{i}"][0]),
-         "acceptedAnswer": {"@type": "Answer", "text": plain(S[f"a{i}"][0])}} for i in range(1, 8)]},
+     "inLanguage": [hreflang(l) for l in LANGS], "publisher": {"@id": SITE + "/#org"}},
+    {"@type": "FAQPage", "url": URL, "inLanguage": hreflang(LC), "mainEntity": [
+        {"@type": "Question", "name": plain(S[f"q{i}"][LI]),
+         "acceptedAnswer": {"@type": "Answer", "text": plain(S[f"a{i}"][LI])}} for i in range(1, 8)]},
 ]}, ensure_ascii=False).replace("</", "<\\/")
-TITLE = "Medical Treatment in Turkey &amp; Second Opinion | Easy Clinic Center"
+
+ALT = "".join(f'<link rel="alternate" hreflang="{hreflang(l)}" href="{SITE}{LANG_PATH[l]}"/>\n' for l in LANGS)
+ALT += f'<link rel="alternate" hreflang="x-default" href="{SITE}/"/>'
+OG_ALT = "".join(f'<meta property="og:locale:alternate" content="{META[l][3]}"/>' for l in LANGS if l != LC)
 HEAD_SEO = f'''<meta name="description" content="{META_DESC}"/>
 <meta name="theme-color" content="#24507A"/>
-<link rel="canonical" href="{SITE}/"/>
+<link rel="canonical" href="{URL}"/>
+{ALT}
 <link rel="icon" href="/favicon.ico" sizes="any"/>
 <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Easy Clinic Center"/>
 <meta property="og:title" content="{TITLE}"/>
 <meta property="og:description" content="{META_DESC}"/>
-<meta property="og:url" content="{SITE}/"/>
+<meta property="og:url" content="{URL}"/>
 <meta property="og:image" content="{SITE}/og.png"/>
-<meta property="og:locale" content="en_GB"/>
+<meta property="og:locale" content="{OG_LOCALE}"/>{OG_ALT}
 <meta name="twitter:card" content="summary_large_image"/>
 <script type="application/ld+json">{JSONLD}</script>'''
 
-FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,500;0,600;1,500&family=Noto+Naskh+Arabic:wght@500;600&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap"/>'
+AR_FONTS = "&family=Noto+Naskh+Arabic:wght@500;600&family=Noto+Sans+Arabic:wght@400;500;600;700" if LC == "ar" else ""
+FONTS = f'<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,500;0,600;1,500{AR_FONTS}&display=swap"/>'
 
+JS_I18N = {LC: I18N[LC], "en": I18N["en"]}
 page = f'''<!doctype html>
-<html lang="en">
+<html lang="{LC}" dir="{DIR}">
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -868,16 +987,15 @@ page = f'''<!doctype html>
 <style>{CSS}</style>
 </head>
 <body>
-<noscript><p style="padding:16px;text-align:center">JavaScript is needed for the application form and the language switch.</p></noscript>
+<noscript><p style="padding:16px;text-align:center">{NOSCRIPT}</p></noscript>
 {header}
 <main id="main">{hero}{about}{how}{treat}{second}{hospitals}{travel}{faq}{form}</main>
 {footer}
-<script>const TITLE_TXT = {json.dumps(H.unescape(TITLE))};
-{JS.replace("__I18N__", json.dumps(I18N, ensure_ascii=False))}</script>
+<script>{JS.replace("__I18N__", json.dumps(JS_I18N, ensure_ascii=False))}</script>
 </body>
 </html>
 '''
-out = ROOT / "site" / "index.html"
+out = ROOT / "site" / LANG_PATH[LC].strip("/") / "index.html"
 out.parent.mkdir(parents=True, exist_ok=True)
 out.write_text(page)
-print(len(page) // 1024, "KB")
+print(LC, len(page) // 1024, "KB")
