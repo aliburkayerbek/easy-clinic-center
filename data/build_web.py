@@ -96,7 +96,10 @@ def check_li(key):
 
 LANG_NAMES = {"en": "English", "fr": "Français", "ar": "العربية", "ru": "Русский"}
 LANG_PATH = {"en": "/", "fr": "/fr/", "ar": "/ar/", "ru": "/ru/"}
-LANG_OPTS = "".join(f'<option value="{LANG_PATH[l]}"{" selected" if l == LC else ""}>{LANG_NAMES[l]}</option>' for l in LANGS)
+REL = "" if LC == "en" else "../"   # pages live at /, /fr/, /ar/, /ru/ - keep links relative so any base path works
+def rel_href(l):
+    return (REL + LANG_PATH[l].strip("/") + ("/" if l != "en" else "")) or "./"
+LANG_OPTS = "".join(f'<option value="{rel_href(l)}"{" selected" if l == LC else ""}>{LANG_NAMES[l]}</option>' for l in LANGS)
 
 header = f'''
 <a class="skip" href="#main">{S["skip"][LI]}</a>
@@ -931,6 +934,7 @@ def make_assets():
     wl = wl.resize((round(wl.width * 420 / wl.height), 420), Image.LANCZOS)
     og.paste(wl, ((1200 - wl.width) // 2, (630 - wl.height) // 2), wl)
     og.save(site / "og.png", optimize=True)
+    (site / ".nojekyll").write_text("")
     (site / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n")
     hl = "".join(f'<xhtml:link rel="alternate" hreflang="{hreflang(l)}" href="{SITE}{LANG_PATH[l]}"/>' for l in LANGS) + f'<xhtml:link rel="alternate" hreflang="x-default" href="{SITE}/"/>'
     urls = "".join(f"<url><loc>{SITE}{LANG_PATH[l]}</loc>{hl}</url>" for l in LANGS)
@@ -960,8 +964,8 @@ HEAD_SEO = f'''<meta name="description" content="{META_DESC}"/>
 <meta name="theme-color" content="#24507A"/>
 <link rel="canonical" href="{URL}"/>
 {ALT}
-<link rel="icon" href="/favicon.ico" sizes="any"/>
-<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+<link rel="icon" href="{REL}favicon.ico" sizes="any"/>
+<link rel="apple-touch-icon" href="{REL}apple-touch-icon.png"/>
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Easy Clinic Center"/>
 <meta property="og:title" content="{TITLE}"/>
