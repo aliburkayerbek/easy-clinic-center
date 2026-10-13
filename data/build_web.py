@@ -1,5 +1,5 @@
 """Builds the Easy Clinic Center website (EN default, FR / AR (RTL) / RU) as one HTML page."""
-import json, base64, pathlib, html as H
+import json, base64, pathlib, re, html as H
 import illus
 from web_strings import S
 
@@ -22,7 +22,7 @@ def web_logo(name):
     """Downscale the brand logo to 300 px wide for embedding."""
     from PIL import Image
     im = Image.open(ROOT / "brand" / name)
-    im = im.resize((300, round(im.height * 300 / im.width)), Image.LANCZOS)
+    im = im.resize((240, round(im.height * 240 / im.width)), Image.LANCZOS)
     out = BUILD / f"web_{name}"
     im.save(out, optimize=True)
     return out
@@ -243,19 +243,19 @@ def fld(id_, key, typ="text", req=False, auto="", extra="", full=False, hint=Non
         ctl = f'<textarea id="{id_}" name="{id_}" rows="4"{r}{desc}></textarea>'
     else:
         ctl = f'<input id="{id_}" name="{id_}" type="{typ}"{r}{a}{desc}{extra}/>'
-    return f'<div class="f{" full" if full else ""}"><label for="{id_}">{T(key)}{star}</label>{h}{ctl}<p class="err" id="{id_}-e" hidden></p></div>'
+    return f'<div class="f{" full" if full else ""}"><label for="{id_}">{T(key)}{star}</label>{h}{ctl}<p class="err" role="alert" id="{id_}-e" hidden></p></div>'
 
 def sel(id_, key, opts, req=False, full=False):
     star = '<b class="req" aria-hidden="true">*</b>' if req else ""
     r = " required" if req else ""
     o = '<option value="" data-i="choose">Choose…</option>' if req else ""
     o += "".join(f'<option value="{v}"{" data-i=" + chr(34) + k + chr(34) if k else ""}>{S[k][0] if k else lbl}</option>' for v, k, lbl in opts)
-    return f'<div class="f{" full" if full else ""}"><label for="{id_}">{T(key)}{star}</label><select id="{id_}" name="{id_}"{r} aria-describedby="{id_}-e">{o}</select><p class="err" id="{id_}-e" hidden></p></div>'
+    return f'<div class="f{" full" if full else ""}"><label for="{id_}">{T(key)}{star}</label><select id="{id_}" name="{id_}"{r} aria-describedby="{id_}-e">{o}</select><p class="err" role="alert" id="{id_}-e" hidden></p></div>'
 
 def tick(id_, key, req=True):
     star = '<b class="req" aria-hidden="true">*</b>' if req else ""
     r = " required" if req else ""
-    return f'<div class="f full tk"><label class="chk"><input type="checkbox" id="{id_}" name="{id_}"{r} aria-describedby="{id_}-e"/><span>{T(key)}{star}</span></label><p class="err" id="{id_}-e" hidden></p></div>'
+    return f'<div class="f full tk"><label class="chk"><input type="checkbox" id="{id_}" name="{id_}"{r} aria-describedby="{id_}-e"/><span>{T(key)}{star}</span></label><p class="err" role="alert" id="{id_}-e" hidden></p></div>'
 
 CONDS = ["c_diab", "c_bp", "c_heart", "c_blood", "c_allergy", "c_surgery", "c_smoke", "c_preg"]
 step1 = f'''<fieldset class="step" data-step="1"><legend>{T("g1")}</legend><div class="fg">
@@ -286,7 +286,7 @@ step3 = f'''<fieldset class="step" data-step="3" hidden><legend>{T("g3")}</legen
 step4 = f'''<fieldset class="step" data-step="4" hidden><legend>{T("g4")}</legend><div class="fg">
  <div class="f full" role="radiogroup" aria-labelledby="quote-l"><p class="lbl" id="quote-l">{T("quote")}<b class="req" aria-hidden="true">*</b></p>
   <div class="radios">{"".join(f'<label class="rad"><input type="radio" name="quote" value="{v}" id="quote-{v}"{" required" if v == "A" else ""}/><span>{T(k)}</span></label>' for v, k in [("A", "q_a"), ("B", "q_b"), ("both", "q_both")])}</div>
-  <p class="err" id="quote-e" hidden></p></div>
+  <p class="err" role="alert" id="quote-e" hidden></p></div>
  {fld("dates", "dates")}{fld("comp", "comp", "number", extra=' inputmode="numeric" min="0" max="6"')}
  {tick("cons1", "cons1")}{tick("cons2", "cons2")}{tick("cons3", "cons3")}
 </div></fieldset>'''
@@ -617,6 +617,39 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent); outline:none
  .mbar .btn{width:100%}
  .mbar.off{display:none}
 }
+
+/* ---- design review fixes ---- */
+:root{--field-line:#6B8798; --focus:#0F6F80}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--field-line:#5E7A8E; --focus:#7FE3EF}}
+:root[data-theme="dark"]{--field-line:#5E7A8E; --focus:#7FE3EF}
+.brand img{height:64px}
+:focus-visible{outline:3px solid var(--focus); outline-offset:3px}
+.btn-p:focus-visible{outline-color:var(--ink)}
+input[type=text],input[type=email],input[type=tel],input[type=date],input[type=number],select,textarea,.lang{border-color:var(--field-line)}
+input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--focus); outline-offset:1px}
+input,select,textarea{accent-color:var(--accent)}
+::placeholder{color:var(--muted); opacity:1}
+.so-steps li.ai{background:linear-gradient(150deg,#0F6F80,#0E8576)}
+.so-steps li.ai p,.so-steps li.ai h3{color:#fff}
+.nav a{padding-block:12px}
+.city li a{min-height:44px; padding-inline:6px; display:inline-flex; align-items:center}
+.nhs,.more,.lang{min-height:44px}
+.req{color:#B93A2C}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .req{color:#F49A8C}}
+:root[data-theme="dark"] .req{color:#F49A8C}
+.copy{color:#8FA9B9}
+.facts dt{font-size:.75rem}
+.qo-k,.who{font-size:.78rem}
+.faq summary:focus-visible{outline-offset:-2px}
+:root[lang="ar"] h1,:root[lang="ar"] h2,:root[lang="ar"] h3{line-height:1.45}
+:root[lang="ar"] .lead,:root[lang="ar"] .lead2{line-height:1.85}
+:root[lang="ar"] .eyebrow,:root[lang="ar"] .qo-k,:root[lang="ar"] .who{font-size:.9rem}
+@media(max-width:1020px){
+ .nav{scrollbar-width:none; -webkit-mask-image:linear-gradient(to right,#000 90%,transparent); mask-image:linear-gradient(to right,#000 90%,transparent)}
+ :root[dir=rtl] .nav{-webkit-mask-image:linear-gradient(to left,#000 90%,transparent); mask-image:linear-gradient(to left,#000 90%,transparent)}
+ .nav::-webkit-scrollbar{display:none}
+}
+@media(max-width:680px){.brand img{height:52px} .prog-l{font-size:.75rem} body::after{display:none}}
 '''
 
 JS = r'''
@@ -631,7 +664,7 @@ JS = r'''
   root.lang = l; root.dir = l === "ar" ? "rtl" : "ltr";
   nodes().forEach(el => { const v = I18N[l][el.dataset.i]; if(v != null) el.innerHTML = v; });
   document.getElementById("lang").value = l;
-  document.title = "Easy Clinic Center";
+  document.title = TITLE_TXT;
   try{ localStorage.setItem("ecc-lang", l); }catch(e){}
   document.querySelectorAll(".err:not([hidden])").forEach(e => { if(e.dataset.k) e.textContent = I18N[l][e.dataset.k]; });
  }
@@ -772,6 +805,56 @@ JS = r'''
 })();
 '''
 
+# ------------------------------------------------------------------ SEO / assets
+SITE = "https://www.easycliniccenter.com"
+META_DESC = "Personal health consultancy in Türkiye for UK patients: treatment at partner hospitals with written quotes, or an online second medical opinion from a specialist physician."
+
+def plain(t):
+    return H.unescape(re.sub(r"<[^>]+>", "", t)).strip()
+
+def make_assets():
+    from PIL import Image
+    site = ROOT / "site"
+    logo = Image.open(ROOT / "brand" / "logo.png").convert("RGBA")
+    sq = Image.new("RGBA", (max(logo.size),) * 2, (255, 255, 255, 255))
+    sq.paste(logo, ((sq.width - logo.width) // 2, (sq.height - logo.height) // 2), logo)
+    sq.resize((180, 180), Image.LANCZOS).convert("RGB").save(site / "apple-touch-icon.png")
+    sq.resize((32, 32), Image.LANCZOS).save(site / "favicon.ico", sizes=[(32, 32)])
+    og = Image.new("RGB", (1200, 630), (36, 80, 122))
+    wl = Image.open(ROOT / "brand" / "logo_white.png").convert("RGBA")
+    wl = wl.resize((round(wl.width * 420 / wl.height), 420), Image.LANCZOS)
+    og.paste(wl, ((1200 - wl.width) // 2, (630 - wl.height) // 2), wl)
+    og.save(site / "og.png", optimize=True)
+    (site / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n")
+    (site / "sitemap.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>{SITE}/</loc></url></urlset>\n')
+
+make_assets()
+JSONLD = json.dumps({"@context": "https://schema.org", "@graph": [
+    {"@type": "Organization", "@id": SITE + "/#org", "name": "Easy Clinic Center", "url": SITE + "/",
+     "logo": SITE + "/apple-touch-icon.png", "foundingDate": "2020-10-01",
+     "areaServed": {"@type": "Country", "name": "United Kingdom"}, "description": META_DESC},
+    {"@type": "WebSite", "@id": SITE + "/#web", "url": SITE + "/", "name": "Easy Clinic Center",
+     "publisher": {"@id": SITE + "/#org"}},
+    {"@type": "FAQPage", "mainEntity": [
+        {"@type": "Question", "name": plain(S[f"q{i}"][0]),
+         "acceptedAnswer": {"@type": "Answer", "text": plain(S[f"a{i}"][0])}} for i in range(1, 8)]},
+]}, ensure_ascii=False).replace("</", "<\\/")
+TITLE = "Medical Treatment in Turkey &amp; Second Opinion | Easy Clinic Center"
+HEAD_SEO = f'''<meta name="description" content="{META_DESC}"/>
+<meta name="theme-color" content="#24507A"/>
+<link rel="canonical" href="{SITE}/"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Easy Clinic Center"/>
+<meta property="og:title" content="{TITLE}"/>
+<meta property="og:description" content="{META_DESC}"/>
+<meta property="og:url" content="{SITE}/"/>
+<meta property="og:image" content="{SITE}/og.png"/>
+<meta property="og:locale" content="en_GB"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<script type="application/ld+json">{JSONLD}</script>'''
+
 FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,500;0,600;1,500&family=Noto+Naskh+Arabic:wght@500;600&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap"/>'
 
 page = f'''<!doctype html>
@@ -779,16 +862,18 @@ page = f'''<!doctype html>
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Easy Clinic Center</title>
-<meta name="description" content="Personal health consultancy in Türkiye: treatment at partner hospitals and AI-supported second medical opinions."/>
+<title>{TITLE}</title>
+{HEAD_SEO}
 {FONTS}
 <style>{CSS}</style>
 </head>
 <body>
+<noscript><p style="padding:16px;text-align:center">JavaScript is needed for the application form and the language switch.</p></noscript>
 {header}
 <main id="main">{hero}{about}{how}{treat}{second}{hospitals}{travel}{faq}{form}</main>
 {footer}
-<script>{JS.replace("__I18N__", json.dumps(I18N, ensure_ascii=False))}</script>
+<script>const TITLE_TXT = {json.dumps(H.unescape(TITLE))};
+{JS.replace("__I18N__", json.dumps(I18N, ensure_ascii=False))}</script>
 </body>
 </html>
 '''
