@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" width="100%">
+<defs>
+ <linearGradient id="gA8" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3DD5E6"/><stop offset="1" stop-color="#1EE6CF"/></linearGradient>
+ <linearGradient id="gG8" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#B5E07A"/><stop offset="1" stop-color="#8DC63F"/></linearGradient>
+ <linearGradient id="gN8" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2F6A9C"/><stop offset="1" stop-color="#24507A"/></linearGradient>
+ <radialGradient id="gel8" cx="0.38" cy="0.32" r="0.75"><stop offset="0" stop-color="#FFFFFF"/><stop offset="0.45" stop-color="#D9F6F9"/><stop offset="1" stop-color="#8FD9E4"/></radialGradient>
+</defs>
+<rect x="0" y="0" width="240" height="180" rx="18" fill="#E8F9FB"/>
+<circle cx="205" cy="28" r="40" fill="#FFFFFF" opacity=".55"/><circle cx="30" cy="160" r="34" fill="#FFFFFF" opacity=".5"/>
+
+<g transform="translate(28 34)"><rect width="70" height="92" rx="8" fill="#FFFFFF" stroke="#24507A" stroke-width="2"/>
+<rect x="10" y="12" width="50" height="30" rx="4" fill="#DDEFF4"/><path d="M14 36 l10 -10 l8 8 l8 -12 l16 18" fill="none" stroke="#22AFC4" stroke-width="2"/>
+<line x1="10" y1="54" x2="60" y2="54" stroke="#C9D7DF" stroke-width="3"/><line x1="10" y1="64" x2="52" y2="64" stroke="#C9D7DF" stroke-width="3"/><line x1="10" y1="74" x2="56" y2="74" stroke="#C9D7DF" stroke-width="3"/></g>
+<path d="M104 80 L128 80" stroke="#22AFC4" stroke-width="3" stroke-dasharray="4 4"/><path d="M124 74 l6 6 l-6 6" fill="none" stroke="#22AFC4" stroke-width="3" stroke-linecap="round"/>
+<g transform="translate(134 50)"><rect width="60" height="60" rx="12" fill="#4FD9E6"/><rect x="16" y="16" width="28" height="28" rx="5" fill="none" stroke="#fff" stroke-width="2.4"/>
+<line x1="20" y1="4" x2="20" y2="12" stroke="#fff" stroke-width="2.4"/><line x1="20" y1="48" x2="20" y2="56" stroke="#fff" stroke-width="2.4"/><line x1="30" y1="4" x2="30" y2="12" stroke="#fff" stroke-width="2.4"/><line x1="30" y1="48" x2="30" y2="56" stroke="#fff" stroke-width="2.4"/><line x1="40" y1="4" x2="40" y2="12" stroke="#fff" stroke-width="2.4"/><line x1="40" y1="48" x2="40" y2="56" stroke="#fff" stroke-width="2.4"/>
+<text x="30" y="35" text-anchor="middle" font-family="Inter" font-size="11" font-weight="700" fill="#fff">AI</text></g>
+<path d="M164 116 L164 132" stroke="#22AFC4" stroke-width="3" stroke-dasharray="4 4"/>
+<g transform="translate(164 150)"><circle r="18" fill="#2B5E8C"/><circle cy="-5" r="6" fill="#fff"/><path d="M-10 10 c2 -9 18 -9 20 0" fill="#fff"/></g>
+<g transform="translate(64 148)"><rect x="-26" y="-12" width="52" height="24" rx="12" fill="#8DC63F"/><text y="4" text-anchor="middle" font-family="Inter" font-size="9" font-weight="700" fill="#fff">REPORT</text></g></svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" width="100%">
+<defs>
+ <linearGradient id="gA6" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3DD5E6"/><stop offset="1" stop-color="#1EE6CF"/></linearGradient>
+ <linearGradient id="gG6" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#B5E07A"/><stop offset="1" stop-color="#8DC63F"/></linearGradient>
+ <linearGradient id="gN6" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2F6A9C"/><stop offset="1" stop-color="#24507A"/></linearGradient>
+ <radialGradient id="gel6" cx="0.38" cy="0.32" r="0.75"><stop offset="0" stop-color="#FFFFFF"/><stop offset="0.45" stop-color="#D9F6F9"/><stop offset="1" stop-color="#8FD9E4"/></radialGradient>
+</defs>
+<rect x="0" y="0" width="240" height="180" rx="18" fill="#E8F9FB"/>
+<circle cx="205" cy="28" r="40" fill="#FFFFFF" opacity=".55"/><circle cx="30" cy="160" r="34" fill="#FFFFFF" opacity=".5"/>
+
+<rect x="20" y="112" width="200" height="60" fill="#F6C9C2" opacity=".55"/>
+<path d="M20 112 C60 104 80 116 120 108 C160 100 180 114 220 108 L220 120 L20 120 Z" fill="#F2A99F" opacity=".7"/>
+<path d="M92 34 C84 36 80 48 84 62 C88 76 90 86 104 86 L136 86 C150 86 152 76 156 62 C160 48 156 36 148 34 C140 32 132 40 120 40 C108 40 100 32 92 34 Z" fill="#FFFFFF" stroke="#24507A" stroke-width="2.2"/>
+<path d="M98 46 c4 -6 10 -6 14 -2" fill="none" stroke="#3DD5E6" stroke-width="3" stroke-linecap="round"/>
+<rect x="108" y="86" width="24" height="18" rx="3" fill="#C9D7DF" stroke="#24507A" stroke-width="1.8"/>
+<path d="M110 104 L130 104 L128 160 L120 170 L112 160 Z" fill="#2B5E8C"/>
+<path d="M110 112 L130 108" stroke="#3DD5E6" stroke-width="2.2"/><path d="M110 121 L130 117" stroke="#3DD5E6" stroke-width="2.2"/><path d="M110 130 L130 126" stroke="#3DD5E6" stroke-width="2.2"/><path d="M110 139 L130 135" stroke="#3DD5E6" stroke-width="2.2"/><path d="M110 148 L130 144" stroke="#3DD5E6" stroke-width="2.2"/><path d="M110 157 L130 153" stroke="#3DD5E6" stroke-width="2.2"/>
+<g transform="translate(186 50)"><circle r="16" fill="#8DC63F"/><path d="M-7 0 l5 5 l9 -10" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="52" y="72" text-anchor="middle" font-family="Inter" font-size="9" font-weight="700" fill="#24507A">CROWN</text>
+<text x="52" y="100" text-anchor="middle" font-family="Inter" font-size="9" font-weight="700" fill="#24507A">ABUTMENT</text>
+<text x="52" y="146" text-anchor="middle" font-family="Inter" font-size="9" font-weight="700" fill="#24507A">IMPLANT</text>
+<g stroke="#24507A" stroke-width="1" opacity=".5"><line x1="76" y1="69" x2="88" y2="62"/><line x1="82" y1="97" x2="106" y2="95"/><line x1="72" y1="143" x2="108" y2="135"/></g></svg>

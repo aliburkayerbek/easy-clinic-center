@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" width="100%">
+<defs>
+ <linearGradient id="gA0" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3DD5E6"/><stop offset="1" stop-color="#1EE6CF"/></linearGradient>
+ <linearGradient id="gG0" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#B5E07A"/><stop offset="1" stop-color="#8DC63F"/></linearGradient>
+ <linearGradient id="gN0" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2F6A9C"/><stop offset="1" stop-color="#24507A"/></linearGradient>
+ <radialGradient id="gel0" cx="0.38" cy="0.32" r="0.75"><stop offset="0" stop-color="#FFFFFF"/><stop offset="0.45" stop-color="#D9F6F9"/><stop offset="1" stop-color="#8FD9E4"/></radialGradient>
+</defs>
+<rect x="0" y="0" width="240" height="180" rx="18" fill="#E8F9FB"/>
+<circle cx="205" cy="28" r="40" fill="#FFFFFF" opacity=".55"/><circle cx="30" cy="160" r="34" fill="#FFFFFF" opacity=".5"/>
+
+<ellipse cx="118" cy="146" rx="70" ry="9" fill="#24507A" opacity=".10"/>
+<path d="M58 132 C52 92 82 52 118 52 C154 52 184 92 178 132 C176 142 160 146 118 146 C76 146 60 142 58 132 Z" fill="#C7F1F6" stroke="#22AFC4" stroke-width="2.5"/>
+<path d="M84 84 C92 70 104 64 116 64" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" opacity=".9"/>
+<path d="M66 128 C90 136 146 136 170 128" fill="none" stroke="#22AFC4" stroke-width="1.5" opacity=".6"/>
+<g transform="translate(26 38)"><rect width="16" height="96" rx="3" fill="#FFFFFF" stroke="#24507A" stroke-width="1.5"/>
+<line x1="0" y1="8" x2="11" y2="8" stroke="#24507A" stroke-width="1.2"/><line x1="0" y1="16" x2="8" y2="16" stroke="#24507A" stroke-width="1.2"/><line x1="0" y1="24" x2="11" y2="24" stroke="#24507A" stroke-width="1.2"/><line x1="0" y1="32" x2="8" y2="32" stroke="#24507A" stroke-width="1.2"/><line x1="0" y1="40" x2="11" y2="40" stroke="#24507A" stroke-width="1.2"/><line x1="0" y1="48" x2="8" y2="48" stroke="#24507A" stroke-width="1.2"/><line x1="0" y1="56" x2="11" y2="56" stroke="#24507A" stroke-width="1.2"/><line x1="0" y1="64" x2="8" y2="64" stroke="#24507A" stroke-width="1.2"/><line x1="0" y1="72" x2="11" y2="72" stroke="#24507A" stroke-width="1.2"/><line x1="0" y1="80" x2="8" y2="80" stroke="#24507A" stroke-width="1.2"/><line x1="0" y1="88" x2="11" y2="88" stroke="#24507A" stroke-width="1.2"/></g>
+<g transform="translate(188 46)"><circle r="16" fill="#8DC63F"/><path d="M-7 0 l5 5 l9 -10" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
