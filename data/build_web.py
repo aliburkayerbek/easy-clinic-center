@@ -247,7 +247,7 @@ second = f'''
   <div class="plate so-ill" aria-hidden="true">{illus.ILL["second"]()}</div>
  </div>
  <ol class="so-steps">
-  {"".join(f'<li class="{c}"><span class="sn">{n}</span>{ic(i)}{T(h, "h3")}{T(p, "p")}</li>' for n, i, h, p, c in [(1, "upload", "so1_h", "so1_p", ""), (2, "ai", "so2_h", "so2_p", "ai"), (3, "steth", "so3_h", "so3_p", ""), (4, "report", "so4_h", "so4_p", "")])}
+  {"".join(f'<li class="{c}"><span class="sn">{n}</span>{ic(i)}{T(h, "h3")}{T(p, "p")}</li>' for n, i, h, p, c in [(1, "upload", "so1_h", "so1_p", ""), (2, "doc", "so2_h", "so2_p", ""), (3, "steth", "so3_h", "so3_p", "ai"), (4, "report", "so4_h", "so4_p", "")])}
  </ol>
  <div class="dodont2"><p class="d1">{T("so_do")}</p><p class="d2">{T("so_dont")}</p></div>
  <a class="btn btn-p btn-l" href="#apply">{T("cta_second")}{ic("arrow", "ic dir")}</a>

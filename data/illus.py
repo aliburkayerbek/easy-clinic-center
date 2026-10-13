@@ -117,9 +117,7 @@ def second_opinion():
 <rect x="10" y="12" width="50" height="30" rx="4" fill="#DDEFF4"/><path d="M14 36 l10 -10 l8 8 l8 -12 l16 18" fill="none" stroke="{CY}" stroke-width="2"/>
 <line x1="10" y1="54" x2="60" y2="54" stroke="#C9D7DF" stroke-width="3"/><line x1="10" y1="64" x2="52" y2="64" stroke="#C9D7DF" stroke-width="3"/><line x1="10" y1="74" x2="56" y2="74" stroke="#C9D7DF" stroke-width="3"/></g>
 <path d="M104 80 L128 80" stroke="{CY}" stroke-width="3" stroke-dasharray="4 4"/><path d="M124 74 l6 6 l-6 6" fill="none" stroke="{CY}" stroke-width="3" stroke-linecap="round"/>
-<g transform="translate(134 50)"><rect width="60" height="60" rx="12" fill="#4FD9E6"/><rect x="16" y="16" width="28" height="28" rx="5" fill="none" stroke="#fff" stroke-width="2.4"/>
-{"".join(f'<line x1="{20+i*10}" y1="4" x2="{20+i*10}" y2="12" stroke="#fff" stroke-width="2.4"/><line x1="{20+i*10}" y1="48" x2="{20+i*10}" y2="56" stroke="#fff" stroke-width="2.4"/>' for i in range(3))}
-<text x="30" y="35" text-anchor="middle" font-family="Inter" font-size="11" font-weight="700" fill="#fff">AI</text></g>
+<g transform="translate(134 50)"><rect width="60" height="60" rx="12" fill="#4FD9E6"/><rect x="25" y="14" width="10" height="32" rx="3" fill="#fff"/><rect x="14" y="25" width="32" height="10" rx="3" fill="#fff"/></g>
 <path d="M164 116 L164 132" stroke="{CY}" stroke-width="3" stroke-dasharray="4 4"/>
 <g transform="translate(164 150)"><circle r="18" fill="#2B5E8C"/><circle cy="-5" r="6" fill="#fff"/><path d="M-10 10 c2 -9 18 -9 20 0" fill="#fff"/></g>
 <g transform="translate(64 148)"><rect x="-26" y="-12" width="52" height="24" rx="12" fill="{GR}"/><text y="4" text-anchor="middle" font-family="Inter" font-size="9" font-weight="700" fill="#fff">REPORT</text></g>''')

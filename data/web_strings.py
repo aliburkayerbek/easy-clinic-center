@@ -176,7 +176,7 @@ S = {
 "t_holly_f3": ("Immediately", "Immédiate", "فورًا", "Сразу"),
 
 "t_second": ("Second medical opinion", "Second avis médical", "الرأي الطبي الثاني", "Второе медицинское мнение"),
-"t_second_d": ("An independent specialist opinion on your diagnosis or treatment plan, prepared with our AI-supported system and delivered as a written report. No travel needed.", "Un avis indépendant de spécialiste sur votre diagnostic ou votre plan de traitement, préparé avec notre système assisté par IA et remis sous forme de rapport écrit. Sans voyage.", "رأي مستقل من أخصائي حول تشخيصك أو خطة علاجك، يُعدّ بمساعدة نظامنا المدعوم بالذكاء الاصطناعي ويُسلَّم في تقرير مكتوب، دون الحاجة إلى السفر.", "Независимое мнение специалиста о диагнозе или плане лечения, подготовленное с помощью нашей системы на базе ИИ, в виде письменного заключения. Без поездки."),
+"t_second_d": ("An independent specialist opinion on your diagnosis or treatment plan, written by a specialist physician and delivered as a written report. No travel needed.", "Un avis indépendant de médecin spécialiste sur votre diagnostic ou votre plan de traitement, remis sous forme de rapport écrit. Sans voyage.", "رأي مستقل من طبيب أخصائي حول تشخيصك أو خطة علاجك، يُسلَّم في تقرير مكتوب، دون الحاجة إلى السفر.", "Независимое мнение врача-специалиста о диагнозе или плане лечения в виде письменного заключения. Без поездки."),
 "t_second_w1": ("A new or serious diagnosis", "Un diagnostic récent ou grave", "تشخيص جديد أو خطير", "Новый или серьёзный диагноз"),
 "t_second_w2": ("An operation you are unsure about", "Une opération dont vous doutez", "عملية جراحية لست متأكدًا منها", "Операция, в которой вы сомневаетесь"),
 
@@ -189,7 +189,7 @@ S = {
 "ch3": ("Every year: full report", "Chaque année : rapport complet", "كل سنة: تقرير شامل", "Ежегодно: полный отчёт"),
 
 # ---------- second opinion section
-"so_eb": ("AI-supported second opinion", "Second avis assisté par IA", "رأي طبي ثانٍ بدعم الذكاء الاصطناعي", "Второе мнение с поддержкой ИИ"),
+"so_eb": ("Physician second opinion", "Second avis d’un médecin", "رأي طبي ثانٍ من طبيب أخصائي", "Второе мнение врача-специалиста"),
 "so_h2": ("A specialist's opinion, <em>without travelling</em>", "L’avis d’un spécialiste, <em>sans vous déplacer</em>", "رأي الأخصائي <em>دون سفر</em>", "Мнение специалиста <em>без поездки</em>"),
 "so_p": ("We put your case to a specialist physician and report the answer back to you in writing. Lengthy one-to-one appointments are not needed; a video call is arranged only if the physician considers it necessary.",
          "Nous soumettons votre dossier à un médecin spécialiste et vous transmettons sa réponse par écrit. Pas de longues consultations individuelles : un appel vidéo n’est organisé que si le médecin le juge nécessaire.",
@@ -197,14 +197,14 @@ S = {
          "Мы передаём ваш случай врачу-специалисту и присылаем вам его ответ письменно. Длительные очные консультации не нужны; видеозвонок назначается, только если врач сочтёт это необходимым."),
 "so1_h": ("Upload", "Envoi", "رفع الملفات", "Загрузка"),
 "so1_p": ("Reports, imaging (CD/DICOM), lab results and your current treatment plan.", "Comptes rendus, imagerie (CD/DICOM), analyses et plan de traitement actuel.", "التقارير وصور الأشعة (CD/DICOM) والتحاليل وخطة علاجك الحالية.", "Заключения, снимки (CD/DICOM), анализы и текущий план лечения."),
-"so2_h": ("AI-assisted summary", "Synthèse assistée par IA", "ملخص بمساعدة الذكاء الاصطناعي", "Сводка с помощью ИИ"),
-"so2_p": ("Our system organises your files and lists the key clinical questions.", "Notre système organise vos documents et liste les questions cliniques clés.", "ينظّم نظامنا ملفاتك ويحدد الأسئلة السريرية الأساسية.", "Система упорядочивает документы и выделяет ключевые клинические вопросы."),
+"so2_h": ("File preparation", "Préparation du dossier", "تجهيز الملف", "Подготовка файла"),
+"so2_p": ("Our team organises your files and lists the key clinical questions.", "Notre équipe organise vos documents et dresse la liste des questions cliniques clés.", "يرتّب فريقنا ملفاتك ويحدد الأسئلة السريرية الأساسية.", "Наша команда упорядочивает файлы и формулирует ключевые клинические вопросы."),
 "so3_h": ("Specialist review", "Examen par un spécialiste", "مراجعة الأخصائي", "Оценка специалиста"),
 "so3_p": ("A specialist physician reviews the summary together with your original files.", "Un médecin spécialiste étudie la synthèse avec vos documents originaux.", "يدرس الطبيب الأخصائي الملخص مع ملفاتك الأصلية.", "Врач-специалист изучает сводку вместе с исходными документами."),
 "so4_h": ("Written report", "Rapport écrit", "تقرير مكتوب", "Письменное заключение"),
 "so4_p": ("You receive the evaluation and treatment options in plain language.", "Vous recevez l’évaluation et les options de traitement en langage clair.", "تتلقى التقييم وخيارات العلاج بلغة واضحة.", "Вы получаете оценку и варианты лечения понятным языком."),
-"so_do": ("<b>What AI does:</b> organises and translates documents, summarises your history and highlights what the specialist needs to see.", "<b>Ce que fait l’IA :</b> elle organise et traduit les documents, résume vos antécédents et met en avant l’essentiel pour le spécialiste.", "<b>ما يفعله الذكاء الاصطناعي:</b> ينظّم المستندات ويترجمها، ويلخّص تاريخك الطبي، ويبرز ما يحتاج الأخصائي إلى رؤيته.", "<b>Что делает ИИ:</b> упорядочивает и переводит документы, обобщает анамнез и выделяет главное для специалиста."),
-"so_dont": ("<b>What AI does not do:</b> diagnose or recommend treatment. Every medical opinion is written by a licensed specialist physician.", "<b>Ce que l’IA ne fait pas :</b> poser un diagnostic ou recommander un traitement. Chaque avis médical est rédigé par un médecin spécialiste diplômé.", "<b>ما لا يفعله:</b> لا يشخّص ولا يوصي بعلاج، فكل رأي طبي يكتبه طبيب أخصائي مرخّص.", "<b>Чего ИИ не делает:</b> не ставит диагноз и не назначает лечение. Каждое заключение пишет лицензированный врач-специалист."),
+"so_do": ("<b>Who gives the opinion:</b> a licensed specialist physician reviews your original files and writes your report.", "<b>Qui donne l’avis :</b> un médecin spécialiste diplômé examine vos documents d’origine et rédige votre rapport.", "<b>من يقدّم الرأي:</b> طبيب أخصائي مرخّص يراجع ملفاتك الأصلية ويكتب تقريرك.", "<b>Кто даёт заключение:</b> лицензированный врач-специалист изучает ваши исходные документы и составляет отчёт."),
+"so_dont": ("<b>What it is not:</b> not an emergency service and not a substitute for an in-person examination. In an emergency, call your local emergency number.", "<b>Ce que ce n’est pas :</b> un service d’urgence ou un remplacement d’un examen en personne. En cas d’urgence, appelez le numéro d’urgence local.", "<b>ما لا يقدّمه:</b> ليس خدمة طوارئ ولا بديلًا عن الفحص الحضوري. في الحالات الطارئة اتصل برقم الطوارئ المحلي.", "<b>Чем это не является:</b> это не экстренная помощь и не замена очного осмотра. В экстренной ситуации звоните в местную службу скорой помощи."),
 
 # ---------- hospitals
 "h_eb": ("Our solution partners", "Nos partenaires", "شركاؤنا", "Наши партнёры"),
@@ -249,8 +249,8 @@ S = {
 "a2": ("Option A includes treatment, flights, accommodation and transfers. Option B is the treatment price only; travel services can be added.", "L’option A comprend traitement, vols, hébergement et transferts. L’option B correspond au traitement seul ; les services de voyage peuvent être ajoutés.", "يشمل الخيار أ العلاج والطيران والإقامة والتنقلات، أما الخيار ب فهو سعر العلاج فقط مع إمكانية إضافة خدمات السفر.", "Вариант A включает лечение, перелёт, проживание и трансферы. Вариант B: только лечение, услуги поездки можно добавить."),
 "q3": ("How is the final price decided?", "Comment le prix final est-il fixé ?", "كيف يُحدَّد السعر النهائي؟", "Как определяется окончательная цена?"),
 "a3": ("Each hospital prepares a personalised quote from your file. The final price is confirmed after your physician examines you in person.", "Chaque hôpital établit un devis personnalisé à partir de votre dossier. Le prix final est confirmé après l’examen par votre médecin.", "يعدّ كل مستشفى عرضًا مخصصًا بناءً على ملفك، ويُؤكَّد السعر النهائي بعد فحصك حضوريًا لدى الطبيب.", "Каждая больница готовит индивидуальное предложение по вашим документам. Окончательная цена подтверждается после очного осмотра врачом."),
-"q4": ("Does AI make medical decisions?", "L’IA prend-elle des décisions médicales ?", "هل يتخذ الذكاء الاصطناعي قرارات طبية؟", "Принимает ли ИИ медицинские решения?"),
-"a4": ("No. AI organises and summarises your documents. Every medical opinion is given by a specialist physician.", "Non. L’IA organise et résume vos documents. Chaque avis médical est donné par un médecin spécialiste.", "لا. ينظّم الذكاء الاصطناعي مستنداتك ويلخصها، وكل رأي طبي يقدّمه طبيب أخصائي.", "Нет. ИИ упорядочивает и обобщает документы. Каждое медицинское мнение даёт врач-специалист."),
+"q4": ("Who gives the second opinion?", "Qui donne le second avis ?", "من يقدّم الرأي الطبي الثاني؟", "Кто даёт второе мнение?"),
+"a4": ("A licensed specialist physician reviews your records and writes the report. A video call is arranged only if the physician considers it necessary.", "Un médecin spécialiste diplômé examine vos documents et rédige le rapport. Un appel vidéo n’est organisé que si le médecin le juge nécessaire.", "يراجع طبيب أخصائي مرخّص سجلاتك ويكتب التقرير، ولا تُرتَّب مكالمة فيديو إلا إذا رآها الطبيب ضرورية.", "Лицензированный врач-специалист изучает ваши документы и пишет заключение. Видеозвонок назначается, только если врач сочтёт это необходимым."),
 "q5": ("Can a family member come with me?", "Un proche peut-il m’accompagner ?", "هل يمكن لأحد أفراد عائلتي مرافقتي؟", "Может ли со мной поехать близкий?"),
 "a5": ("Yes, and we recommend it for surgery. Option A can include your companion's flights and accommodation.", "Oui, et nous le recommandons pour une chirurgie. L’option A peut inclure ses vols et son hébergement.", "نعم، ونوصي بذلك في العمليات الجراحية، ويمكن أن يشمل الخيار أ طيران المرافق وإقامته.", "Да, при операциях мы это рекомендуем. Вариант A может включать перелёт и проживание сопровождающего."),
 "q6": ("Why should my photos not show my face?", "Pourquoi mes photos ne doivent-elles pas montrer mon visage ?", "لماذا يجب ألا يظهر وجهي في الصور؟", "Почему на фото не должно быть лица?"),
@@ -379,7 +379,7 @@ S.update({
           "ارفع سجلاتك عبر الإنترنت، ليقيمها طبيب مختص ويكتب تقريرك. أسعار ميسرة وشفافة.",
           "Загрузите документы онлайн: врач-специалист изучит их и составит заключение. Доступная и прозрачная стоимость."),
  "b2_c1": ("Written specialist report", "Rapport écrit du spécialiste", "تقرير مكتوب من طبيب مختص", "Письменное заключение врача"),
- "b2_c2": ("AI organises, doctor decides", "IA organise, médecin décide", "الذكاء الاصطناعي ينظم فقط", "ИИ лишь систематизирует"),
+"b2_c2": ("Records reviewed by a doctor", "Dossier examiné par un médecin", "ملفك يراجعه طبيب", "Документы изучает врач"),
  "b2_c3": ("Video call only if needed", "Visio si nécessaire", "مكالمة فيديو عند الحاجة", "Видеозвонок по необходимости"),
  "b2_cta": ("Request a second opinion", "Demander un second avis", "اطلب رأيا طبيا ثانيا", "Запросить второе мнение"),
  "form_reassure": ("No payment is taken. Your application stays on your device until you choose to send it.",

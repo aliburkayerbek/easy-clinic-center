@@ -27,7 +27,7 @@ Teklif **iki aşamalıdır**:
 ## 4. Hizmetler
 1. Kişisel sağlık danışmanlığı (tek danışman, ilk değerlendirme ücretsiz)
 2. Türkiye'de tedavi
-3. **Yapay zekâ destekli 2. hekim görüşü:** Kayıtlar yüklenir → yapay zekâ yapılandırılmış özet çıkarır → uzman hekim değerlendirir → yazılı rapor. Uzun birebir görüşme yapılmaz; canlı görüşme yalnızca hekim gerekli görürse yapılır. **Tıbbi görüşü yapay zekâ değil, uzman hekim verir** (bu ifade sitede mutlaka kalmalı).
+3. **2. hekim görüşü:** Kayıtlar yüklenir → ekip dosyayı düzenler → uzman hekim değerlendirir → yazılı rapor. Uzun birebir görüşme yapılmaz; canlı görüşme yalnızca hekim gerekli görürse yapılır. (Web sitesinde yapay zekâ ifadesi kaldırıldı; görüşü lisanslı uzman hekim verir. PDF kataloglar henüz eski "yapay zekâ destekli" metni içeriyor.)
 4. Plastik, rekonstrüktif ve estetik cerrahi (vurgulanacak branş)
 5. Opsiyonel: uçak, konaklama, transfer, koordinasyon/dil desteği, tedavi sonrası takip
 
@@ -61,7 +61,7 @@ Hekim verisi: `data/hekimler_doctors.csv` (**1.679 hekim**, hastanelerin resmi s
 - Tıbbi bilgiler "hekim muayenesinin yerine geçmez" uyarısıyla verilmeli.
 
 ## 9. Önerilen site haritası (TR / EN)
-Ana sayfa · Hakkımızda · Nasıl çalışır (izometrik akış + iki aşamalı teklif) · Öne çıkan tedaviler (10 tedavi sayfası) · Yapay zekâ destekli 2. görüş · Kronik hastalık takip merkezi · Partner hastaneler ve hekim rehberi · İngiltere'den gelen hastalar için seyahat rehberi · SSS · Online başvuru formu · İletişim
+Ana sayfa · Hakkımızda · Nasıl çalışır (izometrik akış + iki aşamalı teklif) · Öne çıkan tedaviler (10 tedavi sayfası) · 2. hekim görüşü · Kronik hastalık takip merkezi · Partner hastaneler ve hekim rehberi · İngiltere'den gelen hastalar için seyahat rehberi · SSS · Online başvuru formu · İletişim
 
 ## 10. Klasör içeriği
 - `pdf/` – 8 PDF: kurumsal katalog, detay katalog, tedavi broşürü, hasta formu (her biri TR + EN)
