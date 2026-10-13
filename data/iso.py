@@ -1,5 +1,5 @@
 """Generate the isometric 'How it works' SVG for the Easy Clinic Center catalogue."""
-import math
+import math, pathlib
 
 C30, S30 = math.cos(math.radians(30)), 0.5
 OX, OY = 500, 150
@@ -331,5 +331,5 @@ svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="-60 -40 1140 1060" wi
 {parts_l}
 </svg>'''
 
-open("/home/claude/cat/iso_none.svg" if NOLABEL else f"/home/claude/cat/iso_{LANG}.svg", "w").write(svg)
+open(pathlib.Path(__file__).resolve().parent / "_build" / ("iso_none.svg" if NOLABEL else f"iso_{LANG}.svg"), "w").write(svg)
 print("ok", len(svg))

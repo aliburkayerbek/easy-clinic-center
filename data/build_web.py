@@ -14,9 +14,24 @@ def T(key, tag="span", cls="", attrs=""):
 def b64(p):
     return "data:image/png;base64," + base64.b64encode(pathlib.Path(p).read_bytes()).decode()
 
-LOGO = b64("/home/claude/cat/web_logo.png")
-LOGO_W = b64("/home/claude/cat/web_logo_white.png")
-ISO = pathlib.Path("/home/claude/cat/iso_none.svg").read_text()
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+BUILD = pathlib.Path(__file__).resolve().parent / "_build"
+BUILD.mkdir(exist_ok=True)
+
+def web_logo(name):
+    """Downscale the brand logo to 300 px wide for embedding."""
+    from PIL import Image
+    im = Image.open(ROOT / "brand" / name)
+    im = im.resize((300, round(im.height * 300 / im.width)), Image.LANCZOS)
+    out = BUILD / f"web_{name}"
+    im.save(out, optimize=True)
+    return out
+
+LOGO = b64(web_logo("logo.png"))
+LOGO_W = b64(web_logo("logo_white.png"))
+import subprocess, sys
+subprocess.run([sys.executable, str(BUILD.parent / "iso.py"), "none"], check=True)
+ISO = (BUILD / "iso_none.svg").read_text()
 
 ICON = {
  "check": '<path d="M5 12l4 4 10-10"/>',
@@ -221,7 +236,8 @@ def fld(id_, key, typ="text", req=False, auto="", extra="", full=False, hint=Non
     star = '<b class="req" aria-hidden="true">*</b>' if req else ""
     r = " required" if req else ""
     a = f' autocomplete="{auto}"' if auto else ""
-    h = f'{T(hint, "p", "hint", f"id=\"{id_}-h\"")}' if hint else ""
+    hattr = f'id="{id_}-h"'
+    h = T(hint, "p", "hint", hattr) if hint else ""
     desc = f' aria-describedby="{id_}-e{(" " + id_ + "-h") if hint else ""}"'
     if typ == "textarea":
         ctl = f'<textarea id="{id_}" name="{id_}" rows="4"{r}{desc}></textarea>'
@@ -568,6 +584,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent); outline:none
 .muted{color:#8FA9B9}
 .legal{grid-column:1/-1; font-size:.8rem; color:#8FA9B9; border-top:1px solid #1E3A50; padding-top:18px; max-width:110ch}
 .copy{grid-column:1/-1; font-size:.8rem; color:#6F8A9B}
+[hidden]{display:none !important}
+.hdr .btn{white-space:nowrap}
 .mbar{display:none}
 
 /* responsive */
@@ -597,6 +615,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent); outline:none
  .prog-l{font-size:.68rem}
  .mbar{display:block; position:fixed; inset-inline:0; bottom:0; z-index:55; padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px)); background:color-mix(in srgb, var(--bg) 94%, transparent); backdrop-filter:blur(8px); border-top:1px solid var(--line)}
  .mbar .btn{width:100%}
+ .mbar.off{display:none}
 }
 '''
 
@@ -736,29 +755,44 @@ JS = r'''
   setTimeout(() => toast.textContent = "", 2500);
  });
  const saveBtn = document.getElementById("btnSave");
- let dl = null;
- if(window.claude && claude.use){ claude.use("downloads").then(d => { dl = d; if(d) saveBtn.hidden = false; }); }
- saveBtn.addEventListener("click", async () => {
-  if(!dl) return;
-  try{ const r = await dl.save({filename: ref + ".txt", data: summary}); if(r && r.status === "saved"){ toast.textContent = I18N[lang].saved; setTimeout(() => toast.textContent = "", 2500); } }
-  catch(e){ if(e && ["unavailable","not_granted","capability_disabled","capability_removed"].includes(e.code)) saveBtn.hidden = true; }
+ saveBtn.hidden = false;
+ saveBtn.addEventListener("click", () => {
+  const url = URL.createObjectURL(new Blob([summary], {type: "text/plain;charset=utf-8"}));
+  const a = document.createElement("a"); a.href = url; a.download = ref + ".txt";
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+  toast.textContent = I18N[lang].saved; setTimeout(() => toast.textContent = "", 2500);
  });
+ const mbar = document.querySelector(".mbar");
+ if(mbar && "IntersectionObserver" in window){
+  const seen = new Set();
+  const io = new IntersectionObserver(es => { es.forEach(e => e.isIntersecting ? seen.add(e.target) : seen.delete(e.target)); mbar.classList.toggle("off", seen.size > 0); });
+  ["apply", "contact"].forEach(id => { const el = document.getElementById(id); if(el) io.observe(el); });
+ }
  show(0);
 })();
 '''
 
 FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,500;0,600;1,500&family=Noto+Naskh+Arabic:wght@500;600&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap"/>'
 
-page = f'''<title>Easy Clinic Center</title>
+page = f'''<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Easy Clinic Center</title>
 <meta name="description" content="Personal health consultancy in Türkiye: treatment at partner hospitals and AI-supported second medical opinions."/>
 {FONTS}
 <style>{CSS}</style>
+</head>
+<body>
 {header}
 <main id="main">{hero}{about}{how}{treat}{second}{hospitals}{travel}{faq}{form}</main>
 {footer}
 <script>{JS.replace("__I18N__", json.dumps(I18N, ensure_ascii=False))}</script>
+</body>
+</html>
 '''
-out = pathlib.Path("/home/claude/ecc_web/site/index.html")
+out = ROOT / "site" / "index.html"
 out.parent.mkdir(parents=True, exist_ok=True)
 out.write_text(page)
 print(len(page) // 1024, "KB")
