@@ -68,3 +68,9 @@ Ana sayfa · Hakkımızda · Nasıl çalışır (izometrik akış + iki aşamal�
 - `brand/` – logolar
 - `illustrations/` – 10 tedavi illüstrasyonu + izometrik süreç şeması (SVG, siteye doğrudan konabilir)
 - `data/` – hekim listesi (CSV) ve PDF'leri üreten kaynak dosyalar (tüm TR/EN metinler bunların içinde)
+
+## 11. Güncel site yapısı (18.10.2026)
+- Ana odak: **ilk kez gönderene ücretsiz 2. hekim görüşü** (hero + tek adımlı başvuru formu: ad, e-posta/WhatsApp, talep, onay).
+- Form şimdilik sunucusuz: özet kopyalanır/indirilir. `data/config.py` içindeki `CONTACT_EMAIL` doldurulunca "e-postayla gönder" düğmesi açılır.
+- Blog (İngilizce, `blog/*.md`): `/blog/` + yazı sayfaları, RSS (`/blog/feed.xml`), sitemap, Article/Breadcrumb JSON-LD.
+- Derleme: `python3 data/build_site.py` (eski `build_web.py` kaldırıldı).
