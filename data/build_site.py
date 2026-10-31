@@ -3,7 +3,7 @@ import json, base64, pathlib, re, shutil, datetime, html as H
 import illus
 from web_strings import S
 from site_strings import S2, META2
-from config import SITE, CONTACT_EMAIL, FORM_ENDPOINT, ATTACHMENTS_ENABLED
+from config import SITE, CONTACT_EMAIL, FORM_ENDPOINT, ATTACHMENTS_ENABLED, GOOGLE_VERIFICATION_FILE
 S.update(S2)
 FAQ_N = 8
 
@@ -769,6 +769,7 @@ def make_assets():
     wl = wl.resize((round(wl.width * 420 / wl.height), 420), Image.LANCZOS)
     og.paste(wl, ((1200 - wl.width) // 2, (630 - wl.height) // 2), wl)
     og.save(site / "og.png", optimize=True)
+    (site / GOOGLE_VERIFICATION_FILE).write_text(f"google-site-verification: {GOOGLE_VERIFICATION_FILE}")
     (site / ".nojekyll").write_text("")
     wk = site / ".well-known"; wk.mkdir(exist_ok=True)
     (wk / "security.txt").write_text(f"Contact: mailto:{CONTACT_EMAIL}\nExpires: 2027-10-31T00:00:00Z\nPreferred-Languages: en, tr\nCanonical: {SITE}/.well-known/security.txt\n")

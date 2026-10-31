@@ -7,3 +7,5 @@ FORM_ENDPOINT = "https://formsubmit.co/ajax/info@easycliniccenter.com"
 # Attachments are NOT delivered by the free FormSubmit AJAX endpoint (tested 2026-10-31: mail arrived without files).
 # Turn on only after a backend that really forwards files exists (e.g. a PHP script on the mail hosting).
 ATTACHMENTS_ENABLED = False
+# Google Search Console ownership file (URL-prefix property, HTML file method). Keep it: Google re-checks it.
+GOOGLE_VERIFICATION_FILE = "googlefd2fd1dc4d730845.html"
