@@ -261,7 +261,7 @@ def make_header(A, N, opts):
  <div class="wrap hdr-in">
   <a class="brand" href="{N}#top" aria-label="Easy Clinic Center"><img class="logo-l" src="{A}{LOGO}" width="64" height="65" alt="Easy Clinic Center"/><img class="logo-d" src="{A}{LOGO_W}" width="64" height="65" alt="Easy Clinic Center"/></a>
   <nav class="nav" aria-label="Main">
-   <a href="{N}#second">{T("nav_second")}</a><a href="{N}#treatments">{T("nav_treat")}</a><a href="{N}#hospitals">{T("nav_hosp")}</a><a href="{A}blog/">{T("nav_blog")}</a><a href="{N}#faq">{T("nav_faq")}</a>
+   <a href="{N}#treatments">{T("nav_treat")}</a><a href="{N}#second">{T("nav_second")}</a><a href="{N}#hospitals">{T("nav_hosp")}</a><a href="{A}blog/">{T("nav_blog")}</a><a href="{N}#faq">{T("nav_faq")}</a>
   </nav>
   <div class="hdr-act">
    <label class="sr" for="lang">{S["lang_label"][LI]}</label>
@@ -317,7 +317,11 @@ hero = f'''
    {T("f_title", "h2")}
    <form id="appForm" novalidate>
     <div class="fg">
-     {sel("need", "f_need", [("second", "n_second", ""), ("treat", "n_treat", ""), ("plastic", "n_plastic", ""), ("dental", "n_dental", ""), ("chronic", "n_chronic", ""), ("unsure", "n_unsure", "")], full=True)}
+     <div class="seg" role="group" aria-label="{S["f_need"][LI]}">
+      <button type="button" class="seg-b" data-need="treat" aria-pressed="true">{T("f_tab_treat")}</button>
+      <button type="button" class="seg-b" data-need="second" aria-pressed="false">{T("f_tab_second")}</button>
+     </div>
+     {sel("need", "f_need", [("treat", "n_treat", ""), ("plastic", "n_plastic", ""), ("dental", "n_dental", ""), ("chronic", "n_chronic", ""), ("unsure", "n_unsure", ""), ("second", "n_second", "")], full=True)}
      {fld("fullname", "f_name", req=True, auto="name", full=True)}
      {fld("contact", "f_contact", req=True, auto="email", extra=' inputmode="email" dir="ltr"', full=True)}
      {fld("msg", "f_msg", typ="textarea", req=True, hint="f_msg_h", full=True)}
@@ -442,7 +446,10 @@ JS = r'''
   const ph = ["treat", "plastic", "dental"].includes(need.value);
   photoBox.hidden = !(full && ph); photoOk.required = full && ph;
  }
- need.addEventListener("change", syncMode); syncMode();
+ const segBtns = [...document.querySelectorAll(".seg-b")];
+ function syncSeg(){ segBtns.forEach(x => x.setAttribute("aria-pressed", String((x.dataset.need === "second") === (need.value === "second")))); }
+ need.addEventListener("change", () => { syncMode(); syncSeg(); }); syncMode(); syncSeg();
+ segBtns.forEach(x => x.addEventListener("click", () => { need.value = x.dataset.need; need.dispatchEvent(new Event("change", {bubbles: true})); }));
  const condBoxes = [...form.querySelectorAll('input[name="cond"]')];
  condBoxes.forEach(c => c.addEventListener("change", () => { detBox.hidden = !condBoxes.some(x => x.checked && ["c_blood", "c_allergy", "c_surgery"].includes(x.value)); }));
  function setErr(el, key){
@@ -905,7 +912,7 @@ page = f'''<!doctype html>
 <body>
 <noscript><p style="padding:16px;text-align:center">{NOSCRIPT}</p></noscript>
 {header}
-<main id="main">{hero}{second}{treat}{how}{hospitals}{travel}{blogsec}{faq}{cta2}</main>
+<main id="main">{hero}{treat}{how}{second}{hospitals}{travel}{blogsec}{faq}{cta2}</main>
 {footer}
 <script>{JS_FINAL}</script>
 </body>

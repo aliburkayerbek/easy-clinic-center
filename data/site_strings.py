@@ -4,21 +4,21 @@ Each value is a tuple (EN, FR, AR, RU); merged over web_strings.S by build_site.
 S2 = {
  # nav / calls to action
  "nav_blog": ("Blog", "Blog", "المدونة", "Блог"),
- "nav_apply": ("Get an opinion", "Obtenir un avis", "احصل على رأي", "Получить мнение"),
- "m_apply": ("Request an opinion", "Demander un avis", "اطلب رأيًا طبيًا", "Запросить мнение"),
+ "nav_apply": ("Get started", "Commencer", "ابدأ الآن", "Начать"),
+ "m_apply": ("Start your request", "Faire ma demande", "ابدأ طلبك", "Оставить заявку"),
  "cta_second": ("Request a second opinion", "Demander un second avis", "اطلب رأيًا طبيًا ثانيًا", "Запросить второе мнение"),
 
  # hero
- "h_eb": ("Second opinions from $30", "Seconds avis dès 30 USD", "رأي طبي ثانٍ ابتداءً من 30 دولارًا", "Второе мнение от 30 $"),
- "h_h1": ("A physician’s second opinion, <em>from $30</em>", "Le second avis d’un médecin, <em>dès 30 USD</em>", "رأي طبيب ثانٍ، <em>ابتداءً من 30 دولارًا</em>", "Второе мнение врача — <em>от 30 $</em>"),
- "h_p": ("Tell us about your case and send your records. A specialist physician reviews them and writes you a clear report.", "Décrivez-nous votre cas et envoyez vos documents. Un médecin spécialiste les examine et vous rédige un rapport clair.", "أخبرنا بحالتك وأرسل سجلاتك، ويراجعها طبيب أخصائي ويكتب لك تقريرًا واضحًا.", "Расскажите о вашем случае и пришлите документы. Врач-специалист изучит их и напишет понятное заключение."),
- "h_c1": ("Written physician report", "Rapport écrit d’un médecin", "تقرير مكتوب من طبيب", "Письменное заключение врача"),
- "h_c2": ("Request in 2 minutes", "Demande en 2 minutes", "اطلب في دقيقتين", "Заявка за 2 минуты"),
- "h_c3": ("From $30", "Dès 30 USD", "ابتداءً من 30 دولارًا", "От 30 $"),
+ "h_eb": ("Treatment in Türkiye · second opinions from $30", "Soins en Türkiye · seconds avis dès 30 USD", "العلاج في تركيا · رأي ثانٍ ابتداءً من 30 دولارًا", "Лечение в Турции · второе мнение от 30 $"),
+ "h_h1": ("Your treatment in Türkiye, <em>coordinated</em> for you", "Votre traitement en Türkiye, <em>coordonné</em> pour vous", "علاجك في تركيا، <em>ننسّقه</em> لك", "Ваше лечение в Турции, <em>скоординированное</em> для вас"),
+ "h_p": ("Tell us what you need. We coordinate treatment at partner hospitals and send you written quotes, or a specialist physician reviews your records and writes you a second opinion.", "Dites-nous ce dont vous avez besoin. Nous coordonnons votre traitement dans des hôpitaux partenaires avec des devis écrits, ou un médecin spécialiste examine vos documents et rédige un second avis.", "أخبرنا بما تحتاجه. ننسّق علاجك في مستشفيات شريكة ونرسل لك عروض أسعار مكتوبة، أو يراجع طبيب أخصائي سجلاتك ويكتب لك رأيًا طبيًا ثانيًا.", "Расскажите, что вам нужно. Мы координируем лечение в клиниках-партнёрах и присылаем письменные предложения, либо врач-специалист изучает ваши документы и пишет второе мнение."),
+ "h_c1": ("Written hospital quotes", "Devis écrits des hôpitaux", "عروض أسعار مكتوبة من المستشفيات", "Письменные предложения клиник"),
+ "h_c2": ("Physician second opinion", "Second avis d’un médecin", "رأي طبي ثانٍ من طبيب", "Второе мнение врача"),
+ "h_c3": ("Second opinion from $30", "Second avis dès 30 USD", "رأي ثانٍ ابتداءً من 30 دولارًا", "Второе мнение от 30 $"),
  "free_note": ("Second opinions from $30.", "Seconds avis dès 30 USD.", "رأي طبي ثانٍ ابتداءً من 30 دولارًا.", "Второе мнение от 30 $."),
 
  # one-step form
- "f_title": ("Request your second opinion", "Demandez votre second avis", "اطلب رأيك الطبي الثاني", "Запросите второе мнение"),
+ "f_title": ("Tell us what you need", "Dites-nous ce dont vous avez besoin", "أخبرنا بما تحتاجه", "Расскажите, что вам нужно"),
  "f_need": ("What do you need?", "De quoi avez-vous besoin ?", "ماذا تحتاج؟", "Что вам нужно?"),
  "f_name": ("Your name", "Votre nom", "اسمك", "Ваше имя"),
  "f_contact": ("E-mail or WhatsApp number", "E-mail ou numéro WhatsApp", "البريد الإلكتروني أو رقم واتساب", "E-mail или номер WhatsApp"),
@@ -108,15 +108,18 @@ S2 = {
  # localized legal pages
  "pg_home": ("Home", "Accueil", "الرئيسية", "Главная"),
  "pg_updated": ("Last updated", "Dernière mise à jour", "آخر تحديث", "Обновлено"),
+ # request type switch
+ "f_tab_treat": ("Treatment quote", "Devis de traitement", "عرض أسعار للعلاج", "Предложение по лечению"),
+ "f_tab_second": ("Second opinion from $30", "Second avis dès 30 USD", "رأي ثانٍ من 30 دولارًا", "Второе мнение от 30 $"),
 }
 
 META2 = {
- "en": ("Second Medical Opinion Online from $30 | Easy Clinic Center",
-        "Get a second medical opinion from a specialist physician online from $30, or arrange treatment at partner hospitals in Türkiye. UK patients welcome."),
- "fr": ("Second avis médical en ligne dès 30 USD | Easy Clinic Center",
-        "Obtenez en ligne le second avis médical d’un médecin spécialiste dès 30 USD, ou organisez un traitement dans des hôpitaux partenaires en Türkiye."),
- "ar": ("رأي طبي ثانٍ ابتداءً من 30 دولارًا | Easy Clinic Center",
-        "احصل على رأي طبي ثانٍ من طبيب أخصائي عبر الإنترنت ابتداءً من 30 دولارًا، أو رتّب علاجك في مستشفيات شريكة في تركيا."),
- "ru": ("Второе мнение врача онлайн от 30 $ | Easy Clinic Center",
-        "Получите второе мнение врача-специалиста онлайн от 30 $ или организуйте лечение в клиниках-партнёрах в Турции."),
+ "en": ("Treatment in Türkiye & Second Opinion | Easy Clinic Center",
+        "Treatment at partner hospitals in Türkiye with written quotes, or an online second opinion from a specialist physician from $30. UK patients welcome."),
+ "fr": ("Soins en Türkiye et second avis médical | Easy Clinic Center",
+        "Traitement dans des hôpitaux partenaires en Türkiye avec devis écrits, ou second avis médical en ligne d’un médecin spécialiste dès 30 USD."),
+ "ar": ("العلاج في تركيا ورأي طبي ثانٍ | Easy Clinic Center",
+        "علاج في مستشفيات شريكة في تركيا مع عروض أسعار مكتوبة، أو رأي طبي ثانٍ عبر الإنترنت من طبيب أخصائي ابتداءً من 30 دولارًا."),
+ "ru": ("Лечение в Турции и второе мнение врача | Easy Clinic Center",
+        "Лечение в клиниках-партнёрах в Турции с письменными предложениями или второе мнение врача-специалиста онлайн от 30 $."),
 }
