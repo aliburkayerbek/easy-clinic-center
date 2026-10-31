@@ -614,6 +614,7 @@ def make_assets():
     og.paste(wl, ((1200 - wl.width) // 2, (630 - wl.height) // 2), wl)
     og.save(site / "og.png", optimize=True)
     (site / ".nojekyll").write_text("")
+    (site / "CNAME").write_text(SITE.split("//", 1)[1] + "\n")
     (site / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n")
     hl = "".join(f'<xhtml:link rel="alternate" hreflang="{hreflang(l)}" href="{SITE}{LANG_PATH[l]}"/>' for l in LANGS) + f'<xhtml:link rel="alternate" hreflang="x-default" href="{SITE}/"/>'
     urls = "".join(f"<url><loc>{SITE}{LANG_PATH[l]}</loc>{hl}</url>" for l in LANGS)
