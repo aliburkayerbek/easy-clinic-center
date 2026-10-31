@@ -42,7 +42,7 @@ We share information only as needed to do what you asked:
 - **Our e-mail provider (İsimtescil, Türkiye)** hosts our mailbox, where your request and any attachments are stored.
 - **Specialist physicians and partner hospitals,** but only the information needed for your case and only after you ask for or agree to that step. Partner hospitals are independent providers; they are responsible for your treatment and have their own privacy notices.
 - **Google Analytics (Google, United States),** only if you accept analytics cookies. It receives information about your visit (pages viewed, approximate location from a shortened IP address, device and browser details).
-- **Website hosting (GitHub Pages)** and **Google Fonts**, which deliver the website and its fonts. They receive technical data such as your IP address when you open a page.
+- **Website hosting (GitHub Pages),** which delivers the website. It receives technical data such as your IP address when you open a page. The site's fonts are served from our own pages, not from Google.
 - **Authorities,** if the law requires it.
 
 Our website links to hospital and other third-party websites. They have their own privacy notices and we are not responsible for them.

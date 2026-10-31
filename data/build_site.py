@@ -107,7 +107,8 @@ def rel_href(l):
 LANG_OPTS = "".join(f'<option value="{rel_href(l)}"{" selected" if l == LC else ""}>{LANG_NAMES[l]}</option>' for l in LANGS)
 
 
-CSS = (pathlib.Path(__file__).resolve().parent / "web.css").read_text(encoding="utf-8")
+CSS = (pathlib.Path(__file__).resolve().parent / "web.css").read_text(encoding="utf-8") + "\n".join(l for l in (pathlib.Path(__file__).resolve().parent / "fonts.css").read_text(encoding="utf-8").splitlines() if "'Noto " not in l) + "\n"
+FONTS_AR_CSS = "\n".join(l for l in (pathlib.Path(__file__).resolve().parent / "fonts.css").read_text(encoding="utf-8").splitlines() if "'Noto " in l) + "\n"
 
 QCARD = f'''
   <aside class="qcard" aria-label="Example quote format">
@@ -657,7 +658,9 @@ def md_to_html(body, A, L=""):
     flush()
     return "\n".join(out)
 
-BLOG_FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,500;0,600;1,500&display=swap"/>'
+def font_links(A, lc="en"):
+    """Self-hosted fonts: preload the two faces every page needs (the rest load on demand via unicode-range)."""
+    return "".join(f'<link rel="preload" as="font" type="font/woff2" crossorigin href="{A}assets/fonts/{n}.woff2"/>' for n in ("inter-latin", "lora-latin")) + (f'<link rel="stylesheet" href="{A}assets/fonts-ar.css"/>' if lc == "ar" else "")
 
 def blog_opts(A):
     en = A or "./"
@@ -682,20 +685,13 @@ var o=document.getElementById("ccOpen");if(o)o.addEventListener("click",function
 
 def csp_meta(script_text):
     h = base64.b64encode(hashlib.sha256(script_text.encode("utf-8")).digest()).decode()
-    policy = ("default-src 'self'; script-src 'sha256-%s' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
-              "font-src https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com https://www.googletagmanager.com; "
+    policy = ("default-src 'self'; script-src 'sha256-%s' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; "
+              "font-src 'self'; img-src 'self' data: https://*.google-analytics.com https://www.googletagmanager.com; "
               "connect-src https://formsubmit.co https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com; "
               "form-action 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests") % h
     return f'<meta http-equiv="Content-Security-Policy" content="{policy}"/>\n<meta name="referrer" content="strict-origin-when-cross-origin"/>'
 
 BLOG_SCRIPT = FRAME_BUST + 'document.getElementById("lang").addEventListener("change", e => { location.href = e.target.value; });' + CONSENT_JS
-
-AR_PAGE_FONTS = "&family=Noto+Naskh+Arabic:wght@500;600&family=Noto+Sans+Arabic:wght@400;500;600;700"
-
-def page_fonts(lc):
-    if lc != "ar":
-        return BLOG_FONTS
-    return BLOG_FONTS.replace("&display=swap", AR_PAGE_FONTS + "&display=swap")
 
 def blog_page(A, title, desc, canonical, main_html, jsonld="", ogtype="website", lc="en", opts=None, N=None, extra_head=""):
     head = f'''<!doctype html>
@@ -716,7 +712,7 @@ def blog_page(A, title, desc, canonical, main_html, jsonld="", ogtype="website",
 <meta name="twitter:card" content="summary_large_image"/>
 {extra_head}
 {jsonld}
-{page_fonts(lc)}
+{font_links(A, lc)}
 <link rel="stylesheet" href="{A}assets/site.css"/>
 </head>
 <body>
@@ -786,6 +782,8 @@ def make_assets():
     shutil.copy(web_logo("logo.png"), site / "assets" / "logo.png")
     shutil.copy(web_logo("logo_white.png"), site / "assets" / "logo_white.png")
     (site / "assets" / "site.css").write_text(CSS, encoding="utf-8")
+    (site / "assets" / "fonts-ar.css").write_text(FONTS_AR_CSS, encoding="utf-8")
+    shutil.copytree(ROOT / "fonts", site / "assets" / "fonts", dirs_exist_ok=True)
     logo = Image.open(ROOT / "brand" / "logo.png").convert("RGBA")
     sq = Image.new("RGBA", (max(logo.size),) * 2, (255, 255, 255, 255))
     sq.paste(logo, ((sq.width - logo.width) // 2, (sq.height - logo.height) // 2), logo)
@@ -890,8 +888,6 @@ HEAD_SEO = f'''<meta name="description" content="{ESC(META_DESC)}"/>
 <link rel="alternate" type="application/rss+xml" title="Easy Clinic Center guides" href="{REL}blog/feed.xml"/>
 <script type="application/ld+json">{JSONLD}</script>'''
 
-AR_FONTS = "&family=Noto+Naskh+Arabic:wght@500;600&family=Noto+Sans+Arabic:wght@400;500;600;700" if LC == "ar" else ""
-FONTS = f'<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,500;0,600;1,500{AR_FONTS}&display=swap"/>'
 
 JS_I18N = {LC: I18N[LC], "en": I18N["en"]}
 JS_FINAL = FRAME_BUST + CONSENT_JS + JS.replace("__I18N__", json.dumps(JS_I18N, ensure_ascii=False)).replace("__CONTACT__", CONTACT_EMAIL).replace("__ENDPOINT__", FORM_ENDPOINT)
@@ -903,7 +899,7 @@ page = f'''<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>{ESC(TITLE)}</title>
 {HEAD_SEO}
-{FONTS}
+{font_links(REL, LC)}
 <link rel="stylesheet" href="{REL}assets/site.css"/>
 </head>
 <body>

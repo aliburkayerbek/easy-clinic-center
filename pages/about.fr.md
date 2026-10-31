@@ -8,7 +8,7 @@ Easy Clinic Center est un cabinet de conseil en santé personnalisé établi à 
 
 ## Ce que nous faisons
 
-- **Deuxième avis médical.** Vous nous envoyez votre question et vos dossiers. Un médecin spécialiste les examine et vous remet un rapport écrit. Les deuxièmes avis commencent à partir de $30.
+- **Deuxième avis médical.** Vous nous envoyez votre question et vos dossiers. Un médecin spécialiste les examine et vous remet un rapport écrit. Les deuxièmes avis commencent à partir de 30 USD.
 - **Traitement en Türkiye.** Nous coordonnons les traitements dans des hôpitaux partenaires : chirurgie plastique, reconstructrice et esthétique, chirurgie générale, soins dentaires et médecine interne. Vous recevez des devis hospitaliers écrits sous deux formes : **Option A**, tout compris (traitement, vols, hébergement et transferts), ou **Option B**, traitement seul, le voyage étant organisé par vos soins.
 - **Aide pratique.** Vols, hébergement et transferts en option, assistance linguistique et suivi après votre retour chez vous.
 

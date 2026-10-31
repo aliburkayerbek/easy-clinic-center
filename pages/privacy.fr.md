@@ -42,7 +42,7 @@ Nous ne partageons des informations que dans la mesure nécessaire pour faire ce
 - **Notre fournisseur de messagerie (İsimtescil, Türkiye)** héberge notre boîte e-mail, où sont stockés votre demande et les éventuelles pièces jointes.
 - **Médecins spécialistes et hôpitaux partenaires,** mais uniquement les informations nécessaires à votre dossier et seulement après que vous avez demandé cette étape ou y avez consenti. Les hôpitaux partenaires sont des prestataires indépendants ; ils sont responsables de votre traitement et disposent de leurs propres notices de confidentialité.
 - **Google Analytics (Google, États-Unis),** uniquement si vous acceptez les cookies d'analyse. Il reçoit des informations sur votre visite (pages consultées, localisation approximative à partir d'une adresse IP raccourcie, informations sur l'appareil et le navigateur).
-- **Hébergement du site web (GitHub Pages)** et **Google Fonts**, qui diffusent le site web et ses polices. Ils reçoivent des données techniques, telles que votre adresse IP, lorsque vous ouvrez une page.
+- **Hébergement du site web (GitHub Pages),** qui diffuse le site web. Il reçoit des données techniques, telles que votre adresse IP, lorsque vous ouvrez une page. Les polices du site sont servies depuis nos propres pages, et non depuis Google.
 - **Les autorités,** si la loi l'exige.
 
 Notre site web contient des liens vers des sites web d'hôpitaux et d'autres tiers. Ils disposent de leurs propres notices de confidentialité et nous n'en sommes pas responsables.
