@@ -439,13 +439,19 @@ JS = r'''
  const DETAIL_REQ = ["dob", "country", "cons1", "cons2", "cons3"];
  function syncMode(){
   const full = need.value !== "second";
-  detail.hidden = !full; simpleConsent.hidden = full;
+  simpleConsent.hidden = full;
   E("consent").required = !full;
   DETAIL_REQ.forEach(id => { E(id).required = full; });
   E("quote-A").required = full;
   const ph = ["treat", "plastic", "dental"].includes(need.value);
   photoBox.hidden = !(full && ph); photoOk.required = full && ph;
+  reveal();
  }
+ /* the detailed questions open once name, contact and message are filled in */
+ const contactOk = v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) || (/^\+?[\d\s().-]{8,}$/.test(v) && v.replace(/\D/g, "").length >= 8);
+ const coreOk = () => !!(E("fullname").value.trim() && contactOk(E("contact").value.trim()) && E("msg").value.trim());
+ function reveal(){ detail.hidden = !(need.value !== "second" && coreOk()); }
+ ["fullname", "contact", "msg"].forEach(id => E(id).addEventListener("input", reveal));
  const segBtns = [...document.querySelectorAll(".seg-b")];
  function syncSeg(){ segBtns.forEach(x => x.setAttribute("aria-pressed", String((x.dataset.need === "second") === (need.value === "second")))); }
  need.addEventListener("change", () => { syncMode(); syncSeg(); }); syncMode(); syncSeg();
@@ -529,6 +535,7 @@ JS = r'''
  form.addEventListener("submit", e => {
   e.preventDefault();
   if(E("website").value || Date.now() - t0 < 2500) return;
+  if(need.value !== "second" && detail.hidden && coreOk()){ reveal(); detail.scrollIntoView({behavior: "smooth", block: "start"}); return; }
   let first = null; const seen = new Set();
   [...form.querySelectorAll("input,select,textarea")].filter(x => x.required || x.value).forEach(x => {
    if(x.type === "radio"){ if(seen.has(x.name)) return; seen.add(x.name); }
