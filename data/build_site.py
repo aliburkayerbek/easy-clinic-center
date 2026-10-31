@@ -424,6 +424,7 @@ JS = r'''
  /* request form: simple for a second opinion, detailed for treatment */
  const form = document.getElementById("appForm");
  const E = id => document.getElementById(id);
+ const t0 = Date.now();
  const need = E("need"), detail = E("detailBox"), simpleConsent = E("simpleConsent"), photoBox = E("photoBox"), photoOk = E("photo_ok"), detBox = E("detBox");
  const DETAIL_REQ = ["dob", "country", "cons1", "cons2", "cons3"];
  function syncMode(){
@@ -514,7 +515,7 @@ JS = r'''
  const val = id => { const el = E(id); if(!el) return ""; if(el.tagName === "SELECT"){ const o = el.selectedOptions[0]; if(!o || !o.value) return ""; return o.dataset.i ? strip(EN[o.dataset.i]) : o.textContent; } return el.value.trim(); };
  form.addEventListener("submit", e => {
   e.preventDefault();
-  if(E("website").value) return;
+  if(E("website").value || Date.now() - t0 < 2500) return;
   let first = null; const seen = new Set();
   [...form.querySelectorAll("input,select,textarea")].filter(x => x.required || x.value).forEach(x => {
    if(x.type === "radio"){ if(seen.has(x.name)) return; seen.add(x.name); }
@@ -658,11 +659,24 @@ def blog_opts(A):
     o += "".join(f'<option value="{A}{l}/">{LANG_NAMES[l]}</option>' for l in LANGS if l != "en")
     return o
 
+import hashlib
+FRAME_BUST = "if(window.top!==window.self){window.top.location=window.self.location;}"
+
+def csp_meta(script_text):
+    h = base64.b64encode(hashlib.sha256(script_text.encode("utf-8")).digest()).decode()
+    policy = ("default-src 'self'; script-src 'sha256-%s'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+              "font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://formsubmit.co; "
+              "form-action 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests") % h
+    return f'<meta http-equiv="Content-Security-Policy" content="{policy}"/>\n<meta name="referrer" content="strict-origin-when-cross-origin"/>'
+
+BLOG_SCRIPT = FRAME_BUST + 'document.getElementById("lang").addEventListener("change", e => { location.href = e.target.value; });'
+
 def blog_page(A, title, desc, canonical, main_html, jsonld="", ogtype="website"):
     head = f'''<!doctype html>
 <html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8"/>
+{csp_meta(BLOG_SCRIPT)}
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>{ESC(title)}</title>
 <meta name="description" content="{ESC(desc)}"/>
@@ -682,7 +696,7 @@ def blog_page(A, title, desc, canonical, main_html, jsonld="", ogtype="website")
 {make_header(A, A, blog_opts(A))}
 <main id="main">{main_html}</main>
 {make_footer(A, A)}
-<script>document.getElementById("lang").addEventListener("change", e => {{ location.href = e.target.value; }});</script>
+<script>{BLOG_SCRIPT}</script>
 </body>
 </html>
 '''
@@ -756,6 +770,8 @@ def make_assets():
     og.paste(wl, ((1200 - wl.width) // 2, (630 - wl.height) // 2), wl)
     og.save(site / "og.png", optimize=True)
     (site / ".nojekyll").write_text("")
+    wk = site / ".well-known"; wk.mkdir(exist_ok=True)
+    (wk / "security.txt").write_text(f"Contact: mailto:{CONTACT_EMAIL}\nExpires: 2027-10-31T00:00:00Z\nPreferred-Languages: en, tr\nCanonical: {SITE}/.well-known/security.txt\n")
     (site / "CNAME").write_text(SITE.split("//", 1)[1] + "\n")
     (site / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n")
     hl = "".join(f'<xhtml:link rel="alternate" hreflang="{hreflang(l)}" href="{SITE}{LANG_PATH[l]}"/>' for l in LANGS) + f'<xhtml:link rel="alternate" hreflang="x-default" href="{SITE}/"/>'
@@ -794,6 +810,9 @@ JSONLD = json.dumps({"@context": "https://schema.org", "@graph": [
     {"@type": "Organization", "@id": SITE + "/#org", "name": "Easy Clinic Center", "url": SITE + "/",
      "logo": SITE + "/apple-touch-icon.png", "foundingDate": "2020-10-01", "email": CONTACT_EMAIL,
      "areaServed": {"@type": "Country", "name": "United Kingdom"}, "description": META_DESC},
+    {"@type": "Service", "@id": SITE + "/#service", "name": "Online second medical opinion", "serviceType": "Second medical opinion",
+     "provider": {"@id": SITE + "/#org"}, "areaServed": {"@type": "Country", "name": "United Kingdom"},
+     "offers": {"@type": "Offer", "priceCurrency": "USD", "priceSpecification": {"@type": "PriceSpecification", "minPrice": 30, "priceCurrency": "USD"}, "url": URL}},
     {"@type": "WebSite", "@id": SITE + "/#web", "url": SITE + "/", "name": "Easy Clinic Center",
      "inLanguage": [hreflang(l) for l in LANGS], "publisher": {"@id": SITE + "/#org"}},
     {"@type": "FAQPage", "url": URL, "inLanguage": hreflang(LC), "mainEntity": [
@@ -825,10 +844,12 @@ AR_FONTS = "&family=Noto+Naskh+Arabic:wght@500;600&family=Noto+Sans+Arabic:wght@
 FONTS = f'<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,500;0,600;1,500{AR_FONTS}&display=swap"/>'
 
 JS_I18N = {LC: I18N[LC], "en": I18N["en"]}
+JS_FINAL = FRAME_BUST + JS.replace("__I18N__", json.dumps(JS_I18N, ensure_ascii=False)).replace("__CONTACT__", CONTACT_EMAIL).replace("__ENDPOINT__", FORM_ENDPOINT)
 page = f'''<!doctype html>
 <html lang="{LC}" dir="{DIR}">
 <head>
 <meta charset="utf-8"/>
+{csp_meta(JS_FINAL)}
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>{ESC(TITLE)}</title>
 {HEAD_SEO}
@@ -840,7 +861,7 @@ page = f'''<!doctype html>
 {header}
 <main id="main">{hero}{second}{treat}{how}{hospitals}{travel}{blogsec}{faq}{cta2}</main>
 {footer}
-<script>{JS.replace("__I18N__", json.dumps(JS_I18N, ensure_ascii=False)).replace("__CONTACT__", CONTACT_EMAIL).replace("__ENDPOINT__", FORM_ENDPOINT)}</script>
+<script>{JS_FINAL}</script>
 </body>
 </html>
 '''

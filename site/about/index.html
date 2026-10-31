@@ -2,6 +2,8 @@
 <html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-7iB8SiPeoXqJrwiHMtYCgedfJzvG4FD1tihjH6qb/Uw='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://formsubmit.co; form-action 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests"/>
+<meta name="referrer" content="strict-origin-when-cross-origin"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>About Easy Clinic Center | Personal health consultancy in Türkiye</title>
 <meta name="description" content="Who Easy Clinic Center is, what we do and what we do not do, how a request works, and our company details."/>
@@ -65,6 +67,6 @@
  <p class="copy">© 2026 Easy Clinic Center</p>
 </div></footer>
 <div class="mbar"><a class="btn btn-p" href="../#apply"><span data-i="m_apply">Request an opinion</span></a></div>
-<script>document.getElementById("lang").addEventListener("change", e => { location.href = e.target.value; });</script>
+<script>if(window.top!==window.self){window.top.location=window.self.location;}document.getElementById("lang").addEventListener("change", e => { location.href = e.target.value; });</script>
 </body>
 </html>
