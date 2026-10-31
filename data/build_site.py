@@ -737,7 +737,7 @@ def build_blog():
 <section class="sec cta2"><div class="wrap"><h2>Second opinions from $30</h2><a class="btn btn-p btn-l" href="{A}#apply">{T("m_apply")}{ic("arrow", "ic dir")}</a></div></section>'''
     ld_idx = ld({"@context": "https://schema.org", "@type": "Blog", "name": "Easy Clinic Center guides", "url": SITE + "/blog/", "inLanguage": "en-GB",
                  "blogPost": [{"@type": "BlogPosting", "headline": p["title"], "url": f"{SITE}/blog/{p['slug']}/", "datePublished": p["date"]} for p in POSTS]})
-    (site / "blog" / "index.html").write_text(blog_page(A, "Health guides: second opinion and treatment in Türkiye | Easy Clinic Center",
+    (site / "blog" / "index.html").write_text(blog_page(A, "Health guides: second opinion and treatment in Türkiye",
         "Plain-language guides for UK patients: second medical opinions, preparing records, questions to ask before treatment abroad and planning a trip to Türkiye.",
         SITE + "/blog/", idx, ld_idx), encoding="utf-8")
     # posts
@@ -764,7 +764,7 @@ def build_blog():
                 {"@type": "ListItem", "position": 2, "name": "Blog", "item": SITE + "/blog/"},
                 {"@type": "ListItem", "position": 3, "name": p["title"], "item": url}]}]})
         d = site / "blog" / p["slug"]; d.mkdir(exist_ok=True)
-        (d / "index.html").write_text(blog_page(A, p["title"] + " | Easy Clinic Center", p["desc"], url, art, j, "article"), encoding="utf-8")
+        (d / "index.html").write_text(blog_page(A, p["title"], p["desc"], url, art, j, "article"), encoding="utf-8")
     # RSS
     items = "".join(f'<item><title>{ESC(p["title"])}</title><link>{SITE}/blog/{p["slug"]}/</link><guid>{SITE}/blog/{p["slug"]}/</guid><pubDate>{datetime.date.fromisoformat(p["date"]).strftime("%a, %d %b %Y 00:00:00 +0000")}</pubDate><description>{ESC(p["desc"])}</description></item>' for p in POSTS)
     (site / "blog" / "feed.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>Easy Clinic Center guides</title><link>{SITE}/blog/</link><description>Health guides for patients considering a second opinion or treatment in Türkiye.</description><language>en-gb</language>{items}</channel></rss>', encoding="utf-8")

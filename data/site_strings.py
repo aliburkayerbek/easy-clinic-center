@@ -112,7 +112,7 @@ META2 = {
         "Get a second medical opinion from a specialist physician online from $30, or arrange treatment at partner hospitals in Türkiye. UK patients welcome."),
  "fr": ("Second avis médical en ligne dès 30 USD | Easy Clinic Center",
         "Obtenez en ligne le second avis médical d’un médecin spécialiste dès 30 USD, ou organisez un traitement dans des hôpitaux partenaires en Türkiye."),
- "ar": ("رأي طبي ثانٍ عبر الإنترنت ابتداءً من 30 دولارًا | Easy Clinic Center",
+ "ar": ("رأي طبي ثانٍ ابتداءً من 30 دولارًا | Easy Clinic Center",
         "احصل على رأي طبي ثانٍ من طبيب أخصائي عبر الإنترنت ابتداءً من 30 دولارًا، أو رتّب علاجك في مستشفيات شريكة في تركيا."),
  "ru": ("Второе мнение врача онлайн от 30 $ | Easy Clinic Center",
         "Получите второе мнение врача-специалиста онлайн от 30 $ или организуйте лечение в клиниках-партнёрах в Турции."),

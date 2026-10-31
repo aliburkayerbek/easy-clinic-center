@@ -1,6 +1,6 @@
 ---
 title: Privacy Policy | Easy Clinic Center
-description: How Easy Clinic Center collects, uses, shares and protects the personal and health information you send us, and the rights you have under UK GDPR and the Turkish KVKK.
+description: How Easy Clinic Center collects, uses, shares and protects the personal and health information you send us, and your rights under UK GDPR and KVKK.
 date: 2026-10-31
 ---
 

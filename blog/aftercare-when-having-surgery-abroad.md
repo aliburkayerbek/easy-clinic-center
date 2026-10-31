@@ -1,5 +1,5 @@
 ---
-title: Aftercare After Surgery Abroad: A Planning Guide for UK Patients
+title: Aftercare After Surgery Abroad: A UK Patient Planning Guide
 description: Planning aftercare after surgery abroad as a UK patient? Learn how to plan follow-up, fly home safely, know who to call and what documents to carry.
 date: 2026-10-31
 tags: aftercare, treatment-abroad, uk-patients, patient-safety
