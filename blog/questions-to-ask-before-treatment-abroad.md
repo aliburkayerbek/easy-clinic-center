@@ -87,6 +87,6 @@ The NHS publishes its own advice on this subject. Read the [NHS page on going ab
 
 ## Next step
 
-Easy Clinic Center is a health consultancy in Istanbul, Türkiye, not a hospital. If you would like a specialist to review your case before you decide anything, you can request your free first second opinion through the [application form](/#apply). There is no obligation to arrange treatment afterwards.
+Easy Clinic Center is a health consultancy in Istanbul, Türkiye, not a hospital. If you would like a specialist to review your case before you decide anything, you can request a second opinion, which starts from $30, through the [application form](/#apply).
 
 *This article is general information and does not replace advice from your own doctor.*

@@ -523,7 +523,7 @@ JS = r'''
   ref = makeRef();
   const full = need.value !== "second";
   const L2 = ["EASY CLINIC CENTER - REQUEST", "Reference: " + ref, "Language used: " + lang.toUpperCase(),
-   "Request: " + val("need") + (full ? "" : " (first request - free)"), "Name: " + val("fullname"), "Contact: " + val("contact")];
+   "Request: " + val("need") + "", "Name: " + val("fullname"), "Contact: " + val("contact")];
   if(full){
    L2.push("Preferred language: " + val("plang"), "Date of birth: " + val("dob"), "Country of residence: " + val("country"),
     "Preferred city: " + val("pcity"));
@@ -703,7 +703,7 @@ def build_blog():
  <p class="lead2 blog-lead">Plain-language checklists written to help you decide with confidence. They are general information and do not replace advice from your own doctor.</p>
  <div class="pgrid">{post_cards(POSTS, A)}</div>
 </div></section>
-<section class="sec cta2"><div class="wrap"><h2>Your first second opinion is free</h2><a class="btn btn-p btn-l" href="{A}#apply">{T("m_apply")}{ic("arrow", "ic dir")}</a></div></section>'''
+<section class="sec cta2"><div class="wrap"><h2>Second opinions from $30</h2><a class="btn btn-p btn-l" href="{A}#apply">{T("m_apply")}{ic("arrow", "ic dir")}</a></div></section>'''
     ld_idx = ld({"@context": "https://schema.org", "@type": "Blog", "name": "Easy Clinic Center guides", "url": SITE + "/blog/", "inLanguage": "en-GB",
                  "blogPost": [{"@type": "BlogPosting", "headline": p["title"], "url": f"{SITE}/blog/{p['slug']}/", "datePublished": p["date"]} for p in POSTS]})
     (site / "blog" / "index.html").write_text(blog_page(A, "Health guides: second opinion and treatment in Türkiye | Easy Clinic Center",
@@ -720,7 +720,7 @@ def build_blog():
  <h1 class="blog-h1">{ESC(p["title"])}</h1>
  <p class="pmeta"><time datetime="{p["date"]}">{p["date"]}</time> · {p["mins"]} min read</p>
  <div class="prose">{md_to_html(p["body"], A)}</div>
- <aside class="postcta"><h2>{ic("heart")} Your first second opinion is free</h2><p>Send us your question and records. A specialist physician reviews them and writes you a report.</p><a class="btn btn-p btn-l" href="{A}#apply">{T("m_apply")}{ic("arrow", "ic dir")}</a></aside>
+ <aside class="postcta"><h2>{ic("heart")} Second opinions from $30</h2><p>Send us your question and records. A specialist physician reviews them and writes you a report.</p><a class="btn btn-p btn-l" href="{A}#apply">{T("m_apply")}{ic("arrow", "ic dir")}</a></aside>
  <h2 class="rel-h">More guides</h2><div class="pgrid two">{post_cards(related, A)}</div>
 </div></article>'''
         j = ld({"@context": "https://schema.org", "@graph": [
@@ -773,7 +773,7 @@ def build_pages():
         m = re.match(r"---\n(.*?)\n---\n(.*)", f.read_text(encoding="utf-8"), re.S)
         meta = {k.strip(): v.strip() for k, v in (l.split(":", 1) for l in m.group(1).splitlines() if ":" in l)}
         url = f"{SITE}/{slug}/"
-        box = f'''<aside class="postcta"><h2>{ic("heart")} Your first second opinion is free</h2><p>Send us your question. A specialist physician reviews your records and writes you a report.</p><a class="btn btn-p btn-l" href="{A}#apply">{T("m_apply")}{ic("arrow", "ic dir")}</a></aside>''' if cta else ""
+        box = f'''<aside class="postcta"><h2>{ic("heart")} Second opinions from $30</h2><p>Send us your question. A specialist physician reviews your records and writes you a report.</p><a class="btn btn-p btn-l" href="{A}#apply">{T("m_apply")}{ic("arrow", "ic dir")}</a></aside>''' if cta else ""
         art = f'''
 <article class="sec post"><div class="wrap narrow">
  <nav class="crumbs" aria-label="Breadcrumb"><a href="{A}">Home</a> <span aria-hidden="true">/</span> <span>{label}</span></nav>

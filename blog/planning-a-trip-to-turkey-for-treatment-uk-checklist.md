@@ -73,6 +73,6 @@ Check what your travel insurance covers, and whether it includes complications f
 
 ## Next step
 
-Not sure whether travelling is the right choice? A second opinion can help you decide. You can request your free first second opinion through the [application form](/#apply), and the team will explain the next stages.
+Not sure whether travelling is the right choice? A second opinion can help you decide. You can request a second opinion, which starts from $30, through the [application form](/#apply), and the team will explain the next stages.
 
 *This article is general information and does not replace advice from your own doctor.*

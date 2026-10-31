@@ -1,6 +1,6 @@
 ---
 title: Second Medical Opinion Online UK: What It Is and When It Helps
-description: Wondering what a second medical opinion online involves? Learn when it is worth it, what it can and cannot do, and how a free first review works.
+description: Wondering what a second medical opinion online involves? Learn when it is worth it, what it can and cannot do, and what it costs and how a request works.
 date: 2026-10-18
 tags: second-opinion, online-consultation, uk-patients, diagnosis
 ---
@@ -12,7 +12,7 @@ A second medical opinion means asking another qualified doctor to look at your r
 - It is most useful after a new or serious diagnosis, or before a major operation.
 - It can clarify, confirm or raise questions. It cannot replace the care of your own doctors.
 - Timing depends on the case, but a report typically takes a few working days.
-- At Easy Clinic Center, the first second opinion for a new patient is free.
+- At Easy Clinic Center, second opinions start from $30.
 
 ## What a second medical opinion is
 
@@ -66,14 +66,14 @@ An opinion is only as good as the information behind it. Complete, recent record
 
 This varies. A straightforward file with clear records is quicker than a complex case with many scans. As a general guide, a written report typically takes a few working days, but it depends on the case, and we cannot promise a fixed timeframe. If something is missing from your file, the team will tell you so that the review is not delayed unnecessarily.
 
-## Cost and the free first second opinion
+## Cost
 
-At Easy Clinic Center, the first second opinion for a new patient is free. We are a health consultancy based in Istanbul, Türkiye, not a hospital, and the second opinion service is separate from any treatment decision. You are under no obligation to arrange treatment through us afterwards. Some patients use the report to stay with their existing NHS or private plan, and that is a perfectly good outcome.
+At Easy Clinic Center, second opinions start from $30. We are a health consultancy based in Istanbul, Türkiye, not a hospital, and the second opinion service is separate from any treatment decision. Some patients use the report to stay with their existing NHS or private plan, and that is a perfectly good outcome.
 
 If a report does lead you to consider treatment, take your time. Our article on [questions to ask before treatment abroad](/blog/questions-to-ask-before-treatment-abroad/) can help you weigh up the decision carefully.
 
 ## Next step
 
-If you would like a specialist to review your case, you can request your free first second opinion by using the [application form](/#apply). Tell us briefly about your condition, and we will explain what records are needed.
+If you would like a specialist to review your case, you can request a second opinion, which starts from $30, by using the [application form](/#apply). Tell us briefly about your condition, and we will explain what records are needed.
 
 *This article is general information and does not replace advice from your own doctor.*

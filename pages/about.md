@@ -8,7 +8,7 @@ Easy Clinic Center is a personal health consultancy based in Istanbul, Türkiye.
 
 ## What we do
 
-- **Second medical opinion.** You send your question and your records. A specialist physician reviews them and gives you a written report. Your first second-opinion request is free.
+- **Second medical opinion.** You send your question and your records. A specialist physician reviews them and gives you a written report. Second opinions start from $30.
 - **Treatment in Türkiye.** We coordinate treatment at partner hospitals: plastic, reconstructive and aesthetic surgery, general surgery, dental treatment and internal medicine. You receive written hospital quotes in two forms: **Option A**, all-inclusive (treatment, flights, accommodation and transfers), or **Option B**, treatment only, with travel arranged by you.
 - **Practical help.** Optional flights, accommodation and transfers, language support and follow-up after you return home.
 
@@ -18,7 +18,7 @@ We are a consultancy, not a hospital. We do not treat patients ourselves. Treatm
 
 ## How a request works
 
-1. **You send a request** through the form on our home page. It takes about two minutes and no payment is taken.
+1. **You send a request** through the form on our home page. It takes about two minutes.
 2. **We reply by e-mail.** If more information is needed, such as reports, scans or photos, we ask you for it by e-mail. Please do not send photos that show your face.
 3. **You receive the answer in writing:** a physician's report for a second opinion, or written hospital quotes for treatment.
 

@@ -74,6 +74,6 @@ A second opinion lets an independent specialist look at your health and your pro
 
 ## Next step
 
-Easy Clinic Center is a health consultancy that coordinates treatment at partner hospitals and offers online second opinions. You can request your free first second opinion through the [application form](/#apply). There is no obligation to proceed with treatment.
+Easy Clinic Center is a health consultancy that coordinates treatment at partner hospitals and offers online second opinions. You can request a second opinion, which starts from $30, through the [application form](/#apply).
 
 *This article is general information and does not replace advice from your own doctor.*

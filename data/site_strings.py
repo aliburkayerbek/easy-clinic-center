@@ -4,27 +4,21 @@ Each value is a tuple (EN, FR, AR, RU); merged over web_strings.S by build_site.
 S2 = {
  # nav / calls to action
  "nav_blog": ("Blog", "Blog", "المدونة", "Блог"),
- "nav_apply": ("Free opinion", "Avis gratuit", "رأي مجاني", "Бесплатно"),
- "m_apply": ("Get your free opinion", "Mon avis gratuit", "احصل على رأيك المجاني", "Бесплатное мнение"),
- "cta_second": ("Request your free opinion", "Demander mon avis gratuit", "اطلب رأيك المجاني", "Запросить бесплатное мнение"),
+ "nav_apply": ("Get an opinion", "Obtenir un avis", "احصل على رأي", "Получить мнение"),
+ "m_apply": ("Request an opinion", "Demander un avis", "اطلب رأيًا طبيًا", "Запросить мнение"),
+ "cta_second": ("Request a second opinion", "Demander un second avis", "اطلب رأيًا طبيًا ثانيًا", "Запросить второе мнение"),
 
  # hero
- "h_eb": ("Free for your first request", "Gratuit pour votre première demande", "مجاني لطلبك الأول", "Бесплатно при первом обращении"),
- "h_h1": ("Your first physician second opinion is <em>free</em>",
-          "Votre premier second avis médical est <em>gratuit</em>",
-          "رأيك الطبي الثاني الأول <em>مجاني</em>",
-          "Первое второе мнение врача — <em>бесплатно</em>"),
- "h_p": ("Tell us about your case and send your records. A specialist physician reviews them and writes you a clear report. No payment, no obligation.",
-         "Décrivez-nous votre cas et envoyez vos documents. Un médecin spécialiste les examine et vous rédige un rapport clair. Sans paiement, sans engagement.",
-         "أخبرنا بحالتك وأرسل سجلاتك، ويراجعها طبيب أخصائي ويكتب لك تقريرًا واضحًا. دون دفع ودون التزام.",
-         "Расскажите о вашем случае и пришлите документы. Врач-специалист изучит их и напишет понятное заключение. Без оплаты и обязательств."),
+ "h_eb": ("Second opinions from $30", "Seconds avis dès 30 USD", "رأي طبي ثانٍ ابتداءً من 30 دولارًا", "Второе мнение от 30 $"),
+ "h_h1": ("A physician’s second opinion, <em>from $30</em>", "Le second avis d’un médecin, <em>dès 30 USD</em>", "رأي طبيب ثانٍ، <em>ابتداءً من 30 دولارًا</em>", "Второе мнение врача — <em>от 30 $</em>"),
+ "h_p": ("Tell us about your case and send your records. A specialist physician reviews them and writes you a clear report.", "Décrivez-nous votre cas et envoyez vos documents. Un médecin spécialiste les examine et vous rédige un rapport clair.", "أخبرنا بحالتك وأرسل سجلاتك، ويراجعها طبيب أخصائي ويكتب لك تقريرًا واضحًا.", "Расскажите о вашем случае и пришлите документы. Врач-специалист изучит их и напишет понятное заключение."),
  "h_c1": ("Written physician report", "Rapport écrit d’un médecin", "تقرير مكتوب من طبيب", "Письменное заключение врача"),
  "h_c2": ("Request in 2 minutes", "Demande en 2 minutes", "اطلب في دقيقتين", "Заявка за 2 минуты"),
- "h_c3": ("No payment", "Aucun paiement", "دون دفع", "Без оплаты"),
- "free_note": ("Free for first-time requests.", "Gratuit pour toute première demande.", "مجاني للطلب الأول.", "Бесплатно при первом обращении."),
+ "h_c3": ("From $30", "Dès 30 USD", "ابتداءً من 30 دولارًا", "От 30 $"),
+ "free_note": ("Second opinions from $30.", "Seconds avis dès 30 USD.", "رأي طبي ثانٍ ابتداءً من 30 دولارًا.", "Второе мнение от 30 $."),
 
  # one-step form
- "f_title": ("Request your free opinion", "Demandez votre avis gratuit", "اطلب رأيك المجاني", "Запросите бесплатное мнение"),
+ "f_title": ("Request your second opinion", "Demandez votre second avis", "اطلب رأيك الطبي الثاني", "Запросите второе мнение"),
  "f_need": ("What do you need?", "De quoi avez-vous besoin ?", "ماذا تحتاج؟", "Что вам нужно?"),
  "f_name": ("Your name", "Votre nom", "اسمك", "Ваше имя"),
  "f_contact": ("E-mail or WhatsApp number", "E-mail ou numéro WhatsApp", "البريد الإلكتروني أو رقم واتساب", "E-mail или номер WhatsApp"),
@@ -35,11 +29,8 @@ S2 = {
              "Достаточно нескольких строк. Документы можно отправить после нашего ответа."),
  "f_more": ("Add more details (optional)", "Ajouter des détails (facultatif)", "أضف تفاصيل أخرى (اختياري)", "Добавить подробности (необязательно)"),
  "f_photo": ("Please do not send photos that show your face.", "Merci de ne pas envoyer de photos montrant votre visage.", "يُرجى عدم إرسال صور يظهر فيها وجهك.", "Пожалуйста, не присылайте фото, на которых видно лицо."),
- "f_consent": ("I agree that Easy Clinic Center may use the information I send to prepare my request, and I am 18 or older (or a parent/guardian).",
-               "J’accepte qu’Easy Clinic Center utilise les informations envoyées pour préparer ma demande, et j’ai 18 ans ou plus (ou je suis parent/tuteur).",
-               "أوافق على استخدام Easy Clinic Center للمعلومات التي أرسلها لإعداد طلبي، وعمري 18 عامًا أو أكثر (أو أنا أحد الوالدين/الوصي).",
-               "Я согласен(на), что Easy Clinic Center использует присланные сведения для подготовки моей заявки, и мне 18 лет или больше (либо я родитель/опекун)."),
- "f_submit": ("Request my free opinion", "Demander mon avis gratuit", "اطلب رأيي المجاني", "Запросить бесплатно"),
+ "f_consent": ("I explicitly consent to Easy Clinic Center using the information I send, including any health information, to deal with my request, and to it being sent to Türkiye and handled by the service providers described in the privacy policy. I can withdraw my consent at any time. I am 18 or older (or a parent/guardian).", "Je consens expressément à ce qu’Easy Clinic Center utilise les informations que j’envoie, y compris mes données de santé, pour traiter ma demande, et à leur transfert vers la Türkiye et leur traitement par les prestataires décrits dans la politique de confidentialité. Je peux retirer mon consentement à tout moment. J’ai 18 ans ou plus (ou je suis parent/tuteur).", "أوافق صراحةً على أن يستخدم Easy Clinic Center المعلومات التي أرسلها، بما فيها أي معلومات صحية، لمعالجة طلبي، وعلى إرسالها إلى تركيا ومعالجتها لدى مزوّدي الخدمات الموضّحين في سياسة الخصوصية. يمكنني سحب موافقتي في أي وقت. عمري 18 عامًا أو أكثر (أو أنا أحد الوالدين/الوصي).", "Я прямо соглашаюсь, чтобы Easy Clinic Center использовал присланные мной сведения, включая данные о здоровье, для рассмотрения моей заявки, а также на их передачу в Турцию и обработку поставщиками услуг, указанными в политике конфиденциальности. Я могу отозвать согласие в любой момент. Мне 18 лет или больше (либо я родитель/опекун)."),
+ "f_submit": ("Send my request", "Envoyer ma demande", "أرسل طلبي", "Отправить заявку"),
  "f_mail": ("Send by e-mail", "Envoyer par e-mail", "إرسال بالبريد الإلكتروني", "Отправить по e-mail"),
  "err_contact": ("Enter an e-mail address or a phone number with country code (+...).",
                  "Saisissez une adresse e-mail ou un numéro avec indicatif (+...).",
@@ -47,7 +38,7 @@ S2 = {
                  "Введите e-mail или номер телефона с кодом страны (+...)."),
 
  # trust strip
- "tr1": ("First second opinion free", "Premier second avis gratuit", "أول رأي طبي ثانٍ مجاني", "Первое второе мнение бесплатно"),
+ "tr1": ("Second opinions from $30", "Seconds avis dès 30 USD", "رأي ثانٍ ابتداءً من 30 دولارًا", "Второе мнение от 30 $"),
  "tr3": ("Your data is used only for your request", "Vos données ne servent qu’à votre demande", "تُستخدم بياناتك لطلبك فقط", "Данные используются только для вашей заявки"),
 
  # blog teaser
@@ -57,14 +48,11 @@ S2 = {
  "blog_read": ("Read article", "Lire l’article", "اقرأ المقال", "Читать статью"),
 
  # closing call to action
- "cta2_h": ("Ready? Request your free opinion in two minutes.", "Prêt ? Demandez votre avis gratuit en deux minutes.", "جاهز؟ اطلب رأيك المجاني في دقيقتين.", "Готовы? Запросите бесплатное мнение за две минуты."),
+ "cta2_h": ("Ready? Send your request in two minutes.", "Prêt ? Envoyez votre demande en deux minutes.", "جاهز؟ أرسل طلبك في دقيقتين.", "Готовы? Отправьте заявку за две минуты."),
 
  # FAQ
- "q8": ("Is the first second opinion really free?", "Le premier second avis est-il vraiment gratuit ?", "هل الرأي الطبي الثاني الأول مجاني فعلًا؟", "Первое второе мнение действительно бесплатно?"),
- "a8": ("Yes. Your first second-opinion request is free. We confirm what is included when we reply to you.",
-        "Oui. Votre première demande de second avis est gratuite. Nous vous confirmons ce qui est inclus dans notre réponse.",
-        "نعم، طلب الرأي الطبي الثاني الأول مجاني. نوضّح لك ما يشمله عند ردّنا عليك.",
-        "Да. Ваш первый запрос на второе мнение бесплатный. Что в него входит, мы подтвердим в ответе."),
+ "q8": ("How much does a second opinion cost?", "Combien coûte un second avis ?", "كم تبلغ تكلفة الرأي الطبي الثاني؟", "Сколько стоит второе мнение?"),
+ "a8": ("Second opinions start from $30. We confirm the price for your case when we reply to you.", "Les seconds avis commencent à 30 USD. Nous vous confirmons le prix pour votre cas dans notre réponse.", "تبدأ تكلفة الرأي الطبي الثاني من 30 دولارًا، ونؤكد لك السعر الخاص بحالتك عند ردّنا عليك.", "Второе мнение стоит от 30 $. Цену для вашего случая мы подтвердим в ответе."),
  # request sent by e-mail (mailbox is live)
  "res_p": ("Your request is ready. Press “Send by e-mail” to open your mail app with it, or copy or save the summary and send it with your documents and photos (without your face). This website does not store your information.",
            "Votre demande est prête. Cliquez sur « Envoyer par e-mail » pour ouvrir votre messagerie, ou copiez ou enregistrez le résumé et envoyez-le avec vos documents et photos (sans visage). Ce site ne conserve pas vos informations.",
@@ -105,15 +93,18 @@ S2 = {
  "f_files_remove": ("Remove", "Retirer", "إزالة", "Удалить"),
  "privacy_link": ("Privacy policy", "Politique de confidentialité (en anglais)", "سياسة الخصوصية (بالإنجليزية)", "Политика конфиденциальности (на английском)"),
  "privacy_read": ("Read our privacy policy", "Lire notre politique de confidentialité (en anglais)", "اقرأ سياسة الخصوصية (بالإنجليزية)", "Прочитать политику конфиденциальности (на английском)"),
+ # legal review overrides
+ "cons2": ("I explicitly consent to Easy Clinic Center processing my personal and health data, transferring it to Türkiye and to the service providers named in the privacy policy, and sharing it with partner hospitals and physicians only to assess my case and prepare a quote (UK GDPR / KVKK). I can withdraw this consent at any time.", "Je consens expressément à ce qu’Easy Clinic Center traite mes données personnelles et de santé, les transfère vers la Türkiye et vers les prestataires cités dans la politique de confidentialité, et les partage avec les hôpitaux et médecins partenaires uniquement pour évaluer mon dossier et établir un devis (RGPD britannique / KVKK). Je peux retirer ce consentement à tout moment.", "أوافق صراحةً على أن يعالج Easy Clinic Center بياناتي الشخصية والصحية، وأن ينقلها إلى تركيا وإلى مزوّدي الخدمات المذكورين في سياسة الخصوصية، وأن يشاركها مع المستشفيات والأطباء الشركاء فقط لتقييم حالتي وإعداد العرض (GDPR البريطانية / KVKK). ويمكنني سحب هذه الموافقة في أي وقت.", "Я прямо соглашаюсь на обработку Easy Clinic Center моих персональных и медицинских данных, их передачу в Турцию и поставщикам услуг, указанным в политике конфиденциальности, и передачу больницам и врачам-партнёрам только для оценки моего случая и подготовки предложения (UK GDPR / KVKK). Я могу отозвать согласие в любой момент."),
+ "a1": ("Yes. Reviewing your request and explaining your options costs nothing. A physician’s written second opinion is priced separately and starts from $30.", "Oui. L’étude de votre demande et l’explication de vos options sont gratuites. Le second avis écrit d’un médecin est facturé à part, dès 30 USD.", "نعم، مراجعة طلبك وشرح خياراتك مجانًا. أما الرأي الطبي المكتوب من الطبيب فيُسعَّر بشكل منفصل ويبدأ من 30 دولارًا.", "Да. Рассмотрение заявки и объяснение вариантов бесплатны. Письменное второе мнение врача оплачивается отдельно и стоит от 30 $."),
 }
 
 META2 = {
- "en": ("Free Second Medical Opinion Online | Easy Clinic Center",
-        "Get a free second medical opinion from a specialist physician online, or arrange treatment at partner hospitals in Türkiye. UK patients welcome."),
- "fr": ("Second avis médical gratuit en ligne | Easy Clinic Center",
-        "Obtenez gratuitement un second avis médical en ligne d’un médecin spécialiste, ou organisez un traitement dans des hôpitaux partenaires en Türkiye."),
- "ar": ("رأي طبي ثانٍ مجاني عبر الإنترنت | Easy Clinic Center",
-        "احصل مجانًا على رأي طبي ثانٍ عبر الإنترنت من طبيب أخصائي، أو رتّب علاجك في مستشفيات شريكة في تركيا."),
- "ru": ("Бесплатное второе мнение врача онлайн | Easy Clinic Center",
-        "Получите бесплатное второе мнение врача-специалиста онлайн или организуйте лечение в клиниках-партнёрах в Турции."),
+ "en": ("Second Medical Opinion Online from $30 | Easy Clinic Center",
+        "Get a second medical opinion from a specialist physician online from $30, or arrange treatment at partner hospitals in Türkiye. UK patients welcome."),
+ "fr": ("Second avis médical en ligne dès 30 USD | Easy Clinic Center",
+        "Obtenez en ligne le second avis médical d’un médecin spécialiste dès 30 USD, ou organisez un traitement dans des hôpitaux partenaires en Türkiye."),
+ "ar": ("رأي طبي ثانٍ عبر الإنترنت ابتداءً من 30 دولارًا | Easy Clinic Center",
+        "احصل على رأي طبي ثانٍ من طبيب أخصائي عبر الإنترنت ابتداءً من 30 دولارًا، أو رتّب علاجك في مستشفيات شريكة في تركيا."),
+ "ru": ("Второе мнение врача онлайн от 30 $ | Easy Clinic Center",
+        "Получите второе мнение врача-специалиста онлайн от 30 $ или организуйте лечение в клиниках-партнёрах в Турции."),
 }

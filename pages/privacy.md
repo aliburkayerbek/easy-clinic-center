@@ -19,17 +19,20 @@ When you send a request we collect what you type or attach:
 - **Contact details:** your name and your e-mail address or phone number.
 - **Your request:** what you would like a doctor to look at, and which service you need.
 - **Health information (sensitive data):** for example a diagnosis, medicines, allergies, previous operations, height and weight, medical records, photos or scans that you send us by e-mail. You decide what to send. In the detailed form we also ask for your date of birth and country, plus your travel and quote preferences.
-- **Technical data:** like most websites, the servers that deliver this site can see your IP address and browser details when you visit. We do not use cookies or analytics tools on this site at the time of writing.
+- **E-mail and documents:** if you write to us, or reply to our e-mails with reports, scans or photos, we keep that correspondence and what it contains.
+- **Technical data:** like most websites, the servers that deliver this site can see your IP address and browser details when you visit. We do not use cookies or analytics tools on this site at the time of writing. If that changes we will update this policy and ask for your consent first where the law requires it.
 
 **Please do not send photos that show your face.** Where a photo is needed for a treatment that involves your face, we will ask you for it separately and only with your agreement.
 
 ## Why we use it and our legal basis
 
-- **To answer your request and prepare your second opinion, quote or treatment plan.** Because this involves health information, we rely on your **explicit consent** (UK GDPR Article 9(2)(a); KVKK Article 6). You give it by ticking the consent box on the form. You can withdraw it at any time.
+- **To answer your request and prepare your second opinion, quote or treatment plan.** Because this involves health information, we rely on your **explicit consent** (UK GDPR Article 9(2)(a); KVKK Article 6). You give it by ticking the consent box on the form. You can withdraw it at any time by writing to us (see Your rights); withdrawing does not affect what we did before.
 - **To take steps you ask for before arranging treatment**, such as obtaining a hospital quote (UK GDPR Article 6(1)(b)).
 - **To keep basic records and meet legal obligations** (UK GDPR Article 6(1)(c)) and to protect this website from abuse (our legitimate interest, Article 6(1)(f)).
 
 We do not use your information for advertising and we do not sell it. No decision about you is made by automated means.
+
+Giving us this information is voluntary, but we cannot answer a request without your contact details and a description of what you need.
 
 ## Who we share it with
 
@@ -40,6 +43,8 @@ We share information only as needed to do what you asked:
 - **Specialist physicians and partner hospitals,** but only the information needed for your case and only after you ask for or agree to that step. Partner hospitals are independent providers; they are responsible for your treatment and have their own privacy notices.
 - **Website hosting (GitHub Pages)** and **Google Fonts**, which deliver the website and its fonts. They receive technical data such as your IP address when you open a page.
 - **Authorities,** if the law requires it.
+
+Our website links to hospital and other third-party websites. They have their own privacy notices and we are not responsible for them.
 
 ## Transfers outside your country
 

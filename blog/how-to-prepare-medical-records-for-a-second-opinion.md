@@ -89,6 +89,6 @@ If you are unsure what the reviewer needs, our team can advise. You can also rea
 
 ## Next step
 
-When your records are ready, or even if you are still gathering them, you can request your free first second opinion through the [application form](/#apply). A licensed specialist physician reviews the file, and the team will tell you if anything is missing.
+When your records are ready, or even if you are still gathering them, you can request a second opinion, which starts from $30, through the [application form](/#apply). A licensed specialist physician reviews the file, and the team will tell you if anything is missing.
 
 *This article is general information and does not replace advice from your own doctor.*
