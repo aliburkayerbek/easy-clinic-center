@@ -100,6 +100,7 @@ def check_li(key):
 
 LANG_NAMES = {"en": "English", "fr": "Français", "ar": "العربية", "ru": "Русский"}
 LANG_PATH = {"en": "/", "fr": "/fr/", "ar": "/ar/", "ru": "/ru/"}
+LOCAL = "" if LC == "en" else f"{LC}/"   # localized pages (privacy, about) live under /<lang>/
 REL = "" if LC == "en" else "../"   # pages live at /, /fr/, /ar/, /ru/ - keep links relative so any base path works
 def rel_href(l):
     return (REL + LANG_PATH[l].strip("/") + ("/" if l != "en" else "")) or "./"
@@ -276,13 +277,13 @@ def make_footer(A, N):
  <div class="ft-c">
   <div>{T("ft_hours", "h4")}{T("ft_hours_v", "p")}</div>
   <div>{T("ft_office", "h4")}{T("ft_office_v", "p")}</div>
-  <div>{T("ft_contact", "h4")}<p><span>www.easycliniccenter.com</span><br/>{T("ft_contact_v", "span", "muted")}</p><p><a href="{A}blog/">{T("nav_blog")}</a> · <a href="{A}about/">{T("nav_about")}</a> · <a href="{A}privacy/">{T("privacy_link")}</a></p></div>
+  <div>{T("ft_contact", "h4")}<p><span>www.easycliniccenter.com</span><br/>{T("ft_contact_v", "span", "muted")}</p><p><a href="{A}blog/">{T("nav_blog")}</a> · <a href="{A}{LOCAL}about/">{T("nav_about")}</a> · <a href="{A}{LOCAL}privacy/">{T("privacy_link")}</a></p></div>
  </div>
  {T("ft_legal", "p", "legal")}
 <p class="copy">© 2026 Easy Clinic Center · <a href="#" id="ccOpen">{T("cc_open")}</a></p>
 </div></footer>
 <div class="ccbar" id="ccBar" role="dialog" aria-label="{S["cc_label"][LI]}" hidden>
- <p>{T("cc_text")} <a href="{A}privacy/">{T("privacy_link")}</a></p>
+ <p>{T("cc_text")} <a href="{A}{LOCAL}privacy/">{T("privacy_link")}</a></p>
  <div class="ccbtn"><button type="button" class="btn btn-p" id="ccYes">{T("cc_yes")}</button><button type="button" class="btn btn-s" id="ccNo">{T("cc_no")}</button></div>
 </div>
 <div class="mbar"><a class="btn btn-p" href="{N}#apply">{T("m_apply")}</a></div>'''
@@ -354,7 +355,7 @@ hero = f'''
     </div>
     <input type="text" name="website" id="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true"/>
     <div id="simpleConsent">{tick("consent", "f_consent")}</div>
-    <p class="hint pl"><a href="{REL}privacy/">{T("privacy_read")}</a></p>
+    <p class="hint pl"><a href="{REL}{LOCAL}privacy/">{T("privacy_read")}</a></p>
     <button type="submit" class="btn btn-p btn-l full" id="btnSubmit">{T("f_submit")}{ic("arrow", "ic dir")}</button>
     <p class="form-reassure">{ic("lock")}{T("form_reassure")}</p>
    </form>
@@ -623,29 +624,30 @@ def og_image(path):
     return SITE + "/" + path
 
 # ---- markdown (small subset used by the blog)
-def inline_md(t, A):
+def inline_md(t, A, L=""):
     t = H.escape(t, quote=False)
     t = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", t)
     t = re.sub(r"(?<![*\w])\*(?!\s)(.+?)(?<!\s)\*(?![*\w])", r"<em>\1</em>", t)
     def link(m):
         text, url = m.group(1), m.group(2)
         if url.startswith("/"):
-            url = A + url.lstrip("/")
+            local = url.startswith(("/privacy/", "/about/", "/#")) or url == "/"
+            url = A + (L if local else "") + url.lstrip("/")
         ext = ' rel="noopener" target="_blank"' if url.startswith("http") else ""
         return f'<a href="{url}"{ext}>{text}</a>'
     return re.sub(r"\[([^\]]+)\]\(([^)]+)\)", link, t)
 
-def md_to_html(body, A):
+def md_to_html(body, A, L=""):
     out, para, items = [], [], []
     def flush():
         nonlocal para, items
-        if para: out.append("<p>" + inline_md(" ".join(para), A) + "</p>"); para = []
-        if items: out.append("<ul>" + "".join(f"<li>{inline_md(i, A)}</li>" for i in items) + "</ul>"); items = []
+        if para: out.append("<p>" + inline_md(" ".join(para), A, L) + "</p>"); para = []
+        if items: out.append("<ul>" + "".join(f"<li>{inline_md(i, A, L)}</li>" for i in items) + "</ul>"); items = []
     for line in body.splitlines():
         s = line.strip()
         if not s: flush(); continue
-        if s.startswith("### "): flush(); out.append(f"<h3>{inline_md(s[4:], A)}</h3>")
-        elif s.startswith("## "): flush(); out.append(f"<h2>{inline_md(s[3:], A)}</h2>")
+        if s.startswith("### "): flush(); out.append(f"<h3>{inline_md(s[4:], A, L)}</h3>")
+        elif s.startswith("## "): flush(); out.append(f"<h2>{inline_md(s[3:], A, L)}</h2>")
         elif s.startswith(("- ", "* ")):
             if para: flush()
             items.append(s[2:].strip())
@@ -688,9 +690,16 @@ def csp_meta(script_text):
 
 BLOG_SCRIPT = FRAME_BUST + 'document.getElementById("lang").addEventListener("change", e => { location.href = e.target.value; });' + CONSENT_JS
 
-def blog_page(A, title, desc, canonical, main_html, jsonld="", ogtype="website"):
+AR_PAGE_FONTS = "&family=Noto+Naskh+Arabic:wght@500;600&family=Noto+Sans+Arabic:wght@400;500;600;700"
+
+def page_fonts(lc):
+    if lc != "ar":
+        return BLOG_FONTS
+    return BLOG_FONTS.replace("&display=swap", AR_PAGE_FONTS + "&display=swap")
+
+def blog_page(A, title, desc, canonical, main_html, jsonld="", ogtype="website", lc="en", opts=None, N=None, extra_head=""):
     head = f'''<!doctype html>
-<html lang="en" dir="ltr">
+<html lang="{lc}" dir="{"rtl" if lc == "ar" else "ltr"}">
 <head>
 <meta charset="utf-8"/>
 {csp_meta(BLOG_SCRIPT)}
@@ -703,16 +712,17 @@ def blog_page(A, title, desc, canonical, main_html, jsonld="", ogtype="website")
 <link rel="apple-touch-icon" href="{A}apple-touch-icon.png"/>
 <meta property="og:type" content="{ogtype}"/><meta property="og:site_name" content="Easy Clinic Center"/>
 <meta property="og:title" content="{ESC(title)}"/><meta property="og:description" content="{ESC(desc)}"/>
-<meta property="og:url" content="{canonical}"/><meta property="og:image" content="{og_image('og.png')}"/><meta property="og:locale" content="en_GB"/>
+<meta property="og:url" content="{canonical}"/><meta property="og:image" content="{og_image('og.png')}"/><meta property="og:locale" content="{META[lc][1]}"/>
 <meta name="twitter:card" content="summary_large_image"/>
+{extra_head}
 {jsonld}
-{BLOG_FONTS}
+{page_fonts(lc)}
 <link rel="stylesheet" href="{A}assets/site.css"/>
 </head>
 <body>
-{make_header(A, A, blog_opts(A))}
+{make_header(A, N or A, opts or blog_opts(A))}
 <main id="main">{main_html}</main>
-{make_footer(A, A)}
+{make_footer(A, N or A)}
 <script>{BLOG_SCRIPT}</script>
 </body>
 </html>
@@ -795,35 +805,56 @@ def make_assets():
     (site / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n")
     hl = "".join(f'<xhtml:link rel="alternate" hreflang="{hreflang(l)}" href="{SITE}{LANG_PATH[l]}"/>' for l in LANGS) + f'<xhtml:link rel="alternate" hreflang="x-default" href="{SITE}/"/>'
     urls = "".join(f"<url><loc>{SITE}{LANG_PATH[l]}</loc>{hl}</url>" for l in LANGS)
-    urls += f"<url><loc>{SITE}/blog/</loc></url><url><loc>{SITE}/privacy/</loc></url><url><loc>{SITE}/about/</loc></url>" + "".join(f"<url><loc>{SITE}/blog/{p['slug']}/</loc><lastmod>{p['date']}</lastmod></url>" for p in POSTS)
+    urls += f"<url><loc>{SITE}/blog/</loc></url>"
+    for slug in ("privacy", "about"):
+        al = "".join(f'<xhtml:link rel="alternate" hreflang="{hreflang(l)}" href="{SITE}{LANG_PATH[l]}{slug}/"/>' for l in LANGS) + f'<xhtml:link rel="alternate" hreflang="x-default" href="{SITE}/{slug}/"/>'
+        urls += "".join(f"<url><loc>{SITE}{LANG_PATH[l]}{slug}/</loc>{al}</url>" for l in LANGS) + "".join(f"<url><loc>{SITE}/blog/{p['slug']}/</loc><lastmod>{p['date']}</lastmod></url>" for p in POSTS)
     (site / "sitemap.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">{urls}</urlset>\n')
 
-PAGES = [("privacy", "Privacy policy", False), ("about", "About us", True)]
+PAGES = [("privacy", False), ("about", True)]
+
+def page_opts(A, slug, cur):
+    o = ""
+    for l in LANGS:
+        v = A + ("" if l == "en" else f"{l}/") + slug + "/"
+        o += f'<option value="{v}"{" selected" if l == cur else ""}>{LANG_NAMES[l]}</option>'
+    return o
+
+def page_alternates(slug):
+    a = "".join(f'<link rel="alternate" hreflang="{hreflang(l)}" href="{SITE}{LANG_PATH[l]}{slug}/"/>\n' for l in LANGS)
+    return a + f'<link rel="alternate" hreflang="x-default" href="{SITE}/{slug}/"/>'
 
 def build_pages():
     site = ROOT / "site"
-    A = "../"
-    for slug, label, cta in PAGES:
-        f = ROOT / "pages" / f"{slug}.md"
+    A = "../" if LC == "en" else "../../"
+    N = A + LOCAL
+    for slug, cta in PAGES:
+        f = ROOT / "pages" / (f"{slug}.md" if LC == "en" else f"{slug}.{LC}.md")
+        if not f.exists():
+            print("skip (no translation yet):", f.name); continue
         m = re.match(r"---\n(.*?)\n---\n(.*)", f.read_text(encoding="utf-8"), re.S)
         meta = {k.strip(): v.strip() for k, v in (l.split(":", 1) for l in m.group(1).splitlines() if ":" in l)}
-        url = f"{SITE}/{slug}/"
-        box = f'''<aside class="postcta"><h2>{ic("heart")} Second opinions from $30</h2><p>Send us your question. A specialist physician reviews your records and writes you a report.</p><a class="btn btn-p btn-l" href="{A}#apply">{T("m_apply")}{ic("arrow", "ic dir")}</a></aside>''' if cta else ""
+        label = S["privacy_link"][LI] if slug == "privacy" else S["nav_about"][LI]
+        if LC == "en" and slug == "about": label = "About us"
+        url = f"{SITE}/{LOCAL}{slug}/"
+        box = f'''<aside class="postcta"><h2>{ic("heart")} {S["tr1"][LI]}</h2><p>{S["h_p"][LI]}</p><a class="btn btn-p btn-l" href="{N}#apply">{S["m_apply"][LI]}{ic("arrow", "ic dir")}</a></aside>''' if cta else ""
         art = f'''
 <article class="sec post"><div class="wrap narrow">
- <nav class="crumbs" aria-label="Breadcrumb"><a href="{A}">Home</a> <span aria-hidden="true">/</span> <span>{label}</span></nav>
+ <nav class="crumbs" aria-label="Breadcrumb"><a href="{N}">{S["pg_home"][LI]}</a> <span aria-hidden="true">/</span> <span>{label}</span></nav>
  <h1 class="blog-h1">{label}</h1>
- <p class="pmeta">Last updated <time datetime="{meta["date"]}">{meta["date"]}</time></p>
- <div class="prose">{md_to_html(m.group(2).strip(), A)}</div>
+ <p class="pmeta">{S["pg_updated"][LI]} <time datetime="{meta["date"]}">{meta["date"]}</time></p>
+ <div class="prose">{md_to_html(m.group(2).strip(), A, LOCAL)}</div>
  {box}
 </div></article>'''
-        d = site / slug; d.mkdir(exist_ok=True)
-        (d / "index.html").write_text(blog_page(A, meta["title"], meta["description"], url, art, ld({"@context": "https://schema.org", "@type": "AboutPage" if slug == "about" else "WebPage", "name": label, "url": url, "inLanguage": "en-GB", "dateModified": meta["date"]})), encoding="utf-8")
+        d = site / LOCAL.strip("/") / slug if LOCAL else site / slug
+        d.mkdir(parents=True, exist_ok=True)
+        j = ld({"@context": "https://schema.org", "@type": "AboutPage" if slug == "about" else "WebPage", "name": label, "url": url, "inLanguage": hreflang(LC), "dateModified": meta["date"]})
+        (d / "index.html").write_text(blog_page(A, meta["title"], meta["description"], url, art, j, "website", LC, page_opts(A, slug, LC), N, page_alternates(slug)), encoding="utf-8")
 
 if LI == 0:
     make_assets()
     build_blog()
-    build_pages()
+build_pages()
 
 JSONLD = json.dumps({"@context": "https://schema.org", "@graph": [
     {"@type": "Organization", "@id": SITE + "/#org", "name": "Easy Clinic Center", "url": SITE + "/",

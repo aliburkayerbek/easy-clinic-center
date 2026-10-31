@@ -91,8 +91,8 @@ S2 = {
                   "Файлы слишком большие (всего 8 МБ). Фото уменьшаются автоматически; большие PDF отправьте по e-mail после нашего ответа."),
  "f_files_max": ("You can attach up to 5 files.", "Vous pouvez joindre 5 fichiers au maximum.", "يمكنك إرفاق 5 ملفات كحد أقصى.", "Можно прикрепить не более 5 файлов."),
  "f_files_remove": ("Remove", "Retirer", "إزالة", "Удалить"),
- "privacy_link": ("Privacy policy", "Politique de confidentialité (en anglais)", "سياسة الخصوصية (بالإنجليزية)", "Политика конфиденциальности (на английском)"),
- "privacy_read": ("Read our privacy policy", "Lire notre politique de confidentialité (en anglais)", "اقرأ سياسة الخصوصية (بالإنجليزية)", "Прочитать политику конфиденциальности (на английском)"),
+ "privacy_link": ("Privacy policy", "Politique de confidentialité", "سياسة الخصوصية", "Политика конфиденциальности"),
+ "privacy_read": ("Read our privacy policy", "Lire notre politique de confidentialité", "اقرأ سياسة الخصوصية", "Прочитать политику конфиденциальности"),
  # legal review overrides
  "cons2": ("I explicitly consent to Easy Clinic Center processing my personal and health data, transferring it to Türkiye and to the service providers named in the privacy policy, and sharing it with partner hospitals and physicians only to assess my case and prepare a quote (UK GDPR / KVKK). I can withdraw this consent at any time.", "Je consens expressément à ce qu’Easy Clinic Center traite mes données personnelles et de santé, les transfère vers la Türkiye et vers les prestataires cités dans la politique de confidentialité, et les partage avec les hôpitaux et médecins partenaires uniquement pour évaluer mon dossier et établir un devis (RGPD britannique / KVKK). Je peux retirer ce consentement à tout moment.", "أوافق صراحةً على أن يعالج Easy Clinic Center بياناتي الشخصية والصحية، وأن ينقلها إلى تركيا وإلى مزوّدي الخدمات المذكورين في سياسة الخصوصية، وأن يشاركها مع المستشفيات والأطباء الشركاء فقط لتقييم حالتي وإعداد العرض (GDPR البريطانية / KVKK). ويمكنني سحب هذه الموافقة في أي وقت.", "Я прямо соглашаюсь на обработку Easy Clinic Center моих персональных и медицинских данных, их передачу в Турцию и поставщикам услуг, указанным в политике конфиденциальности, и передачу больницам и врачам-партнёрам только для оценки моего случая и подготовки предложения (UK GDPR / KVKK). Я могу отозвать согласие в любой момент."),
  "a1": ("Yes. Reviewing your request and explaining your options costs nothing. A physician’s written second opinion is priced separately and starts from $30.", "Oui. L’étude de votre demande et l’explication de vos options sont gratuites. Le second avis écrit d’un médecin est facturé à part, dès 30 USD.", "نعم، مراجعة طلبك وشرح خياراتك مجانًا. أما الرأي الطبي المكتوب من الطبيب فيُسعَّر بشكل منفصل ويبدأ من 30 دولارًا.", "Да. Рассмотрение заявки и объяснение вариантов бесплатны. Письменное второе мнение врача оплачивается отдельно и стоит от 30 $."),
@@ -105,6 +105,9 @@ S2 = {
  "cc_no": ("Decline", "Refuser", "أرفض", "Отклонить"),
  "cc_open": ("Cookie settings", "Paramètres des cookies", "إعدادات ملفات تعريف الارتباط", "Настройки cookie"),
  "cc_label": ("Cookie consent", "Consentement aux cookies", "الموافقة على ملفات تعريف الارتباط", "Согласие на cookie"),
+ # localized legal pages
+ "pg_home": ("Home", "Accueil", "الرئيسية", "Главная"),
+ "pg_updated": ("Last updated", "Dernière mise à jour", "آخر تحديث", "Обновлено"),
 }
 
 META2 = {
