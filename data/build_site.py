@@ -287,6 +287,8 @@ header = make_header(REL, "", LANG_OPTS)
 footer = make_footer(REL, "")
 
 # ------------------------------------------------------------------ hero with the one-step request form
+CONDS = ["c_diab", "c_bp", "c_heart", "c_blood", "c_allergy", "c_surgery", "c_smoke", "c_preg"]
+
 hero = f'''
 <section class="hero" aria-label="Easy Clinic Center">
  <div class="wrap hero2">
@@ -301,19 +303,43 @@ hero = f'''
    {T("f_title", "h2")}
    <form id="appForm" novalidate>
     <div class="fg">
-     {sel("need", "f_need", [("second", "n_second", ""), ("treat", "n_treat", ""), ("unsure", "n_unsure", "")], full=True)}
+     {sel("need", "f_need", [("second", "n_second", ""), ("treat", "n_treat", ""), ("plastic", "n_plastic", ""), ("dental", "n_dental", ""), ("chronic", "n_chronic", ""), ("unsure", "n_unsure", "")], full=True)}
      {fld("fullname", "f_name", req=True, auto="name", full=True)}
      {fld("contact", "f_contact", req=True, auto="email", extra=' inputmode="email" dir="ltr"', full=True)}
      {fld("msg", "f_msg", typ="textarea", req=True, hint="f_msg_h", full=True)}
     </div>
-    <details class="more-d"><summary>{T("f_more")}</summary>
+    <div class="detail" id="detailBox" hidden>
+     <h3 class="dh">{T("g1")}</h3>
      <div class="fg">
-      {fld("country", "country", auto="country-name", full=True)}
-      {fld("meds", "meds", typ="textarea", full=True)}
+      {fld("dob", "dob", "date", True, "bday", full=True)}
+      {fld("country", "country", req=True, auto="country-name", full=True)}
+      {sel("plang", "plang", [("English", None, "English"), ("Français", None, "Français"), ("العربية", None, "العربية"), ("Русский", None, "Русский"), ("Türkçe", None, "Türkçe")], full=True)}
+      {sel("pcity", "pcity", [("any", "anycity", ""), ("İstanbul", "c_ist", ""), ("Ankara", "c_ank", ""), ("İzmir", "c_izm", ""), ("Antalya", "c_ant", "")], full=True)}
+      {fld("diag", "diag", full=True)}
      </div>
-     <p class="hint">{ic("face")}{T("f_photo")}</p>
-    </details>
-    {tick("consent", "f_consent")}
+     <div class="photo" id="photoBox" hidden>
+      <h3>{ic("face")}{T("photo_h")}</h3>{T("photo_p", "p")}
+      <div class="dd"><div class="dd-y"><b>{ic("check")}{T("do")}</b>{T("do_p", "p")}</div><div class="dd-n"><b>{ic("x")}{T("dont")}</b>{T("dont_p", "p")}</div></div>
+      {T("photo_face", "p", "pf")}
+      {tick("photo_ok", "photo_ok")}
+     </div>
+     <h3 class="dh">{T("g3")}</h3>
+     <div class="fg">
+      {fld("hgt", "hgt", "number", extra=' inputmode="numeric" min="50" max="250"')}{fld("wgt", "wgt", "number", extra=' inputmode="numeric" min="20" max="350"')}
+      <div class="f full"><p class="lbl">{T("cond")}</p><div class="conds">{"".join(f'<label class="chk"><input type="checkbox" name="cond" value="{c}" id="{c}"/><span>{T(c)}</span></label>' for c in CONDS)}</div></div>
+      <div class="full" id="detBox" hidden>{fld("details", "details", "textarea", full=True)}</div>
+      {fld("meds", "meds", "textarea", full=True)}
+     </div>
+     <h3 class="dh">{T("g4")}</h3>
+     <div class="fg">
+      <div class="f full" role="radiogroup" aria-labelledby="quote-l"><p class="lbl" id="quote-l">{T("quote")}<b class="req" aria-hidden="true">*</b></p>
+       <div class="radios">{"".join(f'<label class="rad"><input type="radio" name="quote" value="{v}" id="quote-{v}"{" required" if v == "A" else ""}/><span>{T(k)}</span></label>' for v, k in [("A", "q_a"), ("B", "q_b"), ("both", "q_both")])}</div>
+       <p class="err" role="alert" id="quote-e" hidden></p></div>
+      {fld("dates", "dates")}{fld("comp", "comp", "number", extra=' inputmode="numeric" min="0" max="6"')}
+     </div>
+     {tick("cons1", "cons1")}{tick("cons2", "cons2")}{tick("cons3", "cons3")}
+    </div>
+    <div id="simpleConsent">{tick("consent", "f_consent")}</div>
     <button type="submit" class="btn btn-p btn-l full" id="btnSubmit">{T("f_submit")}{ic("arrow", "ic dir")}</button>
     <p class="form-reassure">{ic("lock")}{T("form_reassure")}</p>
    </form>
@@ -380,14 +406,32 @@ JS = r'''
 
  /* form */
 
- /* request form */
+ /* request form: simple for a second opinion, detailed for treatment */
  const form = document.getElementById("appForm");
+ const E = id => document.getElementById(id);
+ const need = E("need"), detail = E("detailBox"), simpleConsent = E("simpleConsent"), photoBox = E("photoBox"), photoOk = E("photo_ok"), detBox = E("detBox");
+ const DETAIL_REQ = ["dob", "country", "cons1", "cons2", "cons3"];
+ function syncMode(){
+  const full = need.value !== "second";
+  detail.hidden = !full; simpleConsent.hidden = full;
+  E("consent").required = !full;
+  DETAIL_REQ.forEach(id => { E(id).required = full; });
+  E("quote-A").required = full;
+  const ph = ["treat", "plastic", "dental"].includes(need.value);
+  photoBox.hidden = !(full && ph); photoOk.required = full && ph;
+ }
+ need.addEventListener("change", syncMode); syncMode();
+ const condBoxes = [...form.querySelectorAll('input[name="cond"]')];
+ condBoxes.forEach(c => c.addEventListener("change", () => { detBox.hidden = !condBoxes.some(x => x.checked && ["c_blood", "c_allergy", "c_surgery"].includes(x.value)); }));
  function setErr(el, key){
-  const e = document.getElementById(el.id + "-e"); if(!e) return;
+  const id = el.type === "radio" ? "quote" : el.id;
+  const e = E(id + "-e"); if(!e) return;
   if(key){ e.dataset.k = key; e.textContent = L[key]; e.hidden = false; el.setAttribute("aria-invalid", "true"); }
   else { e.hidden = true; e.textContent = ""; el.removeAttribute("aria-invalid"); }
  }
  function check(el){
+  if(el.closest("[hidden]")){ setErr(el, null); return true; }
+  if(el.type === "radio"){ const ok = !!form.querySelector('input[name="' + el.name + '"]:checked'); setErr(el, ok ? null : "err_req"); return ok; }
   if(el.type === "checkbox"){ const ok = !el.required || el.checked; setErr(el, ok ? null : "err_tick"); return ok; }
   const v = el.value.trim();
   if(el.required && !v){ setErr(el, "err_req"); return false; }
@@ -401,29 +445,46 @@ JS = r'''
  form.querySelectorAll("input,select,textarea").forEach(el => {
   el.addEventListener("blur", () => { if(el.dataset.t) check(el); });
   el.addEventListener("input", () => { el.dataset.t = 1; if(el.getAttribute("aria-invalid")) check(el); });
-  el.addEventListener("change", () => { el.dataset.t = 1; if(el.getAttribute("aria-invalid") || el.type === "checkbox") check(el); });
+  el.addEventListener("change", () => { el.dataset.t = 1; if(el.getAttribute("aria-invalid") || el.type === "checkbox" || el.type === "radio") check(el); });
  });
 
  const EN = I18N.en;
  const strip = s => s.replace(/<[^>]+>/g, "").replace(/&amp;/g, "&");
  function makeRef(){ const d = new Date(); const p = n => String(n).padStart(2, "0"); return "ECC-" + String(d.getFullYear()).slice(2) + p(d.getMonth() + 1) + p(d.getDate()) + "-" + String(Math.floor(1000 + Math.random() * 9000)); }
- const res = document.getElementById("result"), sumEl = document.getElementById("sumText"), refEl = document.getElementById("refNo");
- const toast = document.getElementById("toast"), mail = document.getElementById("btnMail"), soon = document.getElementById("soonNote");
+ const res = E("result"), sumEl = E("sumText"), refEl = E("refNo");
+ const toast = E("toast"), mail = E("btnMail"), soon = E("soonNote");
  let summary = "", ref = "";
+ const val = id => { const el = E(id); if(!el) return ""; if(el.tagName === "SELECT"){ const o = el.selectedOptions[0]; if(!o || !o.value) return ""; return o.dataset.i ? strip(EN[o.dataset.i]) : o.textContent; } return el.value.trim(); };
  form.addEventListener("submit", e => {
   e.preventDefault();
-  let first = null;
-  [...form.querySelectorAll("input,select,textarea")].filter(x => x.required || x.value).forEach(x => { if(!check(x) && !first) first = x; });
+  let first = null; const seen = new Set();
+  [...form.querySelectorAll("input,select,textarea")].filter(x => x.required || x.value).forEach(x => {
+   if(x.type === "radio"){ if(seen.has(x.name)) return; seen.add(x.name); }
+   if(!check(x) && !first) first = x; });
   if(first){ first.focus(); return; }
   ref = makeRef();
-  const need = form.elements.need.selectedOptions[0];
-  const lines = ["EASY CLINIC CENTER - REQUEST", "Reference: " + ref, "Language used: " + lang.toUpperCase(),
-   "Request: " + strip(EN[need.dataset.i]) + (form.elements.need.value === "second" ? " (first request - free)" : ""),
-   "Name: " + form.elements.fullname.value.trim(), "Contact: " + form.elements.contact.value.trim(),
-   "Message: " + form.elements.msg.value.trim()];
-  if(form.elements.country.value.trim()) lines.push("Country: " + form.elements.country.value.trim());
-  if(form.elements.meds.value.trim()) lines.push("Medicines / allergies / previous operations: " + form.elements.meds.value.trim());
-  summary = lines.join("\n");
+  const full = need.value !== "second";
+  const L2 = ["EASY CLINIC CENTER - REQUEST", "Reference: " + ref, "Language used: " + lang.toUpperCase(),
+   "Request: " + val("need") + (full ? "" : " (first request - free)"), "Name: " + val("fullname"), "Contact: " + val("contact")];
+  if(full){
+   L2.push("Preferred language: " + val("plang"), "Date of birth: " + val("dob"), "Country of residence: " + val("country"),
+    "Preferred city: " + val("pcity"));
+   if(val("diag")) L2.push("Diagnosis: " + val("diag"));
+  }
+  L2.push("Message: " + val("msg"));
+  if(full){
+   if(val("hgt") || val("wgt")) L2.push("Height / weight: " + (val("hgt") || "-") + " cm / " + (val("wgt") || "-") + " kg");
+   const conds = condBoxes.filter(c => c.checked).map(c => strip(EN[c.value]));
+   if(conds.length) L2.push("Conditions: " + conds.join("; "));
+   if(val("details")) L2.push("Details: " + val("details"));
+   if(val("meds")) L2.push("Medicines / allergies / previous operations: " + val("meds"));
+   const q = form.querySelector('input[name="quote"]:checked');
+   if(q) L2.push("Quote option: " + strip(EN[{A: "q_a", B: "q_b", both: "q_both"}[q.value]]));
+   if(val("dates")) L2.push("Preferred dates: " + val("dates"));
+   if(val("comp")) L2.push("Companions: " + val("comp"));
+   L2.push("Consents: data use, photo rules and age confirmed");
+  }
+  summary = L2.join("\n");
   refEl.textContent = ref; sumEl.textContent = summary;
   if(CONTACT){
    mail.href = "mailto:" + CONTACT + "?subject=" + encodeURIComponent("Request " + ref) + "&body=" + encodeURIComponent(summary.slice(0, 1500));
@@ -431,7 +492,7 @@ JS = r'''
   }
   form.hidden = true; res.hidden = false; res.focus(); res.scrollIntoView({block: "start"});
  });
- document.getElementById("btnEdit").addEventListener("click", () => { res.hidden = true; form.hidden = false; form.elements.fullname.focus(); });
+ document.getElementById("btnEdit").addEventListener("click", () => { res.hidden = true; form.hidden = false; E("fullname").focus(); });
  document.getElementById("btnCopy").addEventListener("click", async () => {
   try{ await navigator.clipboard.writeText(summary); toast.textContent = L.copied; }
   catch(err){ const r = document.createRange(); r.selectNodeContents(sumEl); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }

@@ -393,3 +393,11 @@ input,select,textarea{accent-color:var(--accent)}
 .rel-h{font-size:1.3rem;margin:34px 0 0}
 .mbar.off{display:none !important}
 @media(max-width:900px){.hero2{grid-template-columns:1fr;gap:24px}.pgrid,.pgrid.two{grid-template-columns:1fr}}
+
+/* ---- detailed treatment form ---- */
+.detail{margin-top:6px}
+.dh{font-size:1.05rem;margin:18px 0 8px;color:var(--navy)}
+.hero2 .detail .fg{grid-template-columns:1fr 1fr}
+.hero2 .detail .fg .full,.hero2 .detail .fg .f.full{grid-column:1/-1}
+.radios{display:grid;gap:8px}
+@media(max-width:600px){.hero2 .detail .fg{grid-template-columns:1fr}}
