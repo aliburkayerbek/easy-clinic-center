@@ -4,3 +4,6 @@ CONTACT_EMAIL = "info@easycliniccenter.com"
 # Form service: the request is POSTed here and delivered to the mailbox. Empty = local summary + mailto only.
 # FormSubmit needs no account; the first submission sends an activation e-mail to the address in the URL.
 FORM_ENDPOINT = "https://formsubmit.co/ajax/info@easycliniccenter.com"
+# Attachments are NOT delivered by the free FormSubmit AJAX endpoint (tested 2026-10-31: mail arrived without files).
+# Turn on only after a backend that really forwards files exists (e.g. a PHP script on the mail hosting).
+ATTACHMENTS_ENABLED = False

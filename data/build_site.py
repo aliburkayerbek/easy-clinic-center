@@ -3,7 +3,7 @@ import json, base64, pathlib, re, shutil, datetime, html as H
 import illus
 from web_strings import S
 from site_strings import S2, META2
-from config import SITE, CONTACT_EMAIL, FORM_ENDPOINT
+from config import SITE, CONTACT_EMAIL, FORM_ENDPOINT, ATTACHMENTS_ENABLED
 S.update(S2)
 FAQ_N = 8
 
@@ -289,6 +289,14 @@ footer = make_footer(REL, "")
 # ------------------------------------------------------------------ hero with the one-step request form
 CONDS = ["c_diab", "c_bp", "c_heart", "c_blood", "c_allergy", "c_surgery", "c_smoke", "c_preg"]
 
+FILES_HTML = f'''    <div class="f full filesbox">
+ <label for="files">{T("f_files")}</label>
+ <p class="hint" id="files-h">{ic("face")}{T("f_files_h")}</p>
+ <input type="file" id="files" name="files" multiple accept="image/*,application/pdf" aria-describedby="files-h files-e"/>
+ <ul class="flist" id="fileList"></ul>
+ <p class="err" role="alert" id="files-e" hidden></p>
+</div>''' if ATTACHMENTS_ENABLED else ""
+
 hero = f'''
 <section class="hero" aria-label="Easy Clinic Center">
  <div class="wrap hero2">
@@ -308,13 +316,7 @@ hero = f'''
      {fld("contact", "f_contact", req=True, auto="email", extra=' inputmode="email" dir="ltr"', full=True)}
      {fld("msg", "f_msg", typ="textarea", req=True, hint="f_msg_h", full=True)}
     </div>
-    <div class="f full filesbox">
-     <label for="files">{T("f_files")}</label>
-     <p class="hint" id="files-h">{ic("face")}{T("f_files_h")}</p>
-     <input type="file" id="files" name="files" multiple accept="image/*,application/pdf" aria-describedby="files-h files-e"/>
-     <ul class="flist" id="fileList"></ul>
-     <p class="err" role="alert" id="files-e" hidden></p>
-    </div>
+    {FILES_HTML}
     <div class="detail" id="detailBox" hidden>
      <h3 class="dh">{T("g1")}</h3>
      <div class="fg">
@@ -491,7 +493,7 @@ JS = r'''
    li.appendChild(b); fileList.appendChild(li);
   });
  }
- fileIn.addEventListener("change", async () => {
+ if(fileIn) fileIn.addEventListener("change", async () => {
   fileMsg(null);
   const picked = [...fileIn.files]; fileIn.value = "";
   for(const f of picked){

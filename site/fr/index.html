@@ -63,13 +63,7 @@
      <div class="f full"><label for="contact"><span data-i="f_contact">E-mail ou numéro WhatsApp</span><b class="req" aria-hidden="true">*</b></label><input id="contact" name="contact" type="text" required autocomplete="email" aria-describedby="contact-e" inputmode="email" dir="ltr"/><p class="err" role="alert" id="contact-e" hidden></p></div>
      <div class="f full"><label for="msg"><span data-i="f_msg">Sur quoi souhaitez-vous l’avis d’un médecin ?</span><b class="req" aria-hidden="true">*</b></label><p data-i="f_msg_h" class="hint" id="msg-h">Quelques lignes suffisent. Vous pourrez envoyer vos documents après notre réponse.</p><textarea id="msg" name="msg" rows="4" required aria-describedby="msg-e msg-h"></textarea><p class="err" role="alert" id="msg-e" hidden></p></div>
     </div>
-    <div class="f full filesbox">
-     <label for="files"><span data-i="f_files">Photos ou documents (facultatif)</span></label>
-     <p class="hint" id="files-h"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="10" r="5"/><path d="M4 21c1.5-4.5 14.5-4.5 16 0 M3 3l18 18"/></svg><span data-i="f_files_h">JPG, PNG ou PDF. 5 fichiers maximum, 8 Mo au total. Pas de photos montrant votre visage.</span></p>
-     <input type="file" id="files" name="files" multiple accept="image/*,application/pdf" aria-describedby="files-h files-e"/>
-     <ul class="flist" id="fileList"></ul>
-     <p class="err" role="alert" id="files-e" hidden></p>
-    </div>
+    
     <div class="detail" id="detailBox" hidden>
      <h3 class="dh"><span data-i="g1">Vous</span></h3>
      <div class="fg">
@@ -717,7 +711,7 @@
    li.appendChild(b); fileList.appendChild(li);
   });
  }
- fileIn.addEventListener("change", async () => {
+ if(fileIn) fileIn.addEventListener("change", async () => {
   fileMsg(null);
   const picked = [...fileIn.files]; fileIn.value = "";
   for(const f of picked){

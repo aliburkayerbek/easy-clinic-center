@@ -18,7 +18,7 @@ When you send a request we collect what you type or attach:
 
 - **Contact details:** your name and your e-mail address or phone number.
 - **Your request:** what you would like a doctor to look at, and which service you need.
-- **Health information (sensitive data):** for example a diagnosis, medicines, allergies, previous operations, height and weight, medical records, photos or scans. You decide what to send. In the detailed form we also ask for your date of birth and country, plus your travel and quote preferences.
+- **Health information (sensitive data):** for example a diagnosis, medicines, allergies, previous operations, height and weight, medical records, photos or scans that you send us by e-mail. You decide what to send. In the detailed form we also ask for your date of birth and country, plus your travel and quote preferences.
 - **Technical data:** like most websites, the servers that deliver this site can see your IP address and browser details when you visit. We do not use cookies or analytics tools on this site at the time of writing.
 
 **Please do not send photos that show your face.** Where a photo is needed for a treatment that involves your face, we will ask you for it separately and only with your agreement.
@@ -35,7 +35,7 @@ We do not use your information for advertising and we do not sell it. No decisio
 
 We share information only as needed to do what you asked:
 
-- **Our form service (FormSubmit, formsubmit.co).** When you press the send button, your request is passed through this service, which e-mails it to us. According to its documentation it keeps form submissions for 30 days and does not keep uploaded files, although its wording on files is not fully clear. We cannot control this service.
+- **Our form service (FormSubmit, formsubmit.co).** When you press the send button, your request is passed through this service, which e-mails it to us. According to its documentation it keeps form submissions for 30 days. We cannot control this service. Documents and photos are not sent through the form: you send them by replying to our e-mail.
 - **Our e-mail provider (İsimtescil, Türkiye)** hosts our mailbox, where your request and any attachments are stored.
 - **Specialist physicians and partner hospitals,** but only the information needed for your case and only after you ask for or agree to that step. Partner hospitals are independent providers; they are responsible for your treatment and have their own privacy notices.
 - **Website hosting (GitHub Pages)** and **Google Fonts**, which deliver the website and its fonts. They receive technical data such as your IP address when you open a page.
