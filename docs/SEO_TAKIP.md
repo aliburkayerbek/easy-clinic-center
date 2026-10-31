@@ -28,19 +28,19 @@ Not: Analytics yalnızca çerez çubuğunda **Kabul** edenleri sayar; gerçek tr
 `blog/<kisa-baslik>.md` dosyası oluştur (başlık, açıklama, tarih, etiket + metin), `git push`. Siteyi, sitemap'i, RSS'i ve Bing/IndexNow bildirimini otomatik üretir.
 Başlık ≤ 60 karakter, açıklama 120–160 karakter olsun. Denetim: `python3 data/seo_audit.py`.
 
-## Yazı takvimi (sıradaki 10 konu)
-Hepsi UK hastası odaklı, İngilizce, temkinli ve kaynaklı yazılmalı (sağlık içeriği). Fiyat yalnızca "30 $'dan başlar" olarak geçsin.
+## Yazı takvimi
+İlk 10 konu yayınlandı (toplam 19 blog yazısı, 31 Ekim 2026). Hepsi UK hastası odaklı, İngilizce, temkinli yazıldı; fiyat yalnızca "30 $'dan başlar" olarak geçiyor.
 
-1. `second-opinion-vs-nhs-referral` – NHS yönlendirmesi ile online ikinci görüş farkı
-2. `what-to-expect-second-opinion-report` – Yazılı raporda neler bulunur
-3. `rhinoplasty-recovery-flying-home` – Burun estetiği sonrası eve uçuş ve iyileşme zamanı
-4. `breast-surgery-abroad-questions` – Meme ameliyatı için sorulacak sorular
-5. `bariatric-surgery-abroad-checklist` – Obezite cerrahisi öncesi kontrol listesi
-6. `thyroid-surgery-second-opinion` – Tiroid ameliyatı öncesi ikinci görüş
-7. `dental-implant-aftercare-abroad` – İmplant sonrası bakım ve takip
-8. `medical-travel-insurance-uk` – Tedavi için seyahat sigortası
-9. `how-to-read-a-hospital-quote` – Hastane teklifini okumak (A/B seçenek)
-10. `istanbul-hospitals-international-patients` – İstanbul'da uluslararası hasta hizmeti nasıl işler
+Sıradaki fikirler (Search Console'daki gerçek sorgulara göre sırala):
+1. `plastic-surgery-complications-what-to-know` – komplikasyon planı ve kime başvurulur
+2. `liposuction-abroad-questions` – liposuction öncesi sorular
+3. `cancer-diagnosis-second-opinion` – kanser tanısında ikinci görüş
+4. `hair-and-skin-treatments-abroad-checklist` – saç/cilt işlemleri için dikkat edilecekler
+5. `medical-records-translation-for-treatment-abroad` – belgelerin çevirisi
+6. `after-a-second-opinion-what-next` – ikinci görüşten sonra ne yapılır
+7. Kısa SSS yazıları: "Do I need a visa for treatment in Türkiye?", "How do I pay for treatment abroad?"
+
+Her yazıdan sonra: `python3 data/seo_audit.py`, `git push`, haftalık rutinle sorgu takibi.
 
 ## Teknik SEO durumu (kontrol listesi)
 - [x] Her dil için ayrı sayfa, `hreflang`, `canonical`
