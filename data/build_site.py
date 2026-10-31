@@ -276,7 +276,7 @@ def make_footer(A, N):
  <div class="ft-c">
   <div>{T("ft_hours", "h4")}{T("ft_hours_v", "p")}</div>
   <div>{T("ft_office", "h4")}{T("ft_office_v", "p")}</div>
-  <div>{T("ft_contact", "h4")}<p><span>www.easycliniccenter.com</span><br/>{T("ft_contact_v", "span", "muted")}</p><p><a href="{A}blog/">{T("nav_blog")}</a> · <a href="{A}privacy/">{T("privacy_link")}</a></p></div>
+  <div>{T("ft_contact", "h4")}<p><span>www.easycliniccenter.com</span><br/>{T("ft_contact_v", "span", "muted")}</p><p><a href="{A}blog/">{T("nav_blog")}</a> · <a href="{A}about/">{T("nav_about")}</a> · <a href="{A}privacy/">{T("privacy_link")}</a></p></div>
  </div>
  {T("ft_legal", "p", "legal")}
  <p class="copy">© 2026 Easy Clinic Center</p>
@@ -760,24 +760,30 @@ def make_assets():
     (site / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n")
     hl = "".join(f'<xhtml:link rel="alternate" hreflang="{hreflang(l)}" href="{SITE}{LANG_PATH[l]}"/>' for l in LANGS) + f'<xhtml:link rel="alternate" hreflang="x-default" href="{SITE}/"/>'
     urls = "".join(f"<url><loc>{SITE}{LANG_PATH[l]}</loc>{hl}</url>" for l in LANGS)
-    urls += f"<url><loc>{SITE}/blog/</loc></url><url><loc>{SITE}/privacy/</loc></url>" + "".join(f"<url><loc>{SITE}/blog/{p['slug']}/</loc><lastmod>{p['date']}</lastmod></url>" for p in POSTS)
+    urls += f"<url><loc>{SITE}/blog/</loc></url><url><loc>{SITE}/privacy/</loc></url><url><loc>{SITE}/about/</loc></url>" + "".join(f"<url><loc>{SITE}/blog/{p['slug']}/</loc><lastmod>{p['date']}</lastmod></url>" for p in POSTS)
     (site / "sitemap.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">{urls}</urlset>\n')
+
+PAGES = [("privacy", "Privacy policy", False), ("about", "About us", True)]
 
 def build_pages():
     site = ROOT / "site"
-    f = ROOT / "pages" / "privacy.md"
-    m = re.match(r"---\n(.*?)\n---\n(.*)", f.read_text(encoding="utf-8"), re.S)
-    meta = {k.strip(): v.strip() for k, v in (l.split(":", 1) for l in m.group(1).splitlines() if ":" in l)}
-    A = "../"; url = SITE + "/privacy/"
-    art = f'''
+    A = "../"
+    for slug, label, cta in PAGES:
+        f = ROOT / "pages" / f"{slug}.md"
+        m = re.match(r"---\n(.*?)\n---\n(.*)", f.read_text(encoding="utf-8"), re.S)
+        meta = {k.strip(): v.strip() for k, v in (l.split(":", 1) for l in m.group(1).splitlines() if ":" in l)}
+        url = f"{SITE}/{slug}/"
+        box = f'''<aside class="postcta"><h2>{ic("heart")} Your first second opinion is free</h2><p>Send us your question. A specialist physician reviews your records and writes you a report.</p><a class="btn btn-p btn-l" href="{A}#apply">{T("m_apply")}{ic("arrow", "ic dir")}</a></aside>''' if cta else ""
+        art = f'''
 <article class="sec post"><div class="wrap narrow">
- <nav class="crumbs" aria-label="Breadcrumb"><a href="{A}">Home</a> <span aria-hidden="true">/</span> <span>Privacy policy</span></nav>
- <h1 class="blog-h1">Privacy policy</h1>
+ <nav class="crumbs" aria-label="Breadcrumb"><a href="{A}">Home</a> <span aria-hidden="true">/</span> <span>{label}</span></nav>
+ <h1 class="blog-h1">{label}</h1>
  <p class="pmeta">Last updated <time datetime="{meta["date"]}">{meta["date"]}</time></p>
  <div class="prose">{md_to_html(m.group(2).strip(), A)}</div>
+ {box}
 </div></article>'''
-    d = site / "privacy"; d.mkdir(exist_ok=True)
-    (d / "index.html").write_text(blog_page(A, meta["title"], meta["description"], url, art, ld({"@context": "https://schema.org", "@type": "WebPage", "name": "Privacy policy", "url": url, "inLanguage": "en-GB", "dateModified": meta["date"]})), encoding="utf-8")
+        d = site / slug; d.mkdir(exist_ok=True)
+        (d / "index.html").write_text(blog_page(A, meta["title"], meta["description"], url, art, ld({"@context": "https://schema.org", "@type": "AboutPage" if slug == "about" else "WebPage", "name": label, "url": url, "inLanguage": "en-GB", "dateModified": meta["date"]})), encoding="utf-8")
 
 if LI == 0:
     make_assets()
