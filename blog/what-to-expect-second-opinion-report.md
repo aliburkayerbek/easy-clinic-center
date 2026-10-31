@@ -1,7 +1,7 @@
 ---
 title: What Is in a Second Opinion Report? A Plain Guide
 description: What is in a second opinion report? See the typical sections, how to use the findings with your own doctor, and what to do if the report disagrees.
-date: 2026-11-01
+date: 2026-10-31
 tags: second-opinion, report, online-consultation, uk-patients
 ---
 When you ask for a written second opinion, it helps to know what you will get back. A clear report should be something you can read at your own pace, share with your doctor and use to ask better questions. This guide describes the sections a report typically contains, how to make good use of it, and what to do if it does not match what you were told before.

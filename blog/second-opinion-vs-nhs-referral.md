@@ -1,7 +1,7 @@
 ---
 title: Second Opinion vs NHS Referral: Key Differences
 description: Second opinion vs NHS referral: how the two routes differ, what an online physician review can and cannot do, and how to tell your NHS team about it.
-date: 2026-11-01
+date: 2026-10-31
 tags: second-opinion, nhs, uk-patients, patient-safety
 ---
 If you have been given a diagnosis or a treatment recommendation, you may wonder whether to ask for another view. In the UK there is more than one way to do that. This guide compares a second opinion arranged through the NHS with an online written review of your records, explains how they can work together, and is honest about what an online review cannot do.

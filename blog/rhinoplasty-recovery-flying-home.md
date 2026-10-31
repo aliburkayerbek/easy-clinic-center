@@ -1,7 +1,7 @@
 ---
 title: Rhinoplasty in Turkey: Flying Home and Recovery
 description: Planning rhinoplasty in Turkey? Learn what to ask your surgeon about flying home, how to plan recovery near the clinic and who to contact afterwards.
-date: 2026-11-01
+date: 2026-10-31
 tags: rhinoplasty, aftercare, treatment-abroad, uk-patients
 ---
 For many UK patients, the question is not only who will perform the operation but when it will be safe to go home. This guide is a cautious planning aid for people considering rhinoplasty in Turkey. It does not give timings, because timing depends on the operation, your health and your surgeon's judgement. Treat it as a list of questions to put to your surgeon and a way to prepare.
