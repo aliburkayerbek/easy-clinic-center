@@ -75,6 +75,21 @@ S2 = {
                "Vous pouvez joindre vos documents (rapports, imageries) dans votre messagerie avant l’envoi.",
                "يمكنك إضافة المرفقات (التقارير والصور الطبية) في تطبيق البريد قبل الإرسال.",
                "Вложения (заключения, снимки) можно добавить в почтовом приложении перед отправкой."),
+ # automatic delivery through the form service
+ "form_reassure": ("No payment is taken. When you press the button, your request is e-mailed to our team through a form service.",
+                   "Aucun paiement n’est demandé. En cliquant sur le bouton, votre demande est envoyée par e-mail à notre équipe via un service de formulaire.",
+                   "لا يتم أي دفع. عند الضغط على الزر يُرسل طلبك بالبريد الإلكتروني إلى فريقنا عبر خدمة نماذج.",
+                   "Оплата не взимается. При нажатии кнопки заявка отправляется нашей команде по e-mail через сервис форм."),
+ "sending": ("Sending…", "Envoi en cours…", "جارٍ الإرسال…", "Отправка…"),
+ "sent_h": ("Your request has been sent", "Votre demande a été envoyée", "تم إرسال طلبك", "Ваша заявка отправлена"),
+ "sent_p": ("We have received your request and will reply to the e-mail address or number you gave. Please keep your reference. Send your documents and photos (without your face) by replying to our e-mail.",
+            "Nous avons reçu votre demande et répondrons à l’e-mail ou au numéro indiqué. Conservez votre référence. Envoyez vos documents et photos (sans visage) en répondant à notre e-mail.",
+            "استلمنا طلبك وسنردّ على البريد الإلكتروني أو الرقم الذي زوّدتنا به. احتفظ برقم المرجع. أرسل مستنداتك وصورك (دون إظهار الوجه) بالرد على بريدنا.",
+            "Мы получили вашу заявку и ответим на указанный e-mail или номер. Сохраните номер заявки. Документы и фото (без лица) отправьте ответом на наше письмо."),
+ "sent_fail": ("We could not send it automatically. Please press “Send by e-mail” below or copy the summary and send it to us.",
+               "L’envoi automatique a échoué. Cliquez sur « Envoyer par e-mail » ci-dessous ou copiez le résumé et envoyez-le-nous.",
+               "تعذّر الإرسال التلقائي. اضغط «إرسال بالبريد الإلكتروني» أدناه أو انسخ الملخص وأرسله إلينا.",
+               "Не удалось отправить автоматически. Нажмите «Отправить по e-mail» ниже или скопируйте сводку и отправьте нам."),
 }
 
 META2 = {

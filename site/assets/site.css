@@ -401,3 +401,6 @@ input,select,textarea{accent-color:var(--accent)}
 .hero2 .detail .fg .full,.hero2 .detail .fg .f.full{grid-column:1/-1}
 .radios{display:grid;gap:8px}
 @media(max-width:600px){.hero2 .detail .fg{grid-template-columns:1fr}}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.err-box{background:var(--warn-bg);border:1px solid var(--warn-line);color:var(--warn-ink);border-radius:var(--r-s);padding:12px 14px}
+#btnSubmit:disabled{opacity:.7;cursor:progress}

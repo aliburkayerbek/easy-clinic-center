@@ -3,7 +3,7 @@ import json, base64, pathlib, re, shutil, datetime, html as H
 import illus
 from web_strings import S
 from site_strings import S2, META2
-from config import SITE, CONTACT_EMAIL
+from config import SITE, CONTACT_EMAIL, FORM_ENDPOINT
 S.update(S2)
 FAQ_N = 8
 
@@ -339,14 +339,17 @@ hero = f'''
      </div>
      {tick("cons1", "cons1")}{tick("cons2", "cons2")}{tick("cons3", "cons3")}
     </div>
+    <input type="text" name="website" id="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true"/>
     <div id="simpleConsent">{tick("consent", "f_consent")}</div>
     <button type="submit" class="btn btn-p btn-l full" id="btnSubmit">{T("f_submit")}{ic("arrow", "ic dir")}</button>
     <p class="form-reassure">{ic("lock")}{T("form_reassure")}</p>
    </form>
    <div class="result" id="result" hidden tabindex="-1">
-    {ic("check", "ic big")}{T("res_h", "h3")}
+    {ic("check", "ic big")}{T("res_h", "h3", "", 'id="resH"')}
     <p class="refl">{T("ref")}: <bdi class="ref" id="refNo"></bdi></p>
-    {T("res_p", "p")}
+    {T("res_p", "p", "", 'id="resLocal"')}
+    {T("sent_p", "p", "", 'id="resSent" hidden')}
+    {T("sent_fail", "p", "err-box", 'id="resFail" hidden role="alert"')}
     <pre class="sum" id="sumText" dir="ltr" tabindex="0"></pre>
     <div class="ract"><a class="btn btn-p" id="btnMail" href="#" hidden>{T("f_mail")}</a><button type="button" class="btn btn-p" id="btnSave">{T("save")}</button><button type="button" class="btn btn-s" id="btnCopy">{T("copy")}</button><button type="button" class="btn btn-g" id="btnEdit">{T("edit")}</button><span class="toast" id="toast" role="status"></span></div>
     <p class="soon" id="soonNote">{ic("clock")}{T("contacts_soon")}</p>
@@ -386,6 +389,7 @@ JS = r'''
  const root = document.documentElement;
  const lang = root.lang;
  const CONTACT = "__CONTACT__";
+ const ENDPOINT = "__ENDPOINT__";
  const L = I18N[lang] || I18N.en;
  document.getElementById("lang").addEventListener("change", e => { location.href = e.target.value + location.hash; });
 
@@ -458,6 +462,7 @@ JS = r'''
  const val = id => { const el = E(id); if(!el) return ""; if(el.tagName === "SELECT"){ const o = el.selectedOptions[0]; if(!o || !o.value) return ""; return o.dataset.i ? strip(EN[o.dataset.i]) : o.textContent; } return el.value.trim(); };
  form.addEventListener("submit", e => {
   e.preventDefault();
+  if(E("website").value) return;
   let first = null; const seen = new Set();
   [...form.querySelectorAll("input,select,textarea")].filter(x => x.required || x.value).forEach(x => {
    if(x.type === "radio"){ if(seen.has(x.name)) return; seen.add(x.name); }
@@ -486,14 +491,28 @@ JS = r'''
    L2.push("Consents: data use, photo rules and age confirmed");
   }
   summary = L2.join("\n");
-  refEl.textContent = ref; sumEl.textContent = summary;
-  if(CONTACT){
-   const long = summary.length > 1500;
-   mail.href = "mailto:" + CONTACT + "?subject=" + encodeURIComponent("Request " + ref) + "&body=" + encodeURIComponent(long ? summary.slice(0, 1450) + "\n[...] (full text copied to your clipboard - paste it here)" : summary);
-   mail.onclick = () => { if(long && navigator.clipboard) navigator.clipboard.writeText(summary).catch(() => {}); };
-   mail.hidden = false; soon.hidden = true; E("mailNote").hidden = false;
+  const btn = E("btnSubmit"), btnHtml = btn.innerHTML;
+  function show(state){
+   refEl.textContent = ref; sumEl.textContent = summary;
+   E("resH").textContent = state === "sent" ? L.sent_h : L.res_h;
+   E("resLocal").hidden = state !== "local"; E("resSent").hidden = state !== "sent"; E("resFail").hidden = state !== "failed";
+   if(CONTACT && state !== "sent"){
+    const long = summary.length > 1500;
+    mail.href = "mailto:" + CONTACT + "?subject=" + encodeURIComponent("Request " + ref) + "&body=" + encodeURIComponent(long ? summary.slice(0, 1450) + "\n[...] (full text copied to your clipboard - paste it here)" : summary);
+    mail.onclick = () => { if(long && navigator.clipboard) navigator.clipboard.writeText(summary).catch(() => {}); };
+    mail.hidden = false; soon.hidden = true; E("mailNote").hidden = false;
+   } else { mail.hidden = true; E("mailNote").hidden = true; soon.hidden = !!CONTACT || state === "sent"; }
+   btn.disabled = false; btn.innerHTML = btnHtml;
+   form.hidden = true; res.hidden = false; res.focus(); res.scrollIntoView({block: "start"});
   }
-  form.hidden = true; res.hidden = false; res.focus(); res.scrollIntoView({block: "start"});
+  if(!ENDPOINT){ show("local"); return; }
+  btn.disabled = true; btn.textContent = L.sending;
+  const em = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(val("contact")) ? val("contact") : "";
+  const payload = {name: val("fullname"), message: summary, _subject: "Request " + ref + " - " + val("need"), _template: "box", _captcha: "false"};
+  if(em) payload.email = em; else payload.contact = val("contact");
+  fetch(ENDPOINT, {method: "POST", headers: {"Content-Type": "application/json", "Accept": "application/json"}, body: JSON.stringify(payload)})
+   .then(r => r.json()).then(j => show(j && (j.success === true || j.success === "true") ? "sent" : "failed"))
+   .catch(() => show("failed"));
  });
  document.getElementById("btnEdit").addEventListener("click", () => { res.hidden = true; form.hidden = false; E("fullname").focus(); });
  document.getElementById("btnCopy").addEventListener("click", async () => {
@@ -739,7 +758,7 @@ page = f'''<!doctype html>
 {header}
 <main id="main">{hero}{second}{treat}{how}{hospitals}{travel}{blogsec}{faq}{cta2}</main>
 {footer}
-<script>{JS.replace("__I18N__", json.dumps(JS_I18N, ensure_ascii=False)).replace("__CONTACT__", CONTACT_EMAIL)}</script>
+<script>{JS.replace("__I18N__", json.dumps(JS_I18N, ensure_ascii=False)).replace("__CONTACT__", CONTACT_EMAIL).replace("__ENDPOINT__", FORM_ENDPOINT)}</script>
 </body>
 </html>
 '''

@@ -9,6 +9,6 @@ Website and print materials for Easy Clinic Center, a personal health consultanc
 
 ## Editing the site
 - Texts (EN/FR/AR/RU): `data/web_strings.py` and `data/site_strings.py` (the latter wins on duplicate keys).
-- Settings: `data/config.py` - set `CONTACT_EMAIL` and the form result gets a "Send by e-mail" button; `SITE` is the final domain.
+- Settings: `data/config.py` - `SITE` (final domain), `CONTACT_EMAIL` (mailto fallback button), `FORM_ENDPOINT` (form service that e-mails each request; empty = local summary only).
 - Blog: add `blog/<slug>.md` with front matter (`title`, `description`, `date`, `tags`), then push; posts, index, RSS and sitemap are generated.
 - Push to `main`: GitHub Actions rebuilds and publishes the site (`.github/workflows/pages.yml`).
