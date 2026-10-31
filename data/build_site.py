@@ -350,6 +350,7 @@ hero = f'''
     <pre class="sum" id="sumText" dir="ltr" tabindex="0"></pre>
     <div class="ract"><a class="btn btn-p" id="btnMail" href="#" hidden>{T("f_mail")}</a><button type="button" class="btn btn-p" id="btnSave">{T("save")}</button><button type="button" class="btn btn-s" id="btnCopy">{T("copy")}</button><button type="button" class="btn btn-g" id="btnEdit">{T("edit")}</button><span class="toast" id="toast" role="status"></span></div>
     <p class="soon" id="soonNote">{ic("clock")}{T("contacts_soon")}</p>
+    <p class="soon" id="mailNote" hidden>{ic("doc")}{T("mail_note")}</p>
    </div>
   </div>
  </div>
@@ -487,8 +488,10 @@ JS = r'''
   summary = L2.join("\n");
   refEl.textContent = ref; sumEl.textContent = summary;
   if(CONTACT){
-   mail.href = "mailto:" + CONTACT + "?subject=" + encodeURIComponent("Request " + ref) + "&body=" + encodeURIComponent(summary.slice(0, 1500));
-   mail.hidden = false; soon.hidden = true;
+   const long = summary.length > 1500;
+   mail.href = "mailto:" + CONTACT + "?subject=" + encodeURIComponent("Request " + ref) + "&body=" + encodeURIComponent(long ? summary.slice(0, 1450) + "\n[...] (full text copied to your clipboard - paste it here)" : summary);
+   mail.onclick = () => { if(long && navigator.clipboard) navigator.clipboard.writeText(summary).catch(() => {}); };
+   mail.hidden = false; soon.hidden = true; E("mailNote").hidden = false;
   }
   form.hidden = true; res.hidden = false; res.focus(); res.scrollIntoView({block: "start"});
  });
@@ -688,7 +691,7 @@ if LI == 0:
 
 JSONLD = json.dumps({"@context": "https://schema.org", "@graph": [
     {"@type": "Organization", "@id": SITE + "/#org", "name": "Easy Clinic Center", "url": SITE + "/",
-     "logo": SITE + "/apple-touch-icon.png", "foundingDate": "2020-10-01",
+     "logo": SITE + "/apple-touch-icon.png", "foundingDate": "2020-10-01", "email": CONTACT_EMAIL,
      "areaServed": {"@type": "Country", "name": "United Kingdom"}, "description": META_DESC},
     {"@type": "WebSite", "@id": SITE + "/#web", "url": SITE + "/", "name": "Easy Clinic Center",
      "inLanguage": [hreflang(l) for l in LANGS], "publisher": {"@id": SITE + "/#org"}},

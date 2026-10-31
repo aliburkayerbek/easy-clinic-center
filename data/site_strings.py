@@ -65,6 +65,16 @@ S2 = {
         "Oui. Votre première demande de second avis est gratuite. Nous vous confirmons ce qui est inclus dans notre réponse.",
         "نعم، طلب الرأي الطبي الثاني الأول مجاني. نوضّح لك ما يشمله عند ردّنا عليك.",
         "Да. Ваш первый запрос на второе мнение бесплатный. Что в него входит, мы подтвердим в ответе."),
+ # request sent by e-mail (mailbox is live)
+ "res_p": ("Your request is ready. Press “Send by e-mail” to open your mail app with it, or copy or save the summary and send it with your documents and photos (without your face). This website does not store your information.",
+           "Votre demande est prête. Cliquez sur « Envoyer par e-mail » pour ouvrir votre messagerie, ou copiez ou enregistrez le résumé et envoyez-le avec vos documents et photos (sans visage). Ce site ne conserve pas vos informations.",
+           "طلبك جاهز. اضغط «إرسال بالبريد الإلكتروني» لفتح تطبيق البريد لديك، أو انسخ الملخص أو احفظه وأرسله مع مستنداتك وصورك (دون إظهار الوجه). هذا الموقع لا يحتفظ بمعلوماتك.",
+           "Заявка готова. Нажмите «Отправить по e-mail», чтобы открыть почтовое приложение, или скопируйте либо сохраните сводку и отправьте её с документами и фото (без лица). Сайт не хранит ваши данные."),
+ "ft_contact_v": ('<a href="mailto:info@easycliniccenter.com">info@easycliniccenter.com</a>',) * 4,
+ "mail_note": ("Attachments (reports, scans) can be added in your mail app before sending.",
+               "Vous pouvez joindre vos documents (rapports, imageries) dans votre messagerie avant l’envoi.",
+               "يمكنك إضافة المرفقات (التقارير والصور الطبية) في تطبيق البريد قبل الإرسال.",
+               "Вложения (заключения, снимки) можно добавить в почтовом приложении перед отправкой."),
 }
 
 META2 = {
