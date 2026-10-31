@@ -212,7 +212,7 @@ legend{font-family:var(--font-d); font-size:1.35rem; color:var(--navy); font-wei
 .f label,.lbl{font-size:.88rem; font-weight:600; color:var(--ink)}
 .hint{font-size:.82rem; color:var(--muted)}
 input[type=text],input[type=email],input[type=tel],input[type=date],input[type=number],select,textarea{width:100%; min-height:46px; border:1.5px solid var(--line); border-radius:var(--r-s); background:var(--bg); color:var(--ink); font:16px/1.4 var(--font-b); padding:10px 12px}
-textarea{resize:vertical}
+textarea{resize:vertical; min-height:64px; max-height:220px}
 input:focus,select:focus,textarea:focus{border-color:var(--accent); outline:none; box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent)}
 [aria-invalid="true"]{border-color:#D04A3C!important}
 .err{color:#C0392B; font-size:.84rem; font-weight:500}

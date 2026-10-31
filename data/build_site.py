@@ -218,7 +218,7 @@ def fld(id_, key, typ="text", req=False, auto="", extra="", full=False, hint=Non
     h = T(hint, "p", "hint", hattr) if hint else ""
     desc = f' aria-describedby="{id_}-e{(" " + id_ + "-h") if hint else ""}"'
     if typ == "textarea":
-        ctl = f'<textarea id="{id_}" name="{id_}" rows="4"{r}{desc}></textarea>'
+        ctl = f'<textarea id="{id_}" name="{id_}" rows="2"{r}{desc}></textarea>'
     else:
         ctl = f'<input id="{id_}" name="{id_}" type="{typ}"{r}{a}{desc}{extra}/>'
     return f'<div class="f{" full" if full else ""}"><label for="{id_}">{T(key)}{star}</label>{h}{ctl}<p class="err" role="alert" id="{id_}-e" hidden></p></div>'
@@ -318,10 +318,10 @@ hero = f'''
    <form id="appForm" novalidate>
     <div class="fg">
      <div class="seg" role="group" aria-label="{S["f_need"][LI]}">
-      <button type="button" class="seg-b" data-need="treat" aria-pressed="true">{T("f_tab_treat")}</button>
-      <button type="button" class="seg-b" data-need="second" aria-pressed="false">{T("f_tab_second")}</button>
+      <button type="button" class="seg-b" data-need="treat" aria-pressed="false">{T("f_tab_treat")}</button>
+      <button type="button" class="seg-b" data-need="second" aria-pressed="true">{T("f_tab_second")}</button>
      </div>
-     {sel("need", "f_need", [("treat", "n_treat", ""), ("plastic", "n_plastic", ""), ("dental", "n_dental", ""), ("chronic", "n_chronic", ""), ("unsure", "n_unsure", ""), ("second", "n_second", "")], full=True)}
+     {sel("need", "f_need", [("second", "n_second", ""), ("treat", "n_treat", ""), ("plastic", "n_plastic", ""), ("dental", "n_dental", ""), ("chronic", "n_chronic", ""), ("unsure", "n_unsure", "")], full=True)}
      {fld("fullname", "f_name", req=True, auto="name", full=True)}
      {fld("contact", "f_contact", req=True, auto="email", extra=' inputmode="email" dir="ltr"', full=True)}
      {fld("msg", "f_msg", typ="textarea", req=True, hint="f_msg_h", full=True)}
