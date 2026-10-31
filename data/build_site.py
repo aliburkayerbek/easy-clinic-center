@@ -276,7 +276,7 @@ def make_footer(A, N):
  <div class="ft-c">
   <div>{T("ft_hours", "h4")}{T("ft_hours_v", "p")}</div>
   <div>{T("ft_office", "h4")}{T("ft_office_v", "p")}</div>
-  <div>{T("ft_contact", "h4")}<p><span>www.easycliniccenter.com</span><br/>{T("ft_contact_v", "span", "muted")}</p><p><a href="{A}blog/">{T("nav_blog")}</a></p></div>
+  <div>{T("ft_contact", "h4")}<p><span>www.easycliniccenter.com</span><br/>{T("ft_contact_v", "span", "muted")}</p><p><a href="{A}blog/">{T("nav_blog")}</a> · <a href="{A}privacy/">{T("privacy_link")}</a></p></div>
  </div>
  {T("ft_legal", "p", "legal")}
  <p class="copy">© 2026 Easy Clinic Center</p>
@@ -307,6 +307,13 @@ hero = f'''
      {fld("fullname", "f_name", req=True, auto="name", full=True)}
      {fld("contact", "f_contact", req=True, auto="email", extra=' inputmode="email" dir="ltr"', full=True)}
      {fld("msg", "f_msg", typ="textarea", req=True, hint="f_msg_h", full=True)}
+    </div>
+    <div class="f full filesbox">
+     <label for="files">{T("f_files")}</label>
+     <p class="hint" id="files-h">{ic("face")}{T("f_files_h")}</p>
+     <input type="file" id="files" name="files" multiple accept="image/*,application/pdf" aria-describedby="files-h files-e"/>
+     <ul class="flist" id="fileList"></ul>
+     <p class="err" role="alert" id="files-e" hidden></p>
     </div>
     <div class="detail" id="detailBox" hidden>
      <h3 class="dh">{T("g1")}</h3>
@@ -341,6 +348,7 @@ hero = f'''
     </div>
     <input type="text" name="website" id="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true"/>
     <div id="simpleConsent">{tick("consent", "f_consent")}</div>
+    <p class="hint pl"><a href="{REL}privacy/">{T("privacy_read")}</a></p>
     <button type="submit" class="btn btn-p btn-l full" id="btnSubmit">{T("f_submit")}{ic("arrow", "ic dir")}</button>
     <p class="form-reassure">{ic("lock")}{T("form_reassure")}</p>
    </form>
@@ -454,6 +462,48 @@ JS = r'''
  });
 
  const EN = I18N.en;
+ /* attachments: images are reduced in the browser, PDFs are sent as they are */
+ const fileIn = E("files"), fileList = E("fileList"), fileErr = E("files-e");
+ const MAX_FILES = 5, MAX_TOTAL = 8 * 1024 * 1024;
+ let files = [];
+ const kb = n => n >= 1048576 ? (n / 1048576).toFixed(1) + " MB" : Math.max(1, Math.round(n / 1024)) + " KB";
+ const fileMsg = key => { if(!key){ fileErr.hidden = true; fileErr.textContent = ""; return; } fileErr.textContent = L[key]; fileErr.hidden = false; };
+ function shrink(f){
+  return new Promise(res => {
+   if(!f.type.startsWith("image/")) return res(f);
+   const img = new Image(), url = URL.createObjectURL(f);
+   img.onload = () => {
+    const k = Math.min(1, 1600 / Math.max(img.width, img.height));
+    const c = document.createElement("canvas"); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+    c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+    c.toBlob(b => { URL.revokeObjectURL(url); res(b && b.size < f.size ? new File([b], f.name.replace(/\.[^.]+$/, "") + ".jpg", {type: "image/jpeg"}) : f); }, "image/jpeg", 0.82);
+   };
+   img.onerror = () => { URL.revokeObjectURL(url); res(f); };
+   img.src = url;
+  });
+ }
+ function drawFiles(){
+  fileList.innerHTML = "";
+  files.forEach((f, i) => {
+   const li = document.createElement("li"); li.textContent = f.name + " (" + kb(f.size) + ") ";
+   const b = document.createElement("button"); b.type = "button"; b.className = "frm"; b.textContent = L.f_files_remove; b.setAttribute("aria-label", L.f_files_remove + ": " + f.name);
+   b.addEventListener("click", () => { files.splice(i, 1); drawFiles(); fileMsg(null); });
+   li.appendChild(b); fileList.appendChild(li);
+  });
+ }
+ fileIn.addEventListener("change", async () => {
+  fileMsg(null);
+  const picked = [...fileIn.files]; fileIn.value = "";
+  for(const f of picked){
+   if(!(f.type.startsWith("image/") || f.type === "application/pdf")){ fileMsg("f_files_type"); continue; }
+   if(files.length >= MAX_FILES){ fileMsg("f_files_max"); break; }
+   const g = await shrink(f);
+   if(files.reduce((s, x) => s + x.size, 0) + g.size > MAX_TOTAL){ fileMsg("f_files_size"); continue; }
+   files.push(g);
+  }
+  drawFiles();
+ });
+
  const strip = s => s.replace(/<[^>]+>/g, "").replace(/&amp;/g, "&");
  function makeRef(){ const d = new Date(); const p = n => String(n).padStart(2, "0"); return "ECC-" + String(d.getFullYear()).slice(2) + p(d.getMonth() + 1) + p(d.getDate()) + "-" + String(Math.floor(1000 + Math.random() * 9000)); }
  const res = E("result"), sumEl = E("sumText"), refEl = E("refNo");
@@ -478,6 +528,7 @@ JS = r'''
    if(val("diag")) L2.push("Diagnosis: " + val("diag"));
   }
   L2.push("Message: " + val("msg"));
+  if(files.length) L2.push("Attachments (" + files.length + "): " + files.map(f => f.name).join(", "));
   if(full){
    if(val("hgt") || val("wgt")) L2.push("Height / weight: " + (val("hgt") || "-") + " cm / " + (val("wgt") || "-") + " kg");
    const conds = condBoxes.filter(c => c.checked).map(c => strip(EN[c.value]));
@@ -508,9 +559,15 @@ JS = r'''
   if(!ENDPOINT){ show("local"); return; }
   btn.disabled = true; btn.textContent = L.sending;
   const em = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(val("contact")) ? val("contact") : "";
-  const payload = {name: val("fullname"), message: summary, _subject: "Request " + ref + " - " + val("need"), _template: "box", _captcha: "false"};
-  if(em) payload.email = em; else payload.contact = val("contact");
-  fetch(ENDPOINT, {method: "POST", headers: {"Content-Type": "application/json", "Accept": "application/json"}, body: JSON.stringify(payload)})
+  const fields = {name: val("fullname"), message: summary, _subject: "Request " + ref + " - " + val("need") + (files.length ? " (+" + files.length + " files)" : ""), _template: "box", _captcha: "false"};
+  if(em) fields.email = em; else fields.contact = val("contact");
+  let opts;
+  if(files.length){
+   const fd = new FormData(); Object.keys(fields).forEach(k => fd.append(k, fields[k]));
+   files.forEach((f, i) => fd.append(i ? "attachment" + (i + 1) : "attachment", f, f.name));
+   opts = {method: "POST", headers: {"Accept": "application/json"}, body: fd};
+  } else opts = {method: "POST", headers: {"Content-Type": "application/json", "Accept": "application/json"}, body: JSON.stringify(fields)};
+  fetch(ENDPOINT, opts)
    .then(r => r.json()).then(j => show(j && (j.success === true || j.success === "true") ? "sent" : "failed"))
    .catch(() => show("failed"));
  });
@@ -701,12 +758,29 @@ def make_assets():
     (site / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n")
     hl = "".join(f'<xhtml:link rel="alternate" hreflang="{hreflang(l)}" href="{SITE}{LANG_PATH[l]}"/>' for l in LANGS) + f'<xhtml:link rel="alternate" hreflang="x-default" href="{SITE}/"/>'
     urls = "".join(f"<url><loc>{SITE}{LANG_PATH[l]}</loc>{hl}</url>" for l in LANGS)
-    urls += f"<url><loc>{SITE}/blog/</loc></url>" + "".join(f"<url><loc>{SITE}/blog/{p['slug']}/</loc><lastmod>{p['date']}</lastmod></url>" for p in POSTS)
+    urls += f"<url><loc>{SITE}/blog/</loc></url><url><loc>{SITE}/privacy/</loc></url>" + "".join(f"<url><loc>{SITE}/blog/{p['slug']}/</loc><lastmod>{p['date']}</lastmod></url>" for p in POSTS)
     (site / "sitemap.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">{urls}</urlset>\n')
+
+def build_pages():
+    site = ROOT / "site"
+    f = ROOT / "pages" / "privacy.md"
+    m = re.match(r"---\n(.*?)\n---\n(.*)", f.read_text(encoding="utf-8"), re.S)
+    meta = {k.strip(): v.strip() for k, v in (l.split(":", 1) for l in m.group(1).splitlines() if ":" in l)}
+    A = "../"; url = SITE + "/privacy/"
+    art = f'''
+<article class="sec post"><div class="wrap narrow">
+ <nav class="crumbs" aria-label="Breadcrumb"><a href="{A}">Home</a> <span aria-hidden="true">/</span> <span>Privacy policy</span></nav>
+ <h1 class="blog-h1">Privacy policy</h1>
+ <p class="pmeta">Last updated <time datetime="{meta["date"]}">{meta["date"]}</time></p>
+ <div class="prose">{md_to_html(m.group(2).strip(), A)}</div>
+</div></article>'''
+    d = site / "privacy"; d.mkdir(exist_ok=True)
+    (d / "index.html").write_text(blog_page(A, meta["title"], meta["description"], url, art, ld({"@context": "https://schema.org", "@type": "WebPage", "name": "Privacy policy", "url": url, "inLanguage": "en-GB", "dateModified": meta["date"]})), encoding="utf-8")
 
 if LI == 0:
     make_assets()
     build_blog()
+    build_pages()
 
 JSONLD = json.dumps({"@context": "https://schema.org", "@graph": [
     {"@type": "Organization", "@id": SITE + "/#org", "name": "Easy Clinic Center", "url": SITE + "/",

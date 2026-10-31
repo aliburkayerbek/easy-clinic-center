@@ -404,3 +404,13 @@ input,select,textarea{accent-color:var(--accent)}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 .err-box{background:var(--warn-bg);border:1px solid var(--warn-line);color:var(--warn-ink);border-radius:var(--r-s);padding:12px 14px}
 #btnSubmit:disabled{opacity:.7;cursor:progress}
+
+/* ---- attachments + privacy link ---- */
+.filesbox input[type=file]{width:100%;padding:10px;border:1.5px dashed var(--field-line);border-radius:var(--r-s);background:var(--surface);color:var(--ink);font:inherit;min-height:48px}
+.filesbox .hint{display:flex;gap:8px;margin:2px 0 8px}
+.flist{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:6px;font-size:.92rem}
+.flist li{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:6px 10px;border:1px solid var(--line);border-radius:var(--r-s);background:var(--bg-alt);word-break:break-all}
+.flist .frm{margin-inline-start:auto;min-height:36px;padding:2px 12px;border:1px solid var(--field-line);border-radius:999px;background:var(--surface);color:var(--navy);cursor:pointer;font:inherit;font-size:.85rem}
+.hint.pl{margin:10px 0 0;font-size:.9rem}
+.hint.pl a{color:var(--accent-ink);text-decoration:underline;text-underline-offset:3px}
+.ft-c a{color:inherit;text-decoration:underline;text-underline-offset:3px}

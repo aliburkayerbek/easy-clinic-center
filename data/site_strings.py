@@ -90,6 +90,21 @@ S2 = {
                "L’envoi automatique a échoué. Cliquez sur « Envoyer par e-mail » ci-dessous ou copiez le résumé et envoyez-le-nous.",
                "تعذّر الإرسال التلقائي. اضغط «إرسال بالبريد الإلكتروني» أدناه أو انسخ الملخص وأرسله إلينا.",
                "Не удалось отправить автоматически. Нажмите «Отправить по e-mail» ниже или скопируйте сводку и отправьте нам."),
+ # attachments + privacy link
+ "f_files": ("Photos or documents (optional)", "Photos ou documents (facultatif)", "صور أو مستندات (اختياري)", "Фото или документы (необязательно)"),
+ "f_files_h": ("JPG, PNG or PDF. Up to 5 files, 8 MB in total. No photos showing your face.",
+               "JPG, PNG ou PDF. 5 fichiers maximum, 8 Mo au total. Pas de photos montrant votre visage.",
+               "JPG أو PNG أو PDF. حتى 5 ملفات و8 ميغابايت إجمالًا. بدون صور يظهر فيها وجهك.",
+               "JPG, PNG или PDF. До 5 файлов, всего до 8 МБ. Без фото, на которых видно лицо."),
+ "f_files_type": ("Only JPG, PNG or PDF files can be attached.", "Seuls les fichiers JPG, PNG ou PDF sont acceptés.", "يمكن إرفاق ملفات JPG وPNG وPDF فقط.", "Можно прикреплять только файлы JPG, PNG или PDF."),
+ "f_files_size": ("These files are too large (8 MB in total). Photos are reduced automatically; for large PDFs send them by e-mail after we reply.",
+                  "Ces fichiers sont trop volumineux (8 Mo au total). Les photos sont réduites automatiquement ; envoyez les gros PDF par e-mail après notre réponse.",
+                  "هذه الملفات كبيرة جدًا (8 ميغابايت إجمالًا). تُصغَّر الصور تلقائيًا؛ أرسل ملفات PDF الكبيرة بالبريد بعد ردّنا.",
+                  "Файлы слишком большие (всего 8 МБ). Фото уменьшаются автоматически; большие PDF отправьте по e-mail после нашего ответа."),
+ "f_files_max": ("You can attach up to 5 files.", "Vous pouvez joindre 5 fichiers au maximum.", "يمكنك إرفاق 5 ملفات كحد أقصى.", "Можно прикрепить не более 5 файлов."),
+ "f_files_remove": ("Remove", "Retirer", "إزالة", "Удалить"),
+ "privacy_link": ("Privacy policy", "Politique de confidentialité (en anglais)", "سياسة الخصوصية (بالإنجليزية)", "Политика конфиденциальности (на английском)"),
+ "privacy_read": ("Read our privacy policy", "Lire notre politique de confidentialité (en anglais)", "اقرأ سياسة الخصوصية (بالإنجليزية)", "Прочитать политику конфиденциальности (на английском)"),
 }
 
 META2 = {
