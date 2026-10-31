@@ -20,7 +20,7 @@ When you send a request we collect what you type or attach:
 - **Your request:** what you would like a doctor to look at, and which service you need.
 - **Health information (sensitive data):** for example a diagnosis, medicines, allergies, previous operations, height and weight, medical records, photos or scans that you send us by e-mail. You decide what to send. In the detailed form we also ask for your date of birth and country, plus your travel and quote preferences.
 - **E-mail and documents:** if you write to us, or reply to our e-mails with reports, scans or photos, we keep that correspondence and what it contains.
-- **Technical data:** like most websites, the servers that deliver this site can see your IP address and browser details when you visit. We do not use cookies or analytics tools on this site at the time of writing. If that changes we will update this policy and ask for your consent first where the law requires it.
+- **Technical data:** like most websites, the servers that deliver this site can see your IP address and browser details when you visit. We use Google Analytics only if you accept analytics cookies in the banner (see Cookies and analytics below).
 
 **Please do not send photos that show your face.** Where a photo is needed for a treatment that involves your face, we will ask you for it separately and only with your agreement.
 
@@ -41,6 +41,7 @@ We share information only as needed to do what you asked:
 - **Our form service (FormSubmit, formsubmit.co).** When you press the send button, your request is passed through this service, which e-mails it to us. According to its documentation it keeps form submissions for 30 days. We cannot control this service. Documents and photos are not sent through the form: you send them by replying to our e-mail.
 - **Our e-mail provider (İsimtescil, Türkiye)** hosts our mailbox, where your request and any attachments are stored.
 - **Specialist physicians and partner hospitals,** but only the information needed for your case and only after you ask for or agree to that step. Partner hospitals are independent providers; they are responsible for your treatment and have their own privacy notices.
+- **Google Analytics (Google, United States),** only if you accept analytics cookies. It receives information about your visit (pages viewed, approximate location from a shortened IP address, device and browser details).
 - **Website hosting (GitHub Pages)** and **Google Fonts**, which deliver the website and its fonts. They receive technical data such as your IP address when you open a page.
 - **Authorities,** if the law requires it.
 
@@ -49,6 +50,10 @@ Our website links to hospital and other third-party websites. They have their ow
 ## Transfers outside your country
 
 We are in Türkiye. If you live in the UK or EU, your information is sent to us in Türkiye and passes through service providers that may be located in the United States or other countries. Türkiye is not covered by a UK or EU adequacy decision, so we rely on your explicit consent for these transfers and take the safeguards described below. If you do not agree, please do not use the form and contact us in another way.
+
+## Cookies and analytics
+
+The site itself does not set cookies. We would like to use **Google Analytics** to count visits and see which pages are useful. It is switched off by default: nothing from Google Analytics is loaded unless you press **Accept** in the cookie banner. If you press **Decline** (or ignore the banner) it stays off. You can change your choice at any time with **Cookie settings** at the bottom of every page. Analytics cookies are used only to measure the site, not for advertising: we have turned off Google's advertising features. We rely on your consent for this (UK GDPR, Privacy and Electronic Communications Regulations).
 
 ## How long we keep it
 

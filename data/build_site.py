@@ -3,7 +3,7 @@ import json, base64, pathlib, re, shutil, datetime, html as H
 import illus
 from web_strings import S
 from site_strings import S2, META2
-from config import SITE, CONTACT_EMAIL, FORM_ENDPOINT, ATTACHMENTS_ENABLED, GOOGLE_VERIFICATION_FILE
+from config import SITE, CONTACT_EMAIL, FORM_ENDPOINT, ATTACHMENTS_ENABLED, GOOGLE_VERIFICATION_FILE, GA_ID
 S.update(S2)
 FAQ_N = 8
 
@@ -279,8 +279,12 @@ def make_footer(A, N):
   <div>{T("ft_contact", "h4")}<p><span>www.easycliniccenter.com</span><br/>{T("ft_contact_v", "span", "muted")}</p><p><a href="{A}blog/">{T("nav_blog")}</a> · <a href="{A}about/">{T("nav_about")}</a> · <a href="{A}privacy/">{T("privacy_link")}</a></p></div>
  </div>
  {T("ft_legal", "p", "legal")}
- <p class="copy">© 2026 Easy Clinic Center</p>
+<p class="copy">© 2026 Easy Clinic Center · <a href="#" id="ccOpen">{T("cc_open")}</a></p>
 </div></footer>
+<div class="ccbar" id="ccBar" role="dialog" aria-label="{S["cc_label"][LI]}" hidden>
+ <p>{T("cc_text")} <a href="{A}privacy/">{T("privacy_link")}</a></p>
+ <div class="ccbtn"><button type="button" class="btn btn-p" id="ccYes">{T("cc_yes")}</button><button type="button" class="btn btn-s" id="ccNo">{T("cc_no")}</button></div>
+</div>
 <div class="mbar"><a class="btn btn-p" href="{N}#apply">{T("m_apply")}</a></div>'''
 
 header = make_header(REL, "", LANG_OPTS)
@@ -662,14 +666,27 @@ def blog_opts(A):
 import hashlib
 FRAME_BUST = "if(window.top!==window.self){window.top.location=window.self.location;}"
 
+CONSENT_JS = """
+(function(){var GA="__GA__";var bar=document.getElementById("ccBar");if(!GA||!bar)return;var KEY="ecc-consent";
+function get(){try{return localStorage.getItem(KEY);}catch(e){return null;}}
+function set(v){try{localStorage.setItem(KEY,v);}catch(e){}}
+function load(){if(window.__gaLoaded)return;window.__gaLoaded=1;window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments);};gtag("js",new Date());gtag("config",GA,{allow_google_signals:false,allow_ad_personalization_signals:false});var s=document.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id="+GA;document.head.appendChild(s);}
+var v=get();if(v==="granted")load();else if(v!=="denied")bar.hidden=false;
+document.getElementById("ccYes").addEventListener("click",function(){set("granted");bar.hidden=true;load();});
+document.getElementById("ccNo").addEventListener("click",function(){set("denied");bar.hidden=true;if(window.__gaLoaded){window["ga-disable-"+GA]=true;}});
+var o=document.getElementById("ccOpen");if(o)o.addEventListener("click",function(e){e.preventDefault();bar.hidden=false;});
+})();
+""".replace("__GA__", GA_ID)
+
 def csp_meta(script_text):
     h = base64.b64encode(hashlib.sha256(script_text.encode("utf-8")).digest()).decode()
-    policy = ("default-src 'self'; script-src 'sha256-%s'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
-              "font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://formsubmit.co; "
+    policy = ("default-src 'self'; script-src 'sha256-%s' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+              "font-src https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com https://www.googletagmanager.com; "
+              "connect-src https://formsubmit.co https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com; "
               "form-action 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests") % h
     return f'<meta http-equiv="Content-Security-Policy" content="{policy}"/>\n<meta name="referrer" content="strict-origin-when-cross-origin"/>'
 
-BLOG_SCRIPT = FRAME_BUST + 'document.getElementById("lang").addEventListener("change", e => { location.href = e.target.value; });'
+BLOG_SCRIPT = FRAME_BUST + 'document.getElementById("lang").addEventListener("change", e => { location.href = e.target.value; });' + CONSENT_JS
 
 def blog_page(A, title, desc, canonical, main_html, jsonld="", ogtype="website"):
     head = f'''<!doctype html>
@@ -845,7 +862,7 @@ AR_FONTS = "&family=Noto+Naskh+Arabic:wght@500;600&family=Noto+Sans+Arabic:wght@
 FONTS = f'<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,500;0,600;1,500{AR_FONTS}&display=swap"/>'
 
 JS_I18N = {LC: I18N[LC], "en": I18N["en"]}
-JS_FINAL = FRAME_BUST + JS.replace("__I18N__", json.dumps(JS_I18N, ensure_ascii=False)).replace("__CONTACT__", CONTACT_EMAIL).replace("__ENDPOINT__", FORM_ENDPOINT)
+JS_FINAL = FRAME_BUST + CONSENT_JS + JS.replace("__I18N__", json.dumps(JS_I18N, ensure_ascii=False)).replace("__CONTACT__", CONTACT_EMAIL).replace("__ENDPOINT__", FORM_ENDPOINT)
 page = f'''<!doctype html>
 <html lang="{LC}" dir="{DIR}">
 <head>

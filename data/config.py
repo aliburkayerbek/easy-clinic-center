@@ -9,3 +9,5 @@ FORM_ENDPOINT = "https://formsubmit.co/ajax/info@easycliniccenter.com"
 ATTACHMENTS_ENABLED = False
 # Google Search Console ownership file (URL-prefix property, HTML file method). Keep it: Google re-checks it.
 GOOGLE_VERIFICATION_FILE = "googlefd2fd1dc4d730845.html"
+# Google Analytics 4 measurement ID. Loaded ONLY after the visitor accepts the cookie banner.
+GA_ID = "G-23CYTMPX81"

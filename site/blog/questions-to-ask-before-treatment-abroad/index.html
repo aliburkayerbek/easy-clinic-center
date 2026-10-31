@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8"/>
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-7iB8SiPeoXqJrwiHMtYCgedfJzvG4FD1tihjH6qb/Uw='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://formsubmit.co; form-action 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-fmjtHFHQcKFwmUHMmanRUgZmUteLy4GuJkugDwjHWI4=' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com https://www.googletagmanager.com; connect-src https://formsubmit.co https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com; form-action 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests"/>
 <meta name="referrer" content="strict-origin-when-cross-origin"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Questions to Ask Before Treatment Abroad: A Patient Checklist | Easy Clinic Center</title>
@@ -85,9 +85,23 @@
   <div><h4 data-i="ft_contact">Contact</h4><p><span>www.easycliniccenter.com</span><br/><span data-i="ft_contact_v" class="muted"><a href="mailto:info@easycliniccenter.com">info@easycliniccenter.com</a></span></p><p><a href="../../blog/"><span data-i="nav_blog">Blog</span></a> · <a href="../../about/"><span data-i="nav_about">About us</span></a> · <a href="../../privacy/"><span data-i="privacy_link">Privacy policy</span></a></p></div>
  </div>
  <p data-i="ft_legal" class="legal">Easy Clinic Center is a health consultancy, not a healthcare provider. Treatment is provided by partner hospitals, which hold clinical responsibility. This website is for general information and does not replace a medical consultation; treatment plans and prices are confirmed individually after medical review.</p>
- <p class="copy">© 2026 Easy Clinic Center</p>
+<p class="copy">© 2026 Easy Clinic Center · <a href="#" id="ccOpen"><span data-i="cc_open">Cookie settings</span></a></p>
 </div></footer>
+<div class="ccbar" id="ccBar" role="dialog" aria-label="Cookie consent" hidden>
+ <p><span data-i="cc_text">We would like to use Google Analytics cookies to count visits and see which pages are useful. Nothing is loaded unless you accept.</span> <a href="../../privacy/"><span data-i="privacy_link">Privacy policy</span></a></p>
+ <div class="ccbtn"><button type="button" class="btn btn-p" id="ccYes"><span data-i="cc_yes">Accept</span></button><button type="button" class="btn btn-s" id="ccNo"><span data-i="cc_no">Decline</span></button></div>
+</div>
 <div class="mbar"><a class="btn btn-p" href="../../#apply"><span data-i="m_apply">Request an opinion</span></a></div>
-<script>if(window.top!==window.self){window.top.location=window.self.location;}document.getElementById("lang").addEventListener("change", e => { location.href = e.target.value; });</script>
+<script>if(window.top!==window.self){window.top.location=window.self.location;}document.getElementById("lang").addEventListener("change", e => { location.href = e.target.value; });
+(function(){var GA="G-23CYTMPX81";var bar=document.getElementById("ccBar");if(!GA||!bar)return;var KEY="ecc-consent";
+function get(){try{return localStorage.getItem(KEY);}catch(e){return null;}}
+function set(v){try{localStorage.setItem(KEY,v);}catch(e){}}
+function load(){if(window.__gaLoaded)return;window.__gaLoaded=1;window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments);};gtag("js",new Date());gtag("config",GA,{allow_google_signals:false,allow_ad_personalization_signals:false});var s=document.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id="+GA;document.head.appendChild(s);}
+var v=get();if(v==="granted")load();else if(v!=="denied")bar.hidden=false;
+document.getElementById("ccYes").addEventListener("click",function(){set("granted");bar.hidden=true;load();});
+document.getElementById("ccNo").addEventListener("click",function(){set("denied");bar.hidden=true;if(window.__gaLoaded){window["ga-disable-"+GA]=true;}});
+var o=document.getElementById("ccOpen");if(o)o.addEventListener("click",function(e){e.preventDefault();bar.hidden=false;});
+})();
+</script>
 </body>
 </html>

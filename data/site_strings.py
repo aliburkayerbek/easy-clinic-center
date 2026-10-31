@@ -96,6 +96,15 @@ S2 = {
  # legal review overrides
  "cons2": ("I explicitly consent to Easy Clinic Center processing my personal and health data, transferring it to Türkiye and to the service providers named in the privacy policy, and sharing it with partner hospitals and physicians only to assess my case and prepare a quote (UK GDPR / KVKK). I can withdraw this consent at any time.", "Je consens expressément à ce qu’Easy Clinic Center traite mes données personnelles et de santé, les transfère vers la Türkiye et vers les prestataires cités dans la politique de confidentialité, et les partage avec les hôpitaux et médecins partenaires uniquement pour évaluer mon dossier et établir un devis (RGPD britannique / KVKK). Je peux retirer ce consentement à tout moment.", "أوافق صراحةً على أن يعالج Easy Clinic Center بياناتي الشخصية والصحية، وأن ينقلها إلى تركيا وإلى مزوّدي الخدمات المذكورين في سياسة الخصوصية، وأن يشاركها مع المستشفيات والأطباء الشركاء فقط لتقييم حالتي وإعداد العرض (GDPR البريطانية / KVKK). ويمكنني سحب هذه الموافقة في أي وقت.", "Я прямо соглашаюсь на обработку Easy Clinic Center моих персональных и медицинских данных, их передачу в Турцию и поставщикам услуг, указанным в политике конфиденциальности, и передачу больницам и врачам-партнёрам только для оценки моего случая и подготовки предложения (UK GDPR / KVKK). Я могу отозвать согласие в любой момент."),
  "a1": ("Yes. Reviewing your request and explaining your options costs nothing. A physician’s written second opinion is priced separately and starts from $30.", "Oui. L’étude de votre demande et l’explication de vos options sont gratuites. Le second avis écrit d’un médecin est facturé à part, dès 30 USD.", "نعم، مراجعة طلبك وشرح خياراتك مجانًا. أما الرأي الطبي المكتوب من الطبيب فيُسعَّر بشكل منفصل ويبدأ من 30 دولارًا.", "Да. Рассмотрение заявки и объяснение вариантов бесплатны. Письменное второе мнение врача оплачивается отдельно и стоит от 30 $."),
+ # cookie banner (Google Analytics only after consent)
+ "cc_text": ("We would like to use Google Analytics cookies to count visits and see which pages are useful. Nothing is loaded unless you accept.",
+             "Nous aimerions utiliser les cookies de Google Analytics pour compter les visites et savoir quelles pages sont utiles. Rien n’est chargé sans votre accord.",
+             "نودّ استخدام ملفات تعريف الارتباط الخاصة بـ Google Analytics لإحصاء الزيارات ومعرفة الصفحات المفيدة. لا يُحمَّل شيء ما لم توافق.",
+             "Мы хотели бы использовать cookie Google Analytics, чтобы считать посещения и понимать, какие страницы полезны. Без вашего согласия ничего не загружается."),
+ "cc_yes": ("Accept", "Accepter", "أوافق", "Принять"),
+ "cc_no": ("Decline", "Refuser", "أرفض", "Отклонить"),
+ "cc_open": ("Cookie settings", "Paramètres des cookies", "إعدادات ملفات تعريف الارتباط", "Настройки cookie"),
+ "cc_label": ("Cookie consent", "Consentement aux cookies", "الموافقة على ملفات تعريف الارتباط", "Согласие на cookie"),
 }
 
 META2 = {
