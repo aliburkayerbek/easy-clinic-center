@@ -49,6 +49,7 @@ Her yazıdan sonra: `python3 data/seo_audit.py`, `git push`, haftalık rutinle s
 - [x] Search Console + Bing Webmaster doğrulandı, site haritası gönderildi
 - [x] IndexNow (yeni/değişen sayfalar otomatik bildirilir)
 - [x] Mobil uyumlu, HTTPS, hızlı (statik sayfa)
-- [ ] Yazı tiplerini kendi sunucuna almak (hız + gizlilik)
-- [ ] FR/AR/RU blog çevirileri (şu an blog yalnızca İngilizce)
+- [x] Yazı tipleri kendi sunucumuzda (Google Fonts kaldırıldı)
+- [x] Gizlilik ve Hakkımızda sayfaları FR/AR/RU çevrildi
+- [ ] FR/AR/RU blog çevirileri (blog yalnızca İngilizce)
 - [ ] Geri bağlantı çalışması
