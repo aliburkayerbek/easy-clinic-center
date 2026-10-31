@@ -11,3 +11,5 @@ ATTACHMENTS_ENABLED = False
 GOOGLE_VERIFICATION_FILE = "googlefd2fd1dc4d730845.html"
 # Google Analytics 4 measurement ID. Loaded ONLY after the visitor accepts the cookie banner.
 GA_ID = "G-23CYTMPX81"
+# IndexNow (Bing and others): the key file is served at /<key>.txt; the key is public by design.
+INDEXNOW_KEY = "1a8d8f73a9e234ae7e05328293e9f45d"
